@@ -108,3 +108,7 @@ buildNumber.properties
 
 # End of https://www.toptal.com/developers/gitignore/api/java,maven,eclipse
 /bin/
+
+# modif xu gitignore
+.project
+.classpath
