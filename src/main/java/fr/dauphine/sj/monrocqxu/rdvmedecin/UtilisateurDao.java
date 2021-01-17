@@ -2,9 +2,9 @@ package fr.dauphine.sj.monrocqxu.rdvmedecin;
 
 import java.util.List;
 
-public interface PersonneDao {
+public interface UtilisateurDao {
 	
-	List<Personne> getUserDetails();
+	List<Utilisateur> getUserDetails();
 
 }
 

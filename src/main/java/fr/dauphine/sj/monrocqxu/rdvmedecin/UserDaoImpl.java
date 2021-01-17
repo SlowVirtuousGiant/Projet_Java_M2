@@ -15,7 +15,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 @Component
-public class UserDaoImpl implements PersonneDao {
+public class UserDaoImpl implements UtilisateurDao {
 
 	@PersistenceUnit
 	private EntityManagerFactory entityManagerFactory;
@@ -28,8 +28,8 @@ public class UserDaoImpl implements PersonneDao {
 	public List getUserDetails() {
 		Session session=entityManagerFactory.unwrap(SessionFactory.class).openSession();
 		CriteriaBuilder builder = session.getCriteriaBuilder();
-        CriteriaQuery criteria = builder.createQuery(Personne.class);
-        Root contactRoot = criteria.from(Personne.class);
+        CriteriaQuery criteria = builder.createQuery(Utilisateur.class);
+        Root contactRoot = criteria.from(Utilisateur.class);
         criteria.select(contactRoot);
         return session.createQuery(criteria).getResultList();
 	

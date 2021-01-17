@@ -4,6 +4,6 @@ import java.util.List;
 
 public interface UserService {
 
-	List<Personne> getUserDetails();
+	List<User> getUserDetails();
 
 }

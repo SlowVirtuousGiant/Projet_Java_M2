@@ -10,9 +10,9 @@ import org.springframework.stereotype.Service;
 public class UserServiceImpl implements UserService {
 		
 		@Autowired
-		private PersonneDao personneDao;
+		private UtilisateurDao utilisateurDao;
 
 		public List getUserDetails() {
-			return personneDao.getUserDetails();
+			return utilisateurDao.getUserDetails();
 		}
 }
