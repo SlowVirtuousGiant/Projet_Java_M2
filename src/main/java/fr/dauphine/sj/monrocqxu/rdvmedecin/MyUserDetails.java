@@ -9,9 +9,9 @@ import org.springframework.security.core.userdetails.UserDetails;
  
 public class MyUserDetails implements UserDetails {
  
-    private User user;
+    private Utilisateur user;
      
-    public MyUserDetails(User user) {
+    public MyUserDetails(Utilisateur user) {
         this.user = user;
     }
  
@@ -25,7 +25,6 @@ public class MyUserDetails implements UserDetails {
     public String getPassword() {
         return user.getMdp();
     }
- 
     @Override
     public String getUsername() {
         return user.getMail();

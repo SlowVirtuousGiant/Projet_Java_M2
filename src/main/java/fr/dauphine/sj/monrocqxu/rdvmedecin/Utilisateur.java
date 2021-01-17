@@ -14,7 +14,7 @@ import javax.persistence.UniqueConstraint;
 //@Table(name = "personne", uniqueConstraints = {
 //        @UniqueConstraint(columnNames = "ID") })
 
-@Table
+@Table(name="utilisateur")
 public class Utilisateur implements Serializable 
 {   
     private static final long serialVersionUID = -1798070786993154676L;
@@ -31,7 +31,7 @@ public class Utilisateur implements Serializable
     @Column(name = "prenom", unique = false, nullable = false, length = 100)
     private String prenom;
     
-    @Column(name = "mail", unique = false, nullable = false, length = 100)
+    @Column(name = "mail", unique = true, length = 100)
     private String mail;
     
     @Column(name = "motdepasse", unique = false, nullable = false, length = 100)
