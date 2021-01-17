@@ -11,8 +11,10 @@ import javax.persistence.Table;
 import javax.persistence.UniqueConstraint;
 
 @Entity
-@Table(name = "personne", uniqueConstraints = {
-        @UniqueConstraint(columnNames = "ID") })
+//@Table(name = "personne", uniqueConstraints = {
+//        @UniqueConstraint(columnNames = "ID") })
+
+@Table
 public class Personne implements Serializable 
 {   
     private static final long serialVersionUID = -1798070786993154676L;
