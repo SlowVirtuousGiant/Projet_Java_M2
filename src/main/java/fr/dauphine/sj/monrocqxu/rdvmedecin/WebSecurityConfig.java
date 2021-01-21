@@ -30,6 +30,12 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
          
         return authProvider;
     }
+    
+    @Override
+	public void configure(WebSecurity web) throws Exception {
+		web.ignoring().antMatchers("/*.css");
+		web.ignoring().antMatchers("/*.js");
+	}
  
     @Override
     protected void configure(AuthenticationManagerBuilder auth) throws Exception {
@@ -38,22 +44,29 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
  
     @Override
     protected void configure(HttpSecurity http) throws Exception {
-        http.authorizeRequests()
-        	.antMatchers("/css/**", "/js/**", "/images/**","/accueil.html","/CreationCompte.xhtml").permitAll()
-        	.anyRequest()
-        	.authenticated()
-            .and()
-            .formLogin()
-            //.loginPage("/login.html")
-            .usernameParameter("email")
-            //.loginProcessingUrl("/perform_login")
-            .defaultSuccessUrl("/index",true)
-            //.failureUrl("/login.html?error=true")
-            .permitAll()
-            .usernameParameter("email")
-            .and()
-            .logout().permitAll();
+        http
+	        .authorizeRequests()
+	        .antMatchers("/resources/**", "/WEB-INF/jsp/*").permitAll()
+	        .anyRequest().authenticated()
+	        .and()
+	        .formLogin()
+	        .loginPage("/login")
+	        .defaultSuccessUrl("/index")
+	        .failureUrl("/login?error")
+	        .permitAll()
+	        .and()
+	        .logout()
+	        .permitAll();
         
-        // 
+        
     }
+    
+//    .loginPage("/login.html")
+//    .usernameParameter("email")
+//    .loginProcessingUrl("/perform_login")
+//    .defaultSuccessUrl("/index",true)
+//    .failureUrl("/login.html?error=true")
+//    .permitAll()
+    
+    
 }
