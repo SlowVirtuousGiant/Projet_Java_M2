@@ -46,11 +46,12 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     protected void configure(HttpSecurity http) throws Exception {
         http
 	        .authorizeRequests()
-	        .antMatchers("/resources/**", "/WEB-INF/jsp/*").permitAll()
+	        .antMatchers("/css/**","/js/**", "/WEB-INF/jsp/*").permitAll()
 	        .anyRequest().authenticated()
 	        .and()
 	        .formLogin()
 	        .loginPage("/login")
+	        .usernameParameter("email")
 	        .defaultSuccessUrl("/index")
 	        .failureUrl("/login?error")
 	        .permitAll()

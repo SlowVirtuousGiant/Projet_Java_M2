@@ -13,36 +13,35 @@
     <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
     <meta name="description" content="">
     <meta name="author" content="">
-
-    <title>Log in with your account</title>
-
-    <link href="${contextPath}/resources/css/bootstrap.min.css" rel="stylesheet">
-    <link href="${contextPath}/resources/css/common.css" rel="stylesheet">
+    <title>RDVmedecin - Login</title>
+    <link href="${contextPath}/css/bootstrap.min.css" rel="stylesheet">
+    <link href="${contextPath}/css/style.css" rel="stylesheet">
 </head>
-
-<body>
-
-<div class="container">
-
-    <form method="POST" action="${contextPath}/login" class="form-signin">
-        <h2 class="form-heading">Log in</h2>
-
-        <div class="form-group ${error != null ? 'has-error' : ''}">
+<body class="text-center">
+	<main class="form-signin">
+    <div class="container">
+        <form action="${contextPath}/login" method="POST">
+            <h1 class="h3 mb-3 fw-normal">RDVmedecin</h1>
+            
+            <div class="form-group ${error != null ? 'has-error' : ''}">
             <span>${message}</span>
-            <input name="username" type="text" class="form-control" placeholder="Username"
-                   autofocus="true"/>
-            <input name="password" type="password" class="form-control" placeholder="Password"/>
+            <label for="inputEmail" class="visually-hidden">Adresse email</label>
+            <input id="inputEmail" name="email" type="email" class="form-control mb-3" placeholder="email" required autofocus/>
+            <label for="inputPassword" class="visually-hidden">Mot de passe</label>
+            <input type="password" id="inputPassword" name = "password" class="form-control mb-4" placeholder="Mot de passe" required>
             <span>${error}</span>
             <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
 
-            <button class="btn btn-lg btn-primary btn-block" type="submit">Log In</button>
-        </div>
-
-    </form>
-
-</div>
-<!-- /container -->
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
-<script src="${contextPath}/resources/js/bootstrap.min.js"></script>
+            <!-- <label>
+                <input type="checkbox" value="remember-me"> Remember me
+            </label> -->
+             <button name="submit" value="submit" class="w-100 btn btn-lg btn-primary" type="submit">Connexion</button>
+            <a href="CreationCompte.xhtml" class="mt-5 mb-3">Pas de compte ? s'inscrire</a>
+            </div>
+        </form>
+   	</div>
+   </main>
 </body>
+<script src="${contextPath}/js/jquery-3.5.1.min.js"></script>
+<script src="${contextPath}/js/bootstrap.min.js"></script>
 </html>
