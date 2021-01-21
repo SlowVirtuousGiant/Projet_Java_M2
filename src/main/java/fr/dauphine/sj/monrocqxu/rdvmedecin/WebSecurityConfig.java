@@ -52,22 +52,12 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 	        .formLogin()
 	        .loginPage("/login")
 	        .usernameParameter("email")
-	        .defaultSuccessUrl("/index")
+	        .defaultSuccessUrl("/espace")
 	        .failureUrl("/login?error")
 	        .permitAll()
 	        .and()
 	        .logout()
 	        .permitAll();
-        
-        
     }
-    
-//    .loginPage("/login.html")
-//    .usernameParameter("email")
-//    .loginProcessingUrl("/perform_login")
-//    .defaultSuccessUrl("/index",true)
-//    .failureUrl("/login.html?error=true")
-//    .permitAll()
-    
     
 }
