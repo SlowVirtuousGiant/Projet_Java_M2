@@ -29,6 +29,10 @@ public class MyUserDetails implements UserDetails {
     public String getUsername() {
         return user.getMail();
     }
+    
+    public String getPrenom() {
+    	return user.getPrenom();
+    }
  
     @Override
     public boolean isAccountNonExpired() {

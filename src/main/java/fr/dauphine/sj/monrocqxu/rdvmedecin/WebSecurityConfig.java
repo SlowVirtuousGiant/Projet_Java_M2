@@ -47,7 +47,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
             //.loginPage("/login.html")
             .usernameParameter("email")
             //.loginProcessingUrl("/perform_login")
-            .defaultSuccessUrl("/index.html",true)
+            .defaultSuccessUrl("/index",true)
             //.failureUrl("/login.html?error=true")
             .permitAll()
             .usernameParameter("email")

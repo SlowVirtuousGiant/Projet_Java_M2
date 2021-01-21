@@ -23,20 +23,20 @@
                 <a class="nav-link dropdown-toggle" href="#" data-bs-toggle="dropdown" aria-expanded="false">Rendez-vous</a>
                 <ul class="dropdown-menu">
                   <li><a class="dropdown-item" href="#">Prendre un rendez-vous</a></li>
-                  <li><a class="dropdown-item" href="#">GÃ©rer mes rendez-vous</a></li>
+                  <li><a class="dropdown-item" href="#">Gérer mes rendez-vous</a></li>
                 </ul>
               </li>
               <li class="nav-item">
-                <a class="nav-link" href="#">GÃ©rer mon compte</a>
+                <a class="nav-link" href="#">Gérer mon compte</a>
               </li>
               <li class="nav-item">
-                <a class="nav-link" href="#">GÃ©rer mon agenda</a>
+                <a class="nav-link" href="#">Gérer mon agenda</a>
               </li>
               <li class="nav-item">
-                <a class="nav-link" href="#">Inscription mÃ©decin</a>
+                <a class="nav-link" href="#">Inscription médecin</a>
               </li>
               <li class="nav-item">
-                <a class="nav-link" href="#">DÃ©connexion</a>
+                <a class="nav-link" href="#">Déconnexion</a>
               </li>
 
             </ul>
@@ -46,6 +46,9 @@
 
       <section>
         <div class="container">
+        
+        <h2>Bienvenue ${user}</h2>
+        
           <div class="bg-light p-5 rounded">
             <h1>Rendez-vous</h1>
             <p class="lead">Vous n'avez pas de rendez vous pour le moment</p>
