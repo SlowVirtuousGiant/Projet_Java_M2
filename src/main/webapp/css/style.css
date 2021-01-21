@@ -7,6 +7,11 @@
     font-family: "Bitter";
     src: url("Bitter.ttf")
    }
+html, body {
+ margin: 0;
+ height: 100%;
+}
+
 
 h1,h2,h3,h4,h5{
     font-family: "Bitter";
@@ -43,7 +48,7 @@ h1,h2,h3,h4,h5{
 }
 
 .navbar{
-    background-color: seagreen;
+    background-color: #2e8b57;
     padding-top: 15px;
     padding-bottom: 15px;
 }
@@ -58,7 +63,7 @@ h1,h2,h3,h4,h5{
 }
 
 section{
-    margin-top: 70px;
+    margin-top: 50px;
 }
 
 a{

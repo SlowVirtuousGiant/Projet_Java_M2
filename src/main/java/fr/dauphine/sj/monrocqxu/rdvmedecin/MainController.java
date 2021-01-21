@@ -28,22 +28,29 @@ public class MainController {
 		return new ResponseEntity(userDetails, HttpStatus.OK);
 	}
 	
-	@RequestMapping(value = { "/", "/index" }, method = RequestMethod.GET)
-    public String index(Model model) {
+	@RequestMapping(value = "/espace", method = RequestMethod.GET)
+    public String espace(Model model) {
 		
 		Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
 		
 		String username = ((MyUserDetails)principal).getPrenom();
-        model.addAttribute("user",username);
+        model.addAttribute("user", username);
  
+        return "espace";
+    }
+	
+	@RequestMapping(value = { "/", "/index" }, method = RequestMethod.GET)
+    public String index(Model model) {
         return "index";
     }
+	
+	
 	
 	@PostMapping("/login_success_handler")
     public String loginSuccessHandler() {
         System.out.println("Logging user login success...");
  
-        return "index";
+        return "espace";
     }
 	
 	@PostMapping("/login_failure_handler")
@@ -52,6 +59,8 @@ public class MainController {
 	     
 	    return "login";
 	}
+	
+	
 	
 	
 	@GetMapping("/login")
