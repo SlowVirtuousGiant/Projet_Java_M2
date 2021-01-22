@@ -5,12 +5,11 @@
 <c:set var="contextPath" value="${pageContext.request.contextPath}"/>
 
 <!DOCTYPE html>
-<html lang="en">
+<html lang="fr">
 <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
     <meta name="description" content="">
     <meta name="author" content="">
     <title>RDVmedecin - Login</title>
@@ -26,7 +25,7 @@
             <div class="form-group ${error != null ? 'has-error' : ''}">
             <span>${message}</span>
             <label for="inputEmail" class="visually-hidden">Adresse email</label>
-            <input id="inputEmail" name="email" type="email" class="form-control mb-3" placeholder="email" required autofocus/>
+            <input id="inputEmail" name="email" type="email" class="form-control mb-3" placeholder="Adresse email" required autofocus/>
             <label for="inputPassword" class="visually-hidden">Mot de passe</label>
             <input type="password" id="inputPassword" name = "password" class="form-control mb-4" placeholder="Mot de passe" required>
             <span>${error}</span>
