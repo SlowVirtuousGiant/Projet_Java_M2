@@ -4,9 +4,11 @@ import java.util.List;
 
 public interface UtilisateurDao {
 	
-	List<Utilisateur> getUserDetails();
+	//List<Utilisateur> getUserDetails();
 
-	//void ajouter(Utilisateur utilisateur);
+	String ajouter(Utilisateur utilisateur);
+
+	Utilisateur create(Utilisateur utilisateur);
 
 }
 

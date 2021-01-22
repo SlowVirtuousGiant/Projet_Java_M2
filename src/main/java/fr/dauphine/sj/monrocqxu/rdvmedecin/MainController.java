@@ -24,8 +24,8 @@ import org.springframework.web.bind.annotation.RequestMethod;
 public class MainController {
 	
 	
-	@Autowired
-	private UserService userService;
+	/*@Autowired
+	private UserService userService;*/
 	
 	private boolean isAuthenticated() {
 	    Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
@@ -36,12 +36,12 @@ public class MainController {
 	    return authentication.isAuthenticated();
 	}
 	
-	@RequestMapping(value = "/list", method = RequestMethod.GET)
+	/*@RequestMapping(value = "/list", method = RequestMethod.GET)
 	public ResponseEntity userDetails() {
         
 		List userDetails = userService.getUserDetails();
 		return new ResponseEntity(userDetails, HttpStatus.OK);
-	}
+	}*/
 	
 	@RequestMapping(value = "/espace", method = RequestMethod.GET)
     public String espace(Model model) {

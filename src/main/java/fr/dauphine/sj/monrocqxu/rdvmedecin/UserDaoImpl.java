@@ -14,28 +14,27 @@ import org.hibernate.Criteria;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.jdbc.core.JdbcTemplate;
+import org.springframework.jdbc.core.PreparedStatementCreator;
+import org.springframework.jdbc.support.GeneratedKeyHolder;
+import org.springframework.jdbc.support.KeyHolder;
 import org.springframework.security.crypto.bcrypt.BCrypt;
 import org.springframework.stereotype.Component;
 
-@Component
+
 public class UserDaoImpl implements UtilisateurDao {
-   /* private DaoFactory daoFactory;
+    private DaoFactory daoFactory;
 
-
-
-	public UserDaoImpl(DaoFactory daoFactory) {
-        this.daoFactory = daoFactory;
-    }*/
-    
+   /* 
 	@PersistenceUnit
-	private EntityManagerFactory entityManagerFactory;
+	private EntityManagerFactory entityManagerFactory;*/
 
 	/*@Autowired
 	private SessionFactory sessionFactory;
 	*/
 	
 	
-	public List getUserDetails() {
+	/*public List getUserDetails() {
 		Session session=entityManagerFactory.unwrap(SessionFactory.class).openSession();
 		CriteriaBuilder builder = session.getCriteriaBuilder();
         CriteriaQuery criteria = builder.createQuery(Utilisateur.class);
@@ -43,15 +42,50 @@ public class UserDaoImpl implements UtilisateurDao {
         criteria.select(contactRoot);
         return session.createQuery(criteria).getResultList();
 	
-	}
-	/*
+	}*/
+    private final String INSERT_SQL = "INSERT INTO USERS(nom, prenom, telephone, mail, naissance, adresse,code_postal, ville, role, motdepasse) values(?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+    
+    @Autowired
+	private JdbcTemplate jdbcTemplate;
+    
+    public Utilisateur create(final Utilisateur utilisateur) {
+    	System.out.println("début create");
+    	KeyHolder holder = new GeneratedKeyHolder();
+    	System.out.println("after generatekeyholder");
+		jdbcTemplate.update(new PreparedStatementCreator() {
+
+			@Override
+			public PreparedStatement createPreparedStatement(Connection connexion) throws SQLException {
+				System.out.println("connexion établie");
+				PreparedStatement ps = connexion.prepareStatement(INSERT_SQL, Statement.RETURN_GENERATED_KEYS);
+				ps.setString(1, utilisateur.getNom());
+				ps.setString(2, utilisateur.getPrenom());
+				ps.setString(3, utilisateur.getTelephone());
+				ps.setString(4, utilisateur.getMail());
+				ps.setString(5, utilisateur.getNaissance());
+				ps.setString(6, utilisateur.getAdresse());
+				ps.setLong(7, utilisateur.getCode_postal());
+				ps.setString(8, utilisateur.getVille());
+				ps.setString(9, "MEDECIN");
+				ps.setString(10, BCrypt.hashpw(utilisateur.getMdp(), BCrypt.gensalt(12)));
+				System.out.println("méthode create :" + utilisateur.getMdp());
+				return ps;
+			}
+		}, holder);
+
+		int newUserId = holder.getKey().intValue();
+		utilisateur.setId(newUserId);
+		return utilisateur;
+	}	
+    
+    
 	@Override
-    public void ajouter(Utilisateur utilisateur) {
+    public String ajouter(Utilisateur utilisateur) {
         Connection connexion = null;
         PreparedStatement preparedStatement = null;
 
         try {
-            connexion = daoFactory.getConnection();
+            connexion = DaoFactory.createConnection();
             preparedStatement = connexion.prepareStatement("INSERT INTO utilisateur (nom, prenom, telephone, mail, naissance, adresse, "
             		+ "code_postal, ville, role, motdepasse) "
             		+ "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?);");
@@ -67,10 +101,16 @@ public class UserDaoImpl implements UtilisateurDao {
             preparedStatement.setString(10, BCrypt.hashpw(utilisateur.getMdp(), BCrypt.gensalt(12)));
             
             preparedStatement.executeUpdate();
+            
+            int i= preparedStatement.executeUpdate();
+            
+            if (i!=0) 
+           	return "SUCCESS";
+           
         } catch (SQLException e) {
             e.printStackTrace();
         }
-
-    }*/
+        return "non ajout ";
+    }
 
 }
