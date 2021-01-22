@@ -6,5 +6,7 @@ public interface UtilisateurDao {
 	
 	List<Utilisateur> getUserDetails();
 
+	void ajouter(Utilisateur utilisateur);
+
 }
 

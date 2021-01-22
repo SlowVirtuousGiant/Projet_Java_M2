@@ -1,6 +1,7 @@
 package fr.dauphine.sj.monrocqxu.rdvmedecin;
 
 import java.io.Serializable;
+import java.util.Date;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -11,9 +12,6 @@ import javax.persistence.Table;
 import javax.persistence.UniqueConstraint;
 
 @Entity
-//@Table(name = "personne", uniqueConstraints = {
-//        @UniqueConstraint(columnNames = "ID") })
-
 @Table(name="utilisateur")
 public class Utilisateur implements Serializable 
 {   
@@ -25,23 +23,76 @@ public class Utilisateur implements Serializable
     private Integer id;
      
      
-    @Column(name = "nom", unique = false, nullable = false, length = 100)
-    private String nom;
-     
-    @Column(name = "prenom", unique = false, nullable = false, length = 100)
-    private String prenom;
-    
-    @Column(name = "mail", unique = true, length = 100)
+    @Column(name = "mail", unique = true, nullable = false, length = 100)
     private String mail;
-    
-    @Column(name = "motdepasse", unique = false, nullable = false, length = 100)
-    private String mdp;
-    
-	@Column(name = "role", unique = false, nullable = false, length = 100)
-    private String role;
-    
-	@Column(name = "enabled", unique = false, nullable = false, length = 100)
-    private String enabed;
+     
+	private String nom;
+	private String prenom;
+	private String telephone;
+	private String naissance;
+	private String adresse;
+	private int code_postal;
+	private String ville;
+	private String role;
+	private boolean actif;
+	private String motdepasse;
+
+	
+	public Integer getId() {
+		return id;
+	}
+
+	public void setId(Integer id) {
+		this.id = id;
+	}
+
+	public String getTelephone() {
+		return telephone;
+	}
+
+	public void setTelephone(String telephone) {
+		this.telephone = telephone;
+	}
+
+	public String getNaissance() {
+		return naissance;
+	}
+
+	public void setNaissance(String naissance) {
+		this.naissance = naissance;
+	}
+
+	public String getAdresse() {
+		return adresse;
+	}
+
+	public void setAdresse(String adresse) {
+		this.adresse = adresse;
+	}
+
+	public int getCode_postal() {
+		return code_postal;
+	}
+
+	public void setCode_postal(int code_postal) {
+		this.code_postal = code_postal;
+	}
+
+	public String getVille() {
+		return ville;
+	}
+
+	public void setVille(String ville) {
+		this.ville = ville;
+	}
+
+	public boolean isActif() {
+		return actif;
+	}
+
+	public void setActif(boolean actif) {
+		this.actif = actif;
+	}
 
 	public String getNom() {
 		return nom;
@@ -68,11 +119,11 @@ public class Utilisateur implements Serializable
 	}
 
 	public String getMdp() {
-		return mdp;
+		return motdepasse;
 	}
 
-	public void setMdp(String mdp) {
-		this.mdp = mdp;
+	public void setMdp(String motdepasse) {
+		this.motdepasse = motdepasse;
 	}
 
 	public String getRole() {
@@ -82,18 +133,5 @@ public class Utilisateur implements Serializable
 	public void setRole(String role) {
 		this.role = role;
 	}
-
-	public String getEnabed() {
-		return enabed;
-	}
-
-	public void setEnabed(String enabed) {
-		this.enabed = enabed;
-	}
-
- 
-	
-	
-    //Getters and setters
     
 }

@@ -1,3 +1,5 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <!DOCTYPE html>
 <html lang="fr">
 <head>
@@ -23,20 +25,20 @@
                 <a class="nav-link dropdown-toggle" href="#" data-bs-toggle="dropdown" aria-expanded="false">Rendez-vous</a>
                 <ul class="dropdown-menu">
                   <li><a class="dropdown-item" href="#">Prendre un rendez-vous</a></li>
-                  <li><a class="dropdown-item" href="#">Gérer mes rendez-vous</a></li>
+                  <li><a class="dropdown-item" href="#">GÃ©rer mes rendez-vous</a></li>
                 </ul>
               </li>
               <li class="nav-item">
-                <a class="nav-link" href="#">Gérer mon compte</a>
+                <a class="nav-link" href="#">GÃ©rer mon compte</a>
               </li>
               <li class="nav-item">
-                <a class="nav-link" href="#">Gérer mon agenda</a>
+                <a class="nav-link" href="#">GÃ©rer mon agenda</a>
               </li>
               <li class="nav-item">
-                <a class="nav-link" href="#">Inscription médecin</a>
+                <a class="nav-link" href="#">Inscription mÃ©decin</a>
               </li>
               <li class="nav-item">
-                <a class="nav-link" href="#">Déconnexion</a>
+              <a class="nav-link" href="<c:url value='/logout' />">DÃ©connexion</a>
               </li>
 
             </ul>
