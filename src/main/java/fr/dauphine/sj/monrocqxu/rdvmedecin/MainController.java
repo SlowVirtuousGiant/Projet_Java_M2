@@ -81,6 +81,7 @@ public class MainController {
 	public String loginPage() {
 		return "login";
 	}
+
 	
 	@RequestMapping("/403")
     public String erreur403() {

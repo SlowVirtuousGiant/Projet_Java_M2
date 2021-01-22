@@ -1,4 +1,4 @@
-package fr.dauphine.sj.monrocqxu.rdvmedecin;
+/*package fr.dauphine.sj.monrocqxu.rdvmedecin;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
@@ -34,4 +34,4 @@ public class DaoFactory {
     public UtilisateurDao getUtilisateurDao() {
         return new UserDaoImpl(this);
     }
-}
+}*/

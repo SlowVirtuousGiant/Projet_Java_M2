@@ -19,13 +19,13 @@ import org.springframework.stereotype.Component;
 
 @Component
 public class UserDaoImpl implements UtilisateurDao {
-    private DaoFactory daoFactory;
+   /* private DaoFactory daoFactory;
 
 
 
 	public UserDaoImpl(DaoFactory daoFactory) {
         this.daoFactory = daoFactory;
-    }
+    }*/
     
 	@PersistenceUnit
 	private EntityManagerFactory entityManagerFactory;
@@ -44,7 +44,7 @@ public class UserDaoImpl implements UtilisateurDao {
         return session.createQuery(criteria).getResultList();
 	
 	}
-	
+	/*
 	@Override
     public void ajouter(Utilisateur utilisateur) {
         Connection connexion = null;
@@ -71,6 +71,6 @@ public class UserDaoImpl implements UtilisateurDao {
             e.printStackTrace();
         }
 
-    }
+    }*/
 
 }
