@@ -82,6 +82,10 @@ public class MainController {
 		return "login";
 	}
 
+	@RequestMapping("/inscriptionMedecin")
+    public String inscriptionMedecin() {
+        return "inscriptionMedecin";
+    }
 	
 	@RequestMapping("/403")
     public String erreur403() {
