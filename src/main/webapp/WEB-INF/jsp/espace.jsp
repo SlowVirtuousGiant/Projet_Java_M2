@@ -1,3 +1,5 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <!DOCTYPE html>
 <html lang="fr">
 <head>
@@ -36,7 +38,7 @@
                 <a class="nav-link" href="#">Inscription médecin</a>
               </li>
               <li class="nav-item">
-                <a class="nav-link" href="#">Déconnexion</a>
+              <a class="nav-link" href="<c:url value='/logout' />">Déconnexion</a>
               </li>
 
             </ul>

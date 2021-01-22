@@ -1,4 +1,10 @@
+<%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+
+<c:set var="contextPath" value="${pageContext.request.contextPath}"/>
+
 <!DOCTYPE html>
 <html lang="fr">
 <head>
@@ -26,11 +32,15 @@
                           <div class="col-md-8 col-10 my-5">
                               <h2 class="mb-5 text-center heading">Prendre un rendez-vous <br> maintenant</h2>
                               <h6 class="msg-info">Se connecter</h6>
-                              <div class="form-group"> <label class="form-control-label text-muted">Adresse email</label> <input type="text" id="email" name="email" placeholder="Adresse email" class="form-control"> </div>
-                              <div class="form-group"> <label class="form-control-label text-muted">Mot de passe</label> <input type="password" id="psw" name="psw" placeholder="Mot de passe" class="form-control"> </div>
-                              <div class="row justify-content-center my-3 px-3"> <button name="submit" value="submit" class="w-100 btn btn-lg btn-outline-success">Connexion</button> </div>
+                              <form action="${contextPath}/login" method="POST">
+                              <div class="form-group"> <label class="form-control-label text-muted">Adresse email</label> 
+                                <input id="inputEmail" name="email" type="email" class="form-control mb-3" placeholder="Adresse email" required autofocus/></div>
+                              <div class="form-group"> <label class="form-control-label text-muted">Mot de passe</label> <input type="password" id="inputPassword" name = "password" class="form-control mb-4" placeholder="Mot de passe" required></div>
+                              <div class="row justify-content-center my-3 px-3"> <button type="submit" name="submit" value="submit" class="w-100 btn btn-lg btn-outline-success">Connexion</button> </div>
                               <div class="row justify-content-center my-2"> <a href="#"><small class="text-muted">Mot de passe oublié?</small></a> </div>
-                          </div>
+                              <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
+                            </form>
+                            </div>
                       </div>
                   </div>
                   <div class="card card2">
