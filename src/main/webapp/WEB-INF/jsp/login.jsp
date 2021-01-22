@@ -35,7 +35,7 @@
                 <input type="checkbox" value="remember-me"> Remember me
             </label> -->
              <button name="submit" value="submit" class="w-100 btn btn-lg btn-primary" type="submit">Connexion</button>
-            <a href="CreationCompte.xhtml" class="mt-5 mb-3">Pas de compte ? s'inscrire</a>
+            <a href="<c:url value='/inscriptionPatient' />" class="mt-5 mb-3">Pas de compte ? s'inscrire</a>
             </div>
         </form>
    	</div>

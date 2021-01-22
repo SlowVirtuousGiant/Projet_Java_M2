@@ -6,9 +6,6 @@ public interface UtilisateurDao {
 	
 	//List<Utilisateur> getUserDetails();
 
-	String ajouter(Utilisateur utilisateur);
-
-	Utilisateur create(Utilisateur utilisateur);
 
 }
 

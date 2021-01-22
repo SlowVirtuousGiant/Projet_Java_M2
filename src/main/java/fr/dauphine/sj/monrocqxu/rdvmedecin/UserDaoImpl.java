@@ -23,7 +23,7 @@ import org.springframework.stereotype.Component;
 
 
 public class UserDaoImpl implements UtilisateurDao {
-    private DaoFactory daoFactory;
+    //private DaoFactory daoFactory;
 
    /* 
 	@PersistenceUnit
@@ -78,7 +78,7 @@ public class UserDaoImpl implements UtilisateurDao {
 		return utilisateur;
 	}	
     
-    
+    /*
 	@Override
     public String ajouter(Utilisateur utilisateur) {
         Connection connexion = null;
@@ -112,5 +112,5 @@ public class UserDaoImpl implements UtilisateurDao {
         }
         return "non ajout ";
     }
-
+*/
 }

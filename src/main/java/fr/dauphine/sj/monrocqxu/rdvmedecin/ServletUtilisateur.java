@@ -41,8 +41,9 @@ public class ServletUtilisateur extends HttpServlet {
         DaoFactory daoFactory = DaoFactory.getInstance();
         this.utilisateurDao = daoFactory.getUtilisateurDao();
     }*/
-    
+    @Override
     public void doPost( HttpServletRequest request, HttpServletResponse response ) throws ServletException, IOException {
+    	
         Utilisateur utilisateur = new Utilisateur();
         System.out.println("Réagit au formulaire");
         utilisateur.setNom(request.getParameter("nom"));
@@ -57,52 +58,8 @@ public class ServletUtilisateur extends HttpServlet {
         utilisateur.setMdp(BCrypt.hashpw(request.getParameter("mail"),BCrypt.gensalt(12)));
         System.out.println("a catch les infos avec le servlet");
         System.out.println(utilisateur.getNom());
-        //String UtilisateurInscrit = utilisateurDao.ajouter(utilisateur);
-        //utilisateurDao.create(utilisateur);
         
-        
-        System.out.println("début create");
-    	KeyHolder holder = new GeneratedKeyHolder();
-    	System.out.println("after generatekeyholder");
-		jdbcTemplate.update(new PreparedStatementCreator() {
+        //userRepository.save(UserRepository.toto());
 
-			@Override
-			public PreparedStatement createPreparedStatement(Connection connexion) throws SQLException {
-				System.out.println("connexion établie");
-				PreparedStatement ps = connexion.prepareStatement(INSERT_SQL, Statement.RETURN_GENERATED_KEYS);
-				ps.setString(1, utilisateur.getNom());
-				ps.setString(2, utilisateur.getPrenom());
-				ps.setString(3, utilisateur.getTelephone());
-				ps.setString(4, utilisateur.getMail());
-				ps.setString(5, utilisateur.getNaissance());
-				ps.setString(6, utilisateur.getAdresse());
-				ps.setLong(7, utilisateur.getCode_postal());
-				ps.setString(8, utilisateur.getVille());
-				ps.setString(9, "MEDECIN");
-				ps.setString(10, BCrypt.hashpw(utilisateur.getMdp(), BCrypt.gensalt(12)));
-				System.out.println("méthode create :" + utilisateur.getMdp());
-				return ps;
-			}
-		}, holder);
-
-		int newUserId = holder.getKey().intValue();
-		utilisateur.setId(newUserId);
-        System.out.println("a reussi a add un user");
-        /*if(UtilisateurInscrit.equals("SUCCESS"))   //On success, you can display a message to user on Home page
-        {
-           request.getRequestDispatcher("/espace.jsp").forward(request, response);
-        }
-        else   //On Failure, display a meaningful message to the User.
-        {
-           request.setAttribute("errMessage", UtilisateurInscrit);
-           request.getRequestDispatcher("/inscriptionMedecin.jsp").forward(request, response);
-        }
-        */
-         
-        //utilisateurDao.ajouter(utilisateur);
-        
-        
-        
-        //this.getServletContext().getRequestDispatcher("/WEB-INF/inscriptionMedecin.jsp").forward(request, response);
     }
 }

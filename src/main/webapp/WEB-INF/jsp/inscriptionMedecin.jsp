@@ -3,7 +3,7 @@
 <!DOCTYPE html>
 <html>
 <body>
-<form method="post" action="ServletUtilisateur">
+<form method="post" action=inscriptionMedecinProcess>
 Nom:<br>
 <input type="text" name="nom" value="fraise">
 <br>

@@ -12,6 +12,7 @@ import org.springframework.security.authentication.AnonymousAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.crypto.bcrypt.BCrypt;
 import org.springframework.security.web.authentication.logout.SecurityContextLogoutHandler;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -19,6 +20,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 
 @Controller
 public class MainController {
@@ -26,6 +28,8 @@ public class MainController {
 	
 	/*@Autowired
 	private UserService userService;*/
+	 @Autowired
+	 private UserRepository userRepository;
 	
 	private boolean isAuthenticated() {
 	    Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
@@ -82,9 +86,69 @@ public class MainController {
 		return "login";
 	}
 
+	@RequestMapping("/inscriptionMedecinProcess")
+    public String inscriptionMedecinProcess(
+    		@RequestParam(name="nom") String nom,
+    		@RequestParam(name="prenom") String prenom,
+    		@RequestParam(name="telephone") String telephone,
+    		@RequestParam(name="mail") String mail,
+    		@RequestParam(name="naissance") String naissance,
+    		@RequestParam(name="adresse") String adresse,
+    		@RequestParam(name="code_postal") String code_postal,
+    		@RequestParam(name="ville") String ville,
+    		@RequestParam(name="motdepasse") String motdepasse
+    		) {
+		Utilisateur utilisateur = new Utilisateur();
+		utilisateur.setNom(nom);
+		utilisateur.setPrenom(prenom);
+		utilisateur.setTelephone(telephone);
+		utilisateur.setMail(mail);
+		utilisateur.setNaissance(naissance);
+		utilisateur.setAdresse(adresse);
+		utilisateur.setCode_postal(Integer.parseInt(code_postal));
+		utilisateur.setVille(ville);
+		utilisateur.setRole("MEDECIN");
+		utilisateur.setMdp(BCrypt.hashpw(motdepasse,BCrypt.gensalt(12)));
+		userRepository.save(utilisateur);
+		//userRepository.save(UserRepository.toto());
+        return "inscriptionMedecin";
+    }
+	
 	@RequestMapping("/inscriptionMedecin")
     public String inscriptionMedecin() {
         return "inscriptionMedecin";
+    }
+	
+	@RequestMapping("/inscriptionPatientProcess")
+    public String inscriptionPatientProcess(
+    		@RequestParam(name="nom") String nom,
+    		@RequestParam(name="prenom") String prenom,
+    		@RequestParam(name="telephone") String telephone,
+    		@RequestParam(name="mail") String mail,
+    		@RequestParam(name="naissance") String naissance,
+    		@RequestParam(name="adresse") String adresse,
+    		@RequestParam(name="code_postal") String code_postal,
+    		@RequestParam(name="ville") String ville,
+    		@RequestParam(name="motdepasse") String motdepasse
+    		) {
+		Utilisateur utilisateur = new Utilisateur();
+		utilisateur.setNom(nom);
+		utilisateur.setPrenom(prenom);
+		utilisateur.setTelephone(telephone);
+		utilisateur.setMail(mail);
+		utilisateur.setNaissance(naissance);
+		utilisateur.setAdresse(adresse);
+		utilisateur.setCode_postal(Integer.parseInt(code_postal));
+		utilisateur.setVille(ville);
+		utilisateur.setRole("PATIENT");
+		utilisateur.setMdp(BCrypt.hashpw(motdepasse,BCrypt.gensalt(12)));
+		userRepository.save(utilisateur);
+        return "index";
+    }
+	
+	@RequestMapping("/inscriptionPatient")
+    public String inscriptionPatient() {
+        return "inscriptionPatient";
     }
 	
 	@RequestMapping("/403")
