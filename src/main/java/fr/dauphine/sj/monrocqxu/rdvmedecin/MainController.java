@@ -23,7 +23,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
 @Controller
-public class MainController {
+public class MainController {//REFACTOR : Navigation controller, Action Controller
 	
 	
 	/*@Autowired
@@ -86,7 +86,7 @@ public class MainController {
 		return "login";
 	}
 
-	@RequestMapping("/inscriptionMedecinProcess")
+	@RequestMapping("/inscriptionmedecinProcess")
     public String inscriptionMedecinProcess(
     		@RequestParam(name="nom") String nom,
     		@RequestParam(name="prenom") String prenom,
@@ -111,15 +111,15 @@ public class MainController {
 		utilisateur.setMdp(BCrypt.hashpw(motdepasse,BCrypt.gensalt(12)));
 		userRepository.save(utilisateur);
 		//userRepository.save(UserRepository.toto());
-        return "inscriptionMedecin";
+        return "inscriptionmedecin";
     }
 	
-	@RequestMapping("/inscriptionMedecin")
+	@RequestMapping("/inscriptionmedecin")
     public String inscriptionMedecin() {
-        return "inscriptionMedecin";
+        return "inscriptionmedecin";
     }
 	
-	@RequestMapping("/inscriptionPatientProcess")
+	@RequestMapping("/inscriptionpatientprocess")
     public String inscriptionPatientProcess(
     		@RequestParam(name="nom") String nom,
     		@RequestParam(name="prenom") String prenom,
@@ -146,9 +146,9 @@ public class MainController {
         return "index";
     }
 	
-	@RequestMapping("/inscriptionPatient")
+	@RequestMapping("/inscriptionpatient")
     public String inscriptionPatient() {
-        return "inscriptionPatient";
+        return "inscriptionpatient";
     }
 	
 	@RequestMapping("/403")

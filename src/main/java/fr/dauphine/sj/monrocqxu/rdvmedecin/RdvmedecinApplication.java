@@ -27,14 +27,3 @@ public class RdvmedecinApplication extends SpringBootServletInitializer {
  
     private static Class<RdvmedecinApplication> applicationClass = RdvmedecinApplication.class;
 }
- 
-@RestController
-class HelloController {
- 
-    @RequestMapping("/hello/{name}")
-    String hello(@PathVariable String name) {
- 
-        return "Hi " + name + " !";
- 
-    }
-}
