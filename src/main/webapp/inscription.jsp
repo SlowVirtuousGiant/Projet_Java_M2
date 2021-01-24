@@ -31,7 +31,7 @@ Ville:<br>
 Mot de passe:<br>
 <input type="text" name="motdepasse" >
 <br><br>
-<input type="submit" value="Inscrire">
+<input type="submit" value="S'inscrire">
 </form>
 </body>
 </html>

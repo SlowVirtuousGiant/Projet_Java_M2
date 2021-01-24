@@ -18,7 +18,7 @@ public class AppMedecinUtil {
 	public static boolean isAuthenticated (HttpServletRequest request) {
 		
 		
-		HttpSession checkSession = request.getSession(false);
+		HttpSession checkSession = request.getSession();
 		if (checkSession != null && checkSession.getAttribute(ATT_SESSION_USER) != null) {
 			return true;
 		}

@@ -39,6 +39,17 @@
 		<servlet-name>Deconnexion</servlet-name>
 		<url-pattern>/deconnexion</url-pattern>
 	</servlet-mapping>
+	
+		<servlet>
+		<servlet-name>Inscription</servlet-name>
+		<servlet-class>fr.dauphine.sj.monrocqxu.appMedecin.web.Inscription</servlet-class>
+	</servlet>
+
+
+	<servlet-mapping>
+		<servlet-name>Inscription</servlet-name>
+		<url-pattern>/inscription</url-pattern>
+	</servlet-mapping>
 
 
 
