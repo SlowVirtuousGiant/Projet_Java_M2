@@ -19,7 +19,7 @@ public class Connexion extends HttpServlet {
     public static final String ERREUR = "erreur";
     public static final String ATT_ERREUR = "erreur";
     
-    private UtilisateurDao utilisateurDao;
+
     private Map<String, String> erreurs = new HashMap<String, String>();
 
     public void doGet( HttpServletRequest request, HttpServletResponse response ) throws ServletException, IOException {
@@ -35,12 +35,15 @@ public class Connexion extends HttpServlet {
         }
         
         if(!validationMotDePasse(password)) {
-        	erreurs.put(ERREUR, "Mot non valide.");
+        	erreurs.put(ERREUR, "Mot de passe non valide.");
         }
        
         HttpSession session = request.getSession();
         
+        System.out.println(erreurs);
+        
         if ( erreurs.isEmpty() ) {
+        	UtilisateurDao utilisateurDao = new UtilisateurDao();
         	Utilisateur utilisateur = utilisateurDao.validate(email, password);
         	if(utilisateur != null) {
         		System.out.println("login succes");
@@ -51,7 +54,10 @@ public class Connexion extends HttpServlet {
         	}
         }
         request.setAttribute( ATT_ERREUR, erreurs );
+        
         this.getServletContext().getRequestDispatcher("/connexion.jsp").forward( request, response );
+        
+        erreurs.clear();
     }
     
     
