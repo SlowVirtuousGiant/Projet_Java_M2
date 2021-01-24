@@ -12,40 +12,40 @@ import javax.servlet.http.HttpServletResponse;
 import fr.dauphine.sj.monrocqxu.appMedecin.dao.UtilisateurDao;
 
 
-@WebServlet("/login")
-public class LoginController extends HttpServlet{
-	private static final long serialVersionUID = 1L;
-	private UtilisateurDao loginDao;
-
-	public void init() {
-		loginDao = new UtilisateurDao();
-	}
-
-	protected void doGet(HttpServletRequest request, HttpServletResponse response)
-			throws ServletException, IOException {
-		response.sendRedirect("login.jsp");
-	}
-
-	protected void doPost(HttpServletRequest request, HttpServletResponse response)
-			throws ServletException, IOException {
-		try {
-			authenticate(request, response);
-		} catch (Exception e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-	}
-
-	private void authenticate(HttpServletRequest request, HttpServletResponse response)
-			throws Exception {
-		String username = request.getParameter("username");
-		String password = request.getParameter("password");
-
-		if (loginDao.validate(username, password)) {
-			RequestDispatcher dispatcher = request.getRequestDispatcher("login-success.jsp");
-			dispatcher.forward(request, response);
-		} else {
-			System.out.println("login failure");
-		}
-	}
-}
+//@WebServlet("/login")
+//public class LoginController extends HttpServlet{
+//	private static final long serialVersionUID = 1L;
+//	private UtilisateurDao loginDao;
+//
+//	public void init() {
+//		loginDao = new UtilisateurDao();
+//	}
+//
+//	protected void doGet(HttpServletRequest request, HttpServletResponse response)
+//			throws ServletException, IOException {
+//		response.sendRedirect("login.jsp");
+//	}
+//
+//	protected void doPost(HttpServletRequest request, HttpServletResponse response)
+//			throws ServletException, IOException {
+//		try {
+//			authenticate(request, response);
+//		} catch (Exception e) {
+//			// TODO Auto-generated catch block
+//			e.printStackTrace();
+//		}
+//	}
+//
+//	private void authenticate(HttpServletRequest request, HttpServletResponse response)
+//			throws Exception {
+//		String username = request.getParameter("username");
+//		String password = request.getParameter("password");
+//
+//		if (loginDao.validate(username, password)) {
+//			RequestDispatcher dispatcher = request.getRequestDispatcher("login-success.jsp");
+//			dispatcher.forward(request, response);
+//		} else {
+//			System.out.println("login failure");
+//		}
+//	}
+//}

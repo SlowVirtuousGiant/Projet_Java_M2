@@ -1,6 +1,8 @@
 package fr.dauphine.sj.monrocqxu.appMedecin.web;
 
 import java.io.IOException;
+import java.util.HashMap;
+import java.util.Map;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
@@ -10,47 +12,63 @@ import javax.servlet.http.HttpSession;
 
 import fr.dauphine.sj.monrocqxu.appMedecin.dao.UtilisateurDao;
 import fr.dauphine.sj.monrocqxu.appMedecin.model.Utilisateur;
-import fr.dauphine.sj.monrocqxu.appMedecin.util.ConnexionForm;
 
 public class Connexion extends HttpServlet {
-    public static final String ATT_USER         = "utilisateur";
-    public static final String ATT_FORM         = "form";
-    public static final String ATT_SESSION_USER = "sessionUtilisateur";
-    public static final String VUE              = "/connexion.jsp";
-    private UtilisateurDao loginDao;
+	private static final long serialVersionUID = 1L;
+	public static final String ATT_SESSION_USER = "utilisateur";
+    public static final String ERREUR = "erreur";
+    public static final String ATT_ERREUR = "erreur";
+    
+    private UtilisateurDao utilisateurDao;
+    private Map<String, String> erreurs = new HashMap<String, String>();
 
     public void doGet( HttpServletRequest request, HttpServletResponse response ) throws ServletException, IOException {
-        /* Affichage de la page de connexion */
-        this.getServletContext().getRequestDispatcher( VUE ).forward( request, response );
+        this.getServletContext().getRequestDispatcher("/connexion.jsp").forward( request, response );
     }
 
     public void doPost( HttpServletRequest request, HttpServletResponse response ) throws ServletException, IOException {
-        /* Préparation de l'objet formulaire */
-        ConnexionForm form = new ConnexionForm();
-
-        /* Traitement de la requête et récupération du bean en résultant */
-        Utilisateur utilisateur = form.connecterUtilisateur( request );
-
-        /* Récupération de la session depuis la requête */
-        HttpSession session = request.getSession();
-
-        /**
-         * Si aucune erreur de validation n'a eu lieu, alors ajout du bean
-         * Utilisateur à la session, sinon suppression du bean de la session.
-         */
-        if ( form.getErreurs().isEmpty() ) {
-            session.setAttribute( ATT_SESSION_USER, utilisateur );
-        } else {
-            session.setAttribute( ATT_SESSION_USER, null );
+    	String email = request.getParameter("email");
+		String password = request.getParameter("motdepasse");
+    	
+        if(!validationEmail(email)) {
+        	erreurs.put(ERREUR, "Email non valide.");
         }
-
-        /* Stockage du formulaire et du bean dans l'objet request */
-        request.setAttribute( ATT_FORM, form );
-        request.setAttribute( ATT_USER, utilisateur );
         
+        if(!validationMotDePasse(password)) {
+        	erreurs.put(ERREUR, "Mot non valide.");
+        }
+       
+        HttpSession session = request.getSession();
         
-        
-
-        this.getServletContext().getRequestDispatcher( VUE ).forward( request, response );
+        if ( erreurs.isEmpty() ) {
+        	Utilisateur utilisateur = utilisateurDao.validate(email, password);
+        	if(utilisateur != null) {
+        		System.out.println("login succes");
+        	    session.setAttribute( ATT_SESSION_USER, utilisateur);
+        	}else {
+        		System.out.println("login erreur");
+        		erreurs.put(ERREUR, "Erreur d'authentification.");
+        	}
+        }
+        request.setAttribute( ATT_ERREUR, erreurs );
+        this.getServletContext().getRequestDispatcher("/connexion.jsp").forward( request, response );
     }
+    
+    
+    private boolean validationEmail( String email ) {
+        if ( email != null && !email.matches( "([^.@]+)(\\.[^.@]+)*@([^.@]+\\.)+([^.@]+)" ) ) {
+           return false;
+        }
+        return true;
+    }
+    
+    private boolean validationMotDePasse( String motDePasse ) {
+        if ( motDePasse != null ) {
+            if ( motDePasse.length() < 3 ) {
+            	return false;
+            }
+        }
+        return true;
+    }
+    
 }

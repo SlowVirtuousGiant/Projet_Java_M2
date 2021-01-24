@@ -26,7 +26,7 @@ public class UtilisateurDao {
         }
     }
 
-    public boolean validate(String userName, String password) {
+    public Utilisateur validate(String userName, String password) {
 
         Transaction transaction = null;
         Utilisateur utilisateur = null;
@@ -34,11 +34,12 @@ public class UtilisateurDao {
             // start a transaction
             transaction = session.beginTransaction();
             // get an user object
+            System.out.println("test bdd");
             utilisateur = (Utilisateur) session.createQuery("FROM Utilisateur U WHERE U.mail = :mail").setParameter("mail", userName)
                 .uniqueResult();
 
             if (utilisateur != null && utilisateur.getMotdepasse().equals(password)) {
-                return true;
+                return utilisateur;
             }
             // commit transaction
             transaction.commit();
@@ -48,7 +49,7 @@ public class UtilisateurDao {
             }
             e.printStackTrace();
         }
-        return false;
+        return null;
     }
 
 }

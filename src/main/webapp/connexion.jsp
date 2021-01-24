@@ -15,18 +15,16 @@
 
                 <label for="nom">Adresse email <span class="requis">*</span></label>
                 <input type="email" id="email" name="email" value="<c:out value="${utilisateur.mail}"/>" size="20" maxlength="60" />
-                <span class="erreur">${form.erreurs['mail']}</span>
                 <br />
 
                 <label for="motdepasse">Mot de passe <span class="requis">*</span></label>
                 <input type="password" id="motdepasse" name="motdepasse" value="" size="20" maxlength="20" />
-                <span class="erreur">${form.erreurs['motdepasse']}</span>
                 <br />
 
                 <input type="submit" value="Connexion" class="sansLabel" />
                 
                 
-                <p class="${empty form.erreurs ? 'succes' : 'erreur'}">${form.resultat}</p>
+                <p class="${empty erreur ? 'succes' : 'erreur'}">${erreur}</p>
                 
                 <%-- Vérification de la présence d'un objet utilisateur en session --%>
                 <c:if test="${!empty sessionScope.sessionUtilisateur}">
