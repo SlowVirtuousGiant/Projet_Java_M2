@@ -15,7 +15,7 @@ public class Utilisateur implements Serializable{
 	private static final long serialVersionUID = 1L;
     
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "utilisateur_id", unique = true, nullable = false)
     private Integer id;
      
@@ -27,7 +27,7 @@ public class Utilisateur implements Serializable{
 	private String nom;
 	private String prenom;
 	private String telephone;
-	private String naissance;
+	private int naissance;
 	private String adresse;
 	private int code_postal;
 	private String ville;
@@ -64,10 +64,10 @@ public class Utilisateur implements Serializable{
 	public void setTelephone(String telephone) {
 		this.telephone = telephone;
 	}
-	public String getNaissance() {
+	public int getNaissance() {
 		return naissance;
 	}
-	public void setNaissance(String naissance) {
+	public void setNaissance(int naissance) {
 		this.naissance = naissance;
 	}
 	public String getAdresse() {

@@ -76,23 +76,4 @@ public class UtilisateurDao {
 		}
 	}
 }
-	/*PreparedStatement preparedStatement = null;
-			preparedStatement = session.prepareStatement( "INSERT INTO USERS(nom, prenom, telephone, mail, naissance, adresse,code_postal, ville, role, motdepasse) values(?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
 
-			ps.setString(1, utilisateur.getNom());
-			ps.setString(2, utilisateur.getPrenom());
-			ps.setString(3, utilisateur.getTelephone());
-			ps.setString(4, utilisateur.getMail());
-			ps.setString(5, utilisateur.getNaissance());
-			ps.setString(6, utilisateur.getAdresse());
-			ps.setLong(7, utilisateur.getCode_postal());
-			ps.setString(8, utilisateur.getVille());
-			ps.setString(9, "MEDECIN");
-			ps.setString(10, BCrypt.hashpw(utilisateur.getMotdepasse(), BCrypt.gensalt(12)));
-			System.out.println("méthode create :" + utilisateur.getMotdepasse());
-			return ps;
-		}
-
-
-
-} */

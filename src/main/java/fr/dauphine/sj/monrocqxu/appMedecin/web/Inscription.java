@@ -42,7 +42,7 @@ public class Inscription extends HttpServlet {
         utilisateur.setTelephone(request.getParameter("telephone"));
         utilisateur.setAdresse(request.getParameter("adresse"));
         utilisateur.setMail(request.getParameter("mail"));
-        utilisateur.setNaissance(request.getParameter("naissance"));
+        utilisateur.setNaissance(Integer.parseInt(request.getParameter("naissance")));
         utilisateur.setCode_postal(Integer.parseInt(request.getParameter("code_postal")));
         utilisateur.setVille(request.getParameter("ville"));
         utilisateur.setRole("PATIENT");
