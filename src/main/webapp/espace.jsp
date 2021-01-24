@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ page session="true" %>
 <!DOCTYPE html>
 <html lang="fr">
 <head>
@@ -38,7 +39,7 @@
                 <a class="nav-link" href="<c:url value='/inscriptionMedecin' />">Inscription médecin</a>
               </li>
               <li class="nav-item">
-              <a class="nav-link" href="<c:url value='/logout' />">Déconnexion</a>
+              <a class="nav-link" href="<c:url value='/deconnexion' />">Déconnexion</a>
               </li>
 
             </ul>
@@ -49,7 +50,7 @@
       <section>
         <div class="container">
         
-        <h2>Bienvenue ${user}</h2>
+        <h2>Bienvenue ${sessionScope.utilisateur.prenom}</h2>
         
           <div class="bg-light p-5 rounded">
             <h1>Rendez-vous</h1>

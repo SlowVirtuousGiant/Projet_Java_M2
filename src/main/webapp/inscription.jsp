@@ -3,7 +3,7 @@
 <!DOCTYPE html>
 <html>
 <body>
-<form method="post" action="<%=request.getContextPath()%>/inscriptionPatient">
+<form method="post" action="<%=request.getContextPath()%>/inscription">
 Nom:<br>
 <input type="text" name="nom" >
 <br>

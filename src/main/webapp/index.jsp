@@ -30,7 +30,7 @@
                     <div class="my-auto mx-md-5 px-md-5 right text-center">
                         <h2 class="text-white mb-3">Vous n'avez pas encore de compte?</h2> <h4 class="text-white mt-2">Pas de soucis, c'est rapide et gratuit !</h4>
                         <div class="row justify-content-center my-3 px-3"> 
-                        <a class = "btn" href="<c:url value='/inscriptionPatient' />" class="w-100 btn btn-lg btn-outline-light mt-3" >Inscription Patient</a>
+                        <a class = "btn" href="<c:url value='/inscription.jsp' />" class="w-100 btn btn-lg btn-outline-light mt-3" >Inscription Patient</a>
                         <button name="submit" value="submit" class="w-100 btn btn-lg btn-outline-light mt-3">Créer un compte</button> </div>
                     </div>
                 </div>
@@ -39,10 +39,10 @@
                           <div class="col-md-8 col-10 my-5">
                               <h2 class="mb-5 text-center heading">Prendre un rendez-vous <br> maintenant</h2>
                               <h6 class="msg-info">Se connecter</h6>
-                              <form action="${contextPath}/login" method="POST">
+                              <form action="${contextPath}/connexion" method="POST">
                               <div class="form-group"> <label class="form-control-label text-muted">Adresse email</label> 
                                 <input id="inputEmail" name="email" type="email" class="form-control mb-3" placeholder="Adresse email" required autofocus/></div>
-                              <div class="form-group"> <label class="form-control-label text-muted">Mot de passe</label> <input type="password" id="inputPassword" name = "password" class="form-control mb-4" placeholder="Mot de passe" required></div>
+                              <div class="form-group"> <label class="form-control-label text-muted">Mot de passe</label> <input type="password" id="inputPassword" name = "motdepasse" class="form-control mb-4" placeholder="Mot de passe" required></div>
                               <div class="row justify-content-center my-3 px-3"> <button type="submit" name="submit" value="submit" class="w-100 btn btn-lg btn-outline-success">Connexion</button> </div>
                               <div class="row justify-content-center my-2"> <a href="#"><small class="text-muted">Mot de passe oublié?</small></a> </div>
                               <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
