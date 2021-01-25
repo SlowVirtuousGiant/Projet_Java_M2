@@ -1,6 +1,7 @@
 package fr.dauphine.sj.monrocqxu.appMedecin.web;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -17,12 +18,8 @@ import static fr.dauphine.sj.monrocqxu.appMedecin.util.AppMedecinUtil.*;
 public class Connexion extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
+	private ArrayList<String> erreurs = new ArrayList<String>();
 
-
-
-	private Map<String, String> erreurs = new HashMap<String, String>();
-
-	
 	@Override
 	public void doGet( HttpServletRequest request, HttpServletResponse response ) throws ServletException, IOException {
 		if (isAuthenticated(request)) {
@@ -40,11 +37,11 @@ public class Connexion extends HttpServlet {
 			String password = request.getParameter("motdepasse");
 
 			if(!validationEmail(email)) {
-				erreurs.put(ERREUR, "Email non valide.");
+				erreurs.add("Email non valide.");
 			}
 
 			if(!validationMotDePasse(password)) {
-				erreurs.put(ERREUR, "Mot de passe non valide.");
+				erreurs.add("Mot de passe non valide.");
 			}
 
 			System.out.println(erreurs);
@@ -58,7 +55,7 @@ public class Connexion extends HttpServlet {
 					response.sendRedirect( "/appMedecin/espace" );
 				}else {
 					System.out.println("login erreur");
-					erreurs.put(ERREUR, "Erreur d'authentification.");
+					erreurs.add("Erreur d'authentification.");
 				}
 			}
 			request.setAttribute( ERREUR, erreurs );
