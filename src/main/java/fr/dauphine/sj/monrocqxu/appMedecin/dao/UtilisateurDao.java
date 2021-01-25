@@ -50,12 +50,13 @@ public class UtilisateurDao {
 			System.out.println("test bdd");
 			utilisateur = (Utilisateur) session.createQuery("FROM Utilisateur U WHERE U.mail = :mail").setParameter("mail", userName)
 					.uniqueResult();
-			
+
 			if (utilisateur != null) {
-				if(BCrypt.checkpw(utilisateur.getMotdepasse(), password)){
+				if(utilisateur.getMotdepasse().equals(password)) {
+					//if(BCrypt.checkpw(password,utilisateur.getMotdepasse())){
 					return utilisateur;
+					//}
 				}
-				
 			}
 			// commit transaction
 			transaction.commit();
@@ -64,7 +65,7 @@ public class UtilisateurDao {
 				transaction.rollback();
 			}
 			e.printStackTrace();
-			
+
 		}finally {session.close();} 
 		return null;
 	}
@@ -73,7 +74,7 @@ public class UtilisateurDao {
 
 		try {
 			Session session = HibernateUtil.getSessionFactory().openSession();
-	        session.beginTransaction();
+			session.beginTransaction();
 			session.save(utilisateur);
 			session.getTransaction().commit();
 		} catch (Exception e) {
