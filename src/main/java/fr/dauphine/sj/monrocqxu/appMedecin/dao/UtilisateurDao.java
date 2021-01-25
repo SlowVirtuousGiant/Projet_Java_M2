@@ -70,7 +70,6 @@ public class UtilisateurDao {
 	        session.beginTransaction();
 			session.save(utilisateur);
 			session.getTransaction().commit();
-			//HibernateUtil.getSessionFactory().
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
