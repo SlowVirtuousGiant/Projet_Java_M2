@@ -1,7 +1,6 @@
 package fr.dauphine.sj.monrocqxu.appMedecin.web;
 
-import static fr.dauphine.sj.monrocqxu.appMedecin.util.AppMedecinUtil.CHEMIN_ESPACE;
-import static fr.dauphine.sj.monrocqxu.appMedecin.util.AppMedecinUtil.isAuthenticated;
+import static fr.dauphine.sj.monrocqxu.appMedecin.util.AppMedecinUtil.*;
 
 import java.io.IOException;
 
@@ -20,11 +19,11 @@ public class Ajout extends HttpServlet {
 	@Override
 	public void doGet( HttpServletRequest request, HttpServletResponse response ) throws ServletException, IOException {
 		// See JAAS for access for admin_only
-		//if (isAuthenticated(request)) {
-		//	response.sendRedirect( CHEMIN_ESPACE );
-		//}else {
+		if (isAuthenticated(request)==false) {
+			response.sendRedirect( CHEMIN_CONNEXION );
+		}else {
 			this.getServletContext().getRequestDispatcher("/ajout.jsp").forward( request, response );
-		//}
+		}
 	}
 
 	@Override
