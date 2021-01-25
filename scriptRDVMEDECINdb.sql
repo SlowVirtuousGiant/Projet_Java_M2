@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Hôte : 127.0.0.1
--- Généré le :  jeu. 21 jan. 2021 à 22:51
+-- Généré le :  lun. 25 jan. 2021 à 11:53
 -- Version du serveur :  10.4.8-MariaDB
 -- Version de PHP :  7.1.32
 
@@ -99,7 +99,7 @@ CREATE TABLE `utilisateur` (
   `code_postal` int(5) NOT NULL,
   `ville` varchar(25) NOT NULL,
   `role` varchar(100) NOT NULL,
-  `actif` tinyint(1) NOT NULL,
+  `actif` tinyint(1) NOT NULL DEFAULT 1,
   `motdepasse` varchar(100) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
@@ -108,10 +108,9 @@ CREATE TABLE `utilisateur` (
 --
 
 INSERT INTO `utilisateur` (`utilisateur_id`, `nom`, `prenom`, `telephone`, `mail`, `naissance`, `adresse`, `code_postal`, `ville`, `role`, `actif`, `motdepasse`) VALUES
-(1, 'xu', 'nicolas', '0622723426', 'nicolas.xu@dauphine.eu', 1997, '265 rue du faubourg saint martin', 75010, 'Paris', 'PATIENT', 1, '$2y$12$IxGl2fC4KnKAjLUFxK1fUe3Bs8Zl6vu/rxQtL3gFMAiEnETjtDEdK'),
-(2, 'monrocq', 'pierre', '0638487370', 'pierre.monrocq@dauphine.eu', 1998, '16, Rue Louis Dain', 93400, 'Saint-Ouen-sur-Seine', 'MEDECIN', 1, '$2y$12$cxQnC3IlIBWmsxGfTVIh9ul.P3zCjPY6fU.u0q1nJJScB1apBuJ7G'),
-(3, 'admin', 'admin', '0144054405', 'admin@gmail.com', 0000, '', 0, '', 'ADMIN', 1, '$2y$12$J.d62xFi1mOq2jOtYraA.uoxADa/0OKRVZ0sj1B4wV701u7pQb.DK'),
-(5, 'DIMCEA', 'DAN', '0122334455', 'dimcead@fr.ibm.com', 1962, '17 Avenue de l\'Europe', 92275, 'Bois-Colombes', 'MEDECIN', 1, '$2y$12$3lloaz2A0Ts1E.DsLrK9zeEMg9fdtAo9xRzyp9bQZGiCBwolk9jgi');
+(1, 'xu', 'nicolas', '0622723426', 'nicolas.xu@dauphine.eu', 1997, '265 rue du faubourg saint martin', 75010, 'Paris', 'PATIENT', 1, '$2a$12$Aevb3UsVyWTfi7Qtchg0fe/8BqAeiOx1RiqsR9df9mXk7yrIQZc3K'),
+(2, 'monrocq', 'pierre', '0638487370', 'pierre.monrocq@dauphine.eu', 1998, '16, Rue Louis Dain', 93400, 'Saint-Ouen-sur-Seine', 'MEDECIN', 1, '$2a$12$FYiEmzpMXTiTKCGe4Zdys.rCZxV6jRM1pJrsltxEqa1CxBh3l4Ex.'),
+(3, 'admin', 'admin', '0144054405', 'admin@gmail.com', 0000, '', 0, '', 'ADMIN', 1, '$2a$12$0M/7lU86joVBnnxk2M75quRLVB90spBmVKZAfdv/WPeWViSwUKEP6');
 
 --
 -- Index pour les tables déchargées
@@ -172,7 +171,7 @@ ALTER TABLE `rdv`
 -- AUTO_INCREMENT pour la table `utilisateur`
 --
 ALTER TABLE `utilisateur`
-  MODIFY `utilisateur_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+  MODIFY `utilisateur_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=15;
 
 --
 -- Contraintes pour les tables déchargées

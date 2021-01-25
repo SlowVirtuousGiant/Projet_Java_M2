@@ -1,7 +1,6 @@
 package fr.dauphine.sj.monrocqxu.appMedecin.web;
 
-import static fr.dauphine.sj.monrocqxu.appMedecin.util.AppMedecinUtil.CHEMIN_ESPACE;
-import static fr.dauphine.sj.monrocqxu.appMedecin.util.AppMedecinUtil.isAuthenticated;
+import static fr.dauphine.sj.monrocqxu.appMedecin.util.AppMedecinUtil.*;
 
 import java.io.IOException;
 
@@ -14,7 +13,13 @@ public class Espace extends HttpServlet {
 	
 	@Override
 	public void doGet( HttpServletRequest request, HttpServletResponse response ) throws ServletException, IOException {
-		this.getServletContext().getRequestDispatcher("/espace.jsp").forward( request, response );
+		
+		if (isAuthenticated(request) == false) {
+			response.sendRedirect( CHEMIN_CONNEXION );
+		}else {
+			this.getServletContext().getRequestDispatcher("/espace.jsp").forward( request, response );
+		}
+		
 	}
 
 }

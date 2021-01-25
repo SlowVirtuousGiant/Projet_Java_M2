@@ -30,7 +30,7 @@
                     <div class="my-auto mx-md-5 px-md-5 right text-center">
                         <h2 class="text-white mb-3">Vous n'avez pas encore de compte?</h2> <h4 class="text-white mt-2">Pas de soucis, c'est rapide et gratuit !</h4>
                         <div class="row justify-content-center my-3 px-3"> 
-                        <a class = "btn" href="<c:url value='/inscription.jsp' />" class="w-100 btn btn-lg btn-outline-light mt-3" >Inscription Patient</a>
+                        <a class = "btn" href="<c:url value='/inscription' />" class="w-100 btn btn-lg btn-outline-light mt-3" >Inscription Patient</a>
                         <button name="submit" value="submit" class="w-100 btn btn-lg btn-outline-light mt-3">Créer un compte</button> </div>
                     </div>
                 </div>
