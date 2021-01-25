@@ -41,13 +41,14 @@
                                     <div class="form-group"> <label
                                             class="form-control-label text-muted">Adresse email</label>
                                         <input id="inputEmail" name="email" type="email"
+                                        	size="20" maxlength="60"
                                             class="form-control mb-3" placeholder="Adresse email"
                                             required autofocus />
                                     </div>
                                     <div class="form-group"> <label
                                             class="form-control-label text-muted">Mot de passe</label>
                                         <input type="password" id="inputPassword" name="motdepasse"
-                                            class="form-control mb-4" placeholder="Mot de passe"
+                                            class="form-control mb-4" placeholder="Mot de passe" value="" size="20" maxlength="20"
                                             required></div>
                                     <div class="row justify-content-center my-3 px-3"> <button
                                             type="submit" name="submit" value="submit"
