@@ -10,14 +10,12 @@ public class AppMedecinUtil {
 	public static final String ERREUR = "erreur";
 	public static final String CHEMIN_ESPACE ="/appMedecin/espace";
 	public static final String CHEMIN_CONNEXION ="/appMedecin/connexion";
-	
+    public static final String CHEMIN_RACINE = "/appMedecin/";
 	
 	
 	
 	//Methode
 	public static boolean isAuthenticated (HttpServletRequest request) {
-		
-		
 		HttpSession checkSession = request.getSession();
 		if (checkSession != null && checkSession.getAttribute(ATT_SESSION_USER) != null) {
 			return true;

@@ -21,8 +21,6 @@
 		<servlet-name>Connexion</servlet-name>
 		<servlet-class>fr.dauphine.sj.monrocqxu.appMedecin.web.Connexion</servlet-class>
 	</servlet>
-
-
 	<servlet-mapping>
 		<servlet-name>Connexion</servlet-name>
 		<url-pattern>/connexion</url-pattern>
@@ -33,24 +31,35 @@
 		<servlet-name>Deconnexion</servlet-name>
 		<servlet-class>fr.dauphine.sj.monrocqxu.appMedecin.web.Deconnexion</servlet-class>
 	</servlet>
-
-
 	<servlet-mapping>
 		<servlet-name>Deconnexion</servlet-name>
 		<url-pattern>/deconnexion</url-pattern>
 	</servlet-mapping>
-	
-		<servlet>
+
+	<servlet>
 		<servlet-name>Inscription</servlet-name>
 		<servlet-class>fr.dauphine.sj.monrocqxu.appMedecin.web.Inscription</servlet-class>
 	</servlet>
-
-
 	<servlet-mapping>
 		<servlet-name>Inscription</servlet-name>
 		<url-pattern>/inscription</url-pattern>
 	</servlet-mapping>
 
+	<servlet>
+		<servlet-name>Ajout</servlet-name>
+		<servlet-class>fr.dauphine.sj.monrocqxu.appMedecin.web.Ajout</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>Ajout</servlet-name>
+		<url-pattern>/ajout</url-pattern>
+	</servlet-mapping>
 
-
+	<servlet>
+		<servlet-name>Espace</servlet-name>
+		<servlet-class>fr.dauphine.sj.monrocqxu.appMedecin.web.Espace</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>Espace</servlet-name>
+		<url-pattern>/espace</url-pattern>
+	</servlet-mapping>
 </web-app>

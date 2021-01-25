@@ -36,7 +36,7 @@
                 <a class="nav-link" href="#">Gérer mon agenda</a>
               </li>
               <li class="nav-item">
-                <a class="nav-link" href="<c:url value='/inscriptionMedecin' />">Inscription médecin</a>
+                <a class="nav-link" href="<c:url value='/ajout' />">Inscription médecin</a>
               </li>
               <li class="nav-item">
               <a class="nav-link" href="<c:url value='/deconnexion' />">Déconnexion</a>

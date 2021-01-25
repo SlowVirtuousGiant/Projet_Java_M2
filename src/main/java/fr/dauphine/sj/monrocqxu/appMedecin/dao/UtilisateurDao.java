@@ -49,7 +49,7 @@ public class UtilisateurDao {
 			utilisateur = (Utilisateur) session.createQuery("FROM Utilisateur U WHERE U.mail = :mail").setParameter("mail", userName)
 					.uniqueResult();
 
-			if (utilisateur != null && utilisateur.getMotdepasse().equals(password)) {
+			if (utilisateur != null && BCrypt.checkpw(password, utilisateur.getMotdepasse())) {
 				return utilisateur;
 			}
 			// commit transaction
