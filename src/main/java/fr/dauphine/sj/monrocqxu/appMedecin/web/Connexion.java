@@ -52,7 +52,9 @@ public class Connexion extends HttpServlet {
 				if(utilisateur != null) {
 					System.out.println("login succes");
 					session.setAttribute( ATT_SESSION_USER, utilisateur);
+					//session.setAttribute( ATT_SESSION_ROLE, utilisateur.getRole());
 					response.sendRedirect( "/appMedecin/espace" );
+				
 				}else {
 					System.out.println("login erreur");
 					erreurs.add("Erreur d'authentification.");
@@ -63,7 +65,8 @@ public class Connexion extends HttpServlet {
 			this.getServletContext().getRequestDispatcher("/connexion.jsp").forward( request, response );
 
 			erreurs.clear();
-		
+			
+			
 	}
 
 	private boolean validationEmail( String email ) {

@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Hôte : 127.0.0.1
--- Généré le :  lun. 25 jan. 2021 à 11:53
+-- Généré le :  lun. 25 jan. 2021 à 22:13
 -- Version du serveur :  10.4.8-MariaDB
 -- Version de PHP :  7.1.32
 
@@ -171,7 +171,7 @@ ALTER TABLE `rdv`
 -- AUTO_INCREMENT pour la table `utilisateur`
 --
 ALTER TABLE `utilisateur`
-  MODIFY `utilisateur_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=15;
+  MODIFY `utilisateur_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=16;
 
 --
 -- Contraintes pour les tables déchargées

@@ -50,7 +50,7 @@
       <section>
         <div class="container">
         
-        <h2>Bienvenue ${sessionScope.utilisateur.prenom}</h2>
+        <h2>Bienvenue ${sessionScope.utilisateur.prenom}, vous êtes ${sessionScope.utilisateur.role}</h2>
         
           <div class="bg-light p-5 rounded">
             <h1>Rendez-vous</h1>
