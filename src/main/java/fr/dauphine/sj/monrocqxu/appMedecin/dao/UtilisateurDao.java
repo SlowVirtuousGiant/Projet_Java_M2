@@ -52,11 +52,9 @@ public class UtilisateurDao {
 					.uniqueResult();
 
 			if (utilisateur != null) {
-				if(utilisateur.getMotdepasse().equals(password)) {
-					//if(BCrypt.checkpw(password,utilisateur.getMotdepasse())){
+					if(BCrypt.checkpw(password,utilisateur.getMotdepasse())){
 					return utilisateur;
-					//}
-				}
+					}
 			}
 			// commit transaction
 			transaction.commit();

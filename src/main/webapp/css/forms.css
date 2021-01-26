@@ -50,6 +50,11 @@ button:focus {
     padding: 40px 30px 10px 30px
 }
 
+.register{
+    width: 75%;
+    padding: 40px 30px 10px 30px
+}
+
 
 .heading {
     margin-bottom: 60px !important
@@ -134,3 +139,4 @@ a:hover {
     padding-top: 80px;
     font-size: 40px;
 }
+
