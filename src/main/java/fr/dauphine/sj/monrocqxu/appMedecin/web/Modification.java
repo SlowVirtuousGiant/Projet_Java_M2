@@ -28,4 +28,9 @@ public class Modification extends HttpServlet {
 			response.sendRedirect( CHEMIN_CONNEXION );
 		}
 	}
+
+	@Override
+	public void doPost(HttpServletRequest request, HttpServletResponse response ) throws ServletException, IOException {
+
+	}
 }
