@@ -12,7 +12,15 @@ public class AppMedecinUtil {
 	public static final String CHEMIN_ESPACE ="/appMedecin/espace";
 	public static final String CHEMIN_CONNEXION ="/appMedecin/connexion";
     public static final String CHEMIN_RACINE = "/appMedecin/";
-	
+    
+    //Mail
+    public static final String MAIL_HOST = "localhost";//Utilisation FAKESMTP
+    public static final String MAIL_WEBSITE_ADRESS = "noreply@rdvmedecin.fr";
+    public static final String MAIL_USERNAME = "";
+    public static final String MAIL_PASSWORD = "";
+    
+    
+    
 	//Methode
 	public static boolean isAuthenticated (HttpServletRequest request) {
 		HttpSession checkSession = request.getSession();
