@@ -3,12 +3,15 @@
 <!DOCTYPE html>
 <html>
 <head>
-<meta charset="ISO-8859-1">
-<title>Profil</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>RDVmedecin - Profil</title>
+    <link rel="stylesheet" href="css/bootstrap.min.css">
+    <link rel="stylesheet" href="css/style.css">
 </head>
  <body>
  <form method="post" action="<%=request.getContextPath()%>/profil">
-    <h3>Profil de ${sessionScope.utilisateur.prenom} ${sessionScope.utilisateur.prenom}</h3>
+    <h3>Profil de ${sessionScope.utilisateur.prenom} ${sessionScope.utilisateur.xu}</h3>
  
     Adresse mail : <b>${sessionScope.utilisateur.mail}</b>
     <br />
@@ -26,7 +29,7 @@
     <br />
     Role : <b>${sessionScope.utilisateur.role}</b>
     <br />
-<a href="<%=request.getContextPath()%>/modification" class="w-100 btn btn-lg btn-outline-light mt-3" >Modifier mon profil</a>
-<a href="<%=request.getContextPath()%>/suppression" class="w-100 btn btn-lg btn-outline-light mt-3" >Supprimer mon profil</a>
+<a href="<c:url value='/modification' />" class="w-100 btn btn-lg btn-outline-light mt-3" >Modifier mon profil</a>
+<a href="<c:url value='/suppression' />" class="w-100 btn btn-lg btn-outline-light mt-3" >Supprimer mon profil</a>
  </body>
 </html>
