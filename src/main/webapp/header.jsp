@@ -1,6 +1,7 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ page import="fr.dauphine.sj.monrocqxu.appMedecin.model.Utilisateur" %>
+<c:set var="page" value="${requestScope['javax.servlet.forward.request_uri']}" />
 
 <nav class="navbar navbar-expand-md navbar-dark">
 	<div class="container-fluid">
@@ -22,8 +23,8 @@
 				}
 				%>
 				
-				<li class="nav-item"><a class="nav-link active"
-					aria-current="page" href="#">Accueil</a></li>
+				<li class="nav-item"><a class="nav-link ${page.endsWith('/espace') ? 'active' : ''}"
+					aria-current="page" href="<%=request.getContextPath()%>/espace">Accueil</a></li>
 				<% if(role.equals("PATIENT")){ %>
 				<li class="nav-item dropdown"><a
 					class="nav-link dropdown-toggle" href="#" data-bs-toggle="dropdown"
@@ -39,12 +40,12 @@
 				<li class="nav-item"><a class="nav-link" href="#">Gérer mon
 						compte</a></li>
 				<% }
-				if(role.equals("MEDECIN") || role.equals("PATIENT")){ %>
+				if(role.equals("MEDECIN")){ %>
 				<li class="nav-item"><a class="nav-link" href="#">Gérer mon
 						agenda</a></li>
 				<%}
 				if(role.equals("ADMIN")){%>
-				<li class="nav-item"><a class="nav-link"
+				<li class="nav-item"><a class="nav-link ${page.endsWith('/ajout') ? 'active' : ''}"
 					href="<c:url value='/ajout' />">Inscription médecin</a></li>
 				<%} %>
 				<li class="nav-item"><a class="nav-link"

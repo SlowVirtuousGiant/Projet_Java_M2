@@ -88,7 +88,7 @@
 										</div>
 										<div class="form-group">
 											<label class="form-control-label text-muted">Mot de
-												passe</label> <input id="inputMdp" name="motdepasse" type="email"
+												passe</label> <input id="inputMdp" name="motdepasse" type="password"
 												size="20" maxlength="60" class="form-control mb-3"
 												placeholder="Mot de passe" required />
 										</div>
