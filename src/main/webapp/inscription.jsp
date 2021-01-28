@@ -99,7 +99,7 @@
 										class="w-100 btn btn-lg btn-outline-success">Inscription</button>
 								</div>
 								<div class="row justify-content-center my-2">
-									<a href="#"><small class="text-muted">Déjà un
+									<a href="<c:url value='/connexion' />"><small class="text-muted">Déjà un
 											compte? Se connecter</small></a>
 								</div>
 							</form>
