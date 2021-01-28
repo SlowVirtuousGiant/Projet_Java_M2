@@ -43,6 +43,7 @@ public class Inscription extends HttpServlet {
         utilisateur.setAdresse(request.getParameter("adresse"));
         utilisateur.setMail(request.getParameter("mail"));
         utilisateur.setNaissance(Integer.parseInt(request.getParameter("naissance")));
+        utilisateur.setSexe("sexe");
         utilisateur.setCode_postal(Integer.parseInt(request.getParameter("code_postal")));
         utilisateur.setVille(request.getParameter("ville"));
         utilisateur.setRole("PATIENT");

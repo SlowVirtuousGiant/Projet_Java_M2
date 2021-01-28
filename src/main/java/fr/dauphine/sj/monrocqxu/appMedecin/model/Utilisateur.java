@@ -34,6 +34,7 @@ public class Utilisateur implements Serializable{
 	private String role;
 	private boolean actif;
 	private String motdepasse;
+	private String sexe;
 	public Integer getId() {
 		return id;
 	}
@@ -106,5 +107,12 @@ public class Utilisateur implements Serializable{
 	public void setMotdepasse(String motdepasse) {
 		this.motdepasse = motdepasse;
 	}
+	public String getSexe() {
+		return sexe;
+	}
+	public void setSexe(String sexe) {
+		this.sexe = sexe;
+	}
+	
 	
 }

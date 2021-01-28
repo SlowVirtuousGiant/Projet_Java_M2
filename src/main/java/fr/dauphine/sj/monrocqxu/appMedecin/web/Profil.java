@@ -14,13 +14,13 @@ import javax.servlet.http.HttpServletResponse;
 
 import fr.dauphine.sj.monrocqxu.appMedecin.model.Utilisateur;
 
-public class Modification extends HttpServlet {
+public class Profil extends HttpServlet {
 	@Override
 	public void doGet( HttpServletRequest request, HttpServletResponse response ) throws ServletException, IOException {
 		if (isAuthenticated(request) ) {
 			Utilisateur utilisateur = (Utilisateur)request.getSession().getAttribute(ATT_SESSION_USER);
 			if(utilisateur!=null && !utilisateur.getRole().equals("ADMIN")) {
-				this.getServletContext().getRequestDispatcher("/modification.jsp").forward( request, response );
+				this.getServletContext().getRequestDispatcher("/profil.jsp").forward( request, response );
 			}else {
 				response.sendRedirect( CHEMIN_ESPACE );
 			}

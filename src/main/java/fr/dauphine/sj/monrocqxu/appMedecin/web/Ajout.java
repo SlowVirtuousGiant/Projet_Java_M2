@@ -48,6 +48,7 @@ public class Ajout extends HttpServlet {
 		utilisateur.setVille(request.getParameter("ville"));
 		utilisateur.setRole("MEDECIN");
 		utilisateur.setMotdepasse(BCrypt.hashpw(request.getParameter("motdepasse"),BCrypt.gensalt(12)));
+		utilisateur.setSexe("sexe");
 		System.out.println("a catch les infos avec le servlet");
 		System.out.println(utilisateur.getNom());
 
