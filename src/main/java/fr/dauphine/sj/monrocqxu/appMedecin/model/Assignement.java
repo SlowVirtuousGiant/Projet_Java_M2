@@ -21,5 +21,32 @@ public class Assignement implements Serializable{
  	private int medecin_id;
  	private int centre_id;
  	private String specialite;
+ 	
+	public int getId() {
+		return id;
+	}
+	public void setId(int id) {
+		this.id = id;
+	}
+	public int getMedecin_id() {
+		return medecin_id;
+	}
+	public void setMedecin_id(int medecin_id) {
+		this.medecin_id = medecin_id;
+	}
+	public int getCentre_id() {
+		return centre_id;
+	}
+	public void setCentre_id(int centre_id) {
+		this.centre_id = centre_id;
+	}
+	public String getSpecialite() {
+		return specialite;
+	}
+	public void setSpecialite(String specialite) {
+		this.specialite = specialite;
+	}
 	
+ 	
+ 	
 }
