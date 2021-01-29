@@ -21,6 +21,7 @@ public class AppMedecinUtil {
 	public static final String ERREUR = "erreur";
 	public static final String CHEMIN_ESPACE ="/appMedecin/espace";
 	public static final String CHEMIN_CONNEXION ="/appMedecin/connexion";
+	public static final String CHEMIN_INSCRIPTION ="/appMedecin/inscription";
 	public static final String CHEMIN_RACINE = "/appMedecin/";
 
 	//Mail

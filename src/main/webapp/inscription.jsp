@@ -23,19 +23,16 @@
 				<div class="card card1">
 					<div class="row justify-content-center my-auto">
 						<div class="col-md-12 col-10">
-							<form method="post" action="<%=request.getContextPath()%>/inscription">
+							<form method="post" action="<c:url value='/inscription' />">
 								<h2 class="mb-1 text-center heading">Il est temps de
 									s'inscrire</h2>
-								<c:forEach items="${erreur}" var="item">
-									<div class="alert alert-danger" role="alert">
-										${item}<br>
-									</div>
-								</c:forEach>
-
+								<div class="alert alert-danger" role="alert">
+									${erreur}<br>
+								</div>
 
 								<div class="row register-form">
 									<div class="col-md-6">
-										
+
 										<div class="form-group">
 											<label class="form-control-label text-muted">Nom</label> <input
 												id="inputNom" name="nom" type="text" size="20"
@@ -56,15 +53,16 @@
 										</div>
 										<div class="form-group">
 											<label class="form-control-label text-muted">Adresse
-												mail</label> <input id="inputEmail" name="email" type="email"
+												mail</label> <input id="inputEmail" name="mail" type="email"
 												size="20" maxlength="60" class="form-control mb-3"
 												placeholder="Adresse mail" required />
 										</div>
 										<div class="form-group">
 											<label class="form-control-label text-muted">Année de
-												naissance</label> <input id="inputAnnee" name="naissance" type="number"
-												size="20" maxlength="60" class="form-control mb-3"
-												placeholder="Année de naissance" required />
+												naissance</label> <input id="inputAnnee" name="naissance"
+												type="number" size="20" maxlength="60"
+												class="form-control mb-3" placeholder="Année de naissance"
+												required />
 										</div>
 									</div>
 									<div class="col-md-6">
@@ -76,9 +74,9 @@
 										</div>
 										<div class="form-group">
 											<label class="form-control-label text-muted">Code
-												postal</label> <input id="inputCodepostal" name="code_postal" type="number"
-												size="20" maxlength="60" class="form-control mb-3"
-												placeholder="Code postal" required />
+												postal</label> <input id="inputCodepostal" name="code_postal"
+												type="number" size="20" maxlength="60"
+												class="form-control mb-3" placeholder="Code postal" required />
 										</div>
 										<div class="form-group">
 											<label class="form-control-label text-muted">Ville</label> <input
@@ -92,6 +90,17 @@
 												size="20" maxlength="60" class="form-control mb-3"
 												placeholder="Mot de passe" required />
 										</div>
+										<div class="form-group">
+											<div class="mt-5">
+												<label class="radio inline"> <input type="radio"
+													name="gender" value="female" class="ml-5 pl-5" required>
+													<span> Femme </span>
+												</label> <label class="radio inline"> <input type="radio"
+													name="gender" value="male" required> <span>
+														Homme </span>
+												</label>
+											</div>
+										</div>
 									</div>
 								</div>
 								<div class="row justify-content-center my-3 px-3">
@@ -99,8 +108,8 @@
 										class="w-100 btn btn-lg btn-outline-success">Inscription</button>
 								</div>
 								<div class="row justify-content-center my-2">
-									<a href="<c:url value='/connexion' />"><small class="text-muted">Déjà un
-											compte? Se connecter</small></a>
+									<a href="<c:url value='/connexion' />"><small
+										class="text-muted">Déjà un compte? Se connecter</small></a>
 								</div>
 							</form>
 						</div>

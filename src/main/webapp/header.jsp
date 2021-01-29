@@ -24,7 +24,7 @@
 				%>
 				
 				<li class="nav-item"><a class="nav-link ${page.endsWith('/espace') ? 'active' : ''}"
-					aria-current="page" href="<%=request.getContextPath()%>/espace">Accueil</a></li>
+					aria-current="page" href="<c:url value='/espace' />">Accueil</a></li>
 				<% if(role.equals("PATIENT")){ %>
 				<li class="nav-item dropdown"><a
 					class="nav-link dropdown-toggle" href="#" data-bs-toggle="dropdown"
@@ -37,8 +37,8 @@
 					</ul></li>
 				<%}
 				if(!role.equals("ADMIN")){%>
-				<li class="nav-item"><a class="nav-link" href="#">Gérer mon
-						compte</a></li>
+				<li class="nav-item"><a class="nav-link ${page.endsWith('/profil') ? 'active' : ''} }" 
+					href="<c:url value='/profil' />">Mon profil</a></li>
 				<% }
 				if(role.equals("MEDECIN")){ %>
 				<li class="nav-item"><a class="nav-link" href="#">Gérer mon

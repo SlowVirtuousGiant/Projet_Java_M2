@@ -51,7 +51,7 @@ public class Connexion extends HttpServlet {
 					System.out.println("login succes");
 					session.setAttribute( ATT_SESSION_USER, utilisateur);
 					//session.setAttribute( ATT_SESSION_ROLE, utilisateur.getRole());
-					response.sendRedirect( "/appMedecin/espace" );
+					response.sendRedirect( CHEMIN_ESPACE );
 				
 				}else {
 					System.out.println("login erreur");

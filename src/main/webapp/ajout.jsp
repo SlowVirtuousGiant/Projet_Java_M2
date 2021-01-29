@@ -5,7 +5,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>RDVmedecin - Inscription</title>
+<title>RDVmedecin - Ajout</title>
 <link rel="stylesheet" href="css/bootstrap.min.css">
 <link rel="stylesheet" href="css/style.css">
 </head>
@@ -15,7 +15,7 @@
 
 	<div class="container">
 		<div class="col-md-12 col-10">
-			<form method="post" action="<%=request.getContextPath()%>/ajout">
+			<form method="post" action="<c:url value='/ajout' />">
 				<h2 class="mb-4 mt-5 text-center heading">Ajouter un médecin</h2>
 				<c:forEach items="${erreur}" var="item">
 					<div class="alert alert-danger" role="alert">
@@ -46,7 +46,7 @@
 						</div>
 						<div class="form-group">
 							<label class="form-control-label text-muted">Adresse mail</label>
-							<input id="inputEmail" name="email" type="email" size="20"
+							<input id="inputEmail" name="mail" type="email" size="20"
 								maxlength="60" class="form-control mb-3"
 								placeholder="Adresse mail" required />
 						</div>

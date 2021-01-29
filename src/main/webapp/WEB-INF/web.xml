@@ -36,6 +36,7 @@
 		<session-timeout>5</session-timeout>
 	</session-config>
 
+
 	<servlet>
 		<servlet-name>Connexion</servlet-name>
 		<servlet-class>fr.dauphine.sj.monrocqxu.appMedecin.web.Connexion</servlet-class>
@@ -81,8 +82,8 @@
 		<servlet-name>Espace</servlet-name>
 		<url-pattern>/espace</url-pattern>
 	</servlet-mapping>
-	
-		<servlet>
+
+	<servlet>
 		<servlet-name>Profil</servlet-name>
 		<servlet-class>fr.dauphine.sj.monrocqxu.appMedecin.web.Profil</servlet-class>
 	</servlet>
