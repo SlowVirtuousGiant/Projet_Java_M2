@@ -91,4 +91,13 @@
 		<servlet-name>Profil</servlet-name>
 		<url-pattern>/profil</url-pattern>
 	</servlet-mapping>
+	
+	<servlet>
+		<servlet-name>Modification</servlet-name>
+		<servlet-class>fr.dauphine.sj.monrocqxu.appMedecin.web.Modification</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>Modification</servlet-name>
+		<url-pattern>/modification</url-pattern>
+	</servlet-mapping>
 </web-app>
