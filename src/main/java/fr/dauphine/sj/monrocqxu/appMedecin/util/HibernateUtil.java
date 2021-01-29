@@ -9,6 +9,9 @@ import org.hibernate.cfg.Configuration;
 import org.hibernate.cfg.Environment;
 import org.hibernate.service.ServiceRegistry;
 
+import fr.dauphine.sj.monrocqxu.appMedecin.model.Assignement;
+import fr.dauphine.sj.monrocqxu.appMedecin.model.Centre;
+import fr.dauphine.sj.monrocqxu.appMedecin.model.Rdv;
 import fr.dauphine.sj.monrocqxu.appMedecin.model.Utilisateur;
 
 /**
@@ -40,7 +43,10 @@ public class HibernateUtil {
 
                 configuration.setProperties(settings);
                 configuration.addAnnotatedClass(Utilisateur.class);
-
+                configuration.addAnnotatedClass(Centre.class);
+                configuration.addAnnotatedClass(Rdv.class);
+                configuration.addAnnotatedClass(Assignement.class);
+                
                 ServiceRegistry serviceRegistry = new StandardServiceRegistryBuilder()
                     .applySettings(configuration.getProperties()).build();
                 System.out.println("Hibernate Java Config serviceRegistry created");

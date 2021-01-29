@@ -12,20 +12,6 @@ import fr.dauphine.sj.monrocqxu.appMedecin.util.HibernateUtil;
 
 public class UtilisateurDao {
 
-	public void saveUser(Utilisateur utilisateur) {
-		Transaction transaction = null;
-		try (Session session = HibernateUtil.getSessionFactory().openSession()) {
-			transaction = session.beginTransaction();
-			session.save(utilisateur);
-			transaction.commit();
-		} catch (Exception e) {
-			if (transaction != null) {
-				transaction.rollback();
-			}
-			e.printStackTrace();
-		}
-	}
-
 	public Utilisateur validate(String userName, String password) {
 		Transaction transaction = null;
 		Utilisateur utilisateur = null;
