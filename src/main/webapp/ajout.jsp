@@ -76,17 +76,20 @@
 								maxlength="60" class="form-control mb-3" placeholder="Ville"
 								required />
 						</div>
+
 						<div class="form-group">
 							<label class="form-control-label text-muted">Mot de passe</label>
-							<input id="inputMdp" name="motdepasse" type="password" size="20"
-								maxlength="60" class="form-control mb-3"
-								placeholder="Mot de passe" required />
+								<input id="inputMdp" name="motdepasse" type="password" size="20"
+								maxlength="60" class="form-control mb-1"
+								placeholder="Mot de passe" required>
+								<input type="checkbox" id="reveal"> Afficher mot de passe
 						</div>
+						
 						<div class="form-group">
-							<div class="mt-5">
+							<div class="mt-4">
 								<label class="radio inline"> <input type="radio"
-									name="gender" value="female" class="ml-5 pl-5" required> <span>
-										Femme </span>
+									name="gender" value="female" required>
+									<span> Femme </span>
 								</label> <label class="radio inline"> <input type="radio"
 									name="gender" value="male" required> <span>
 										Homme </span>
@@ -107,4 +110,16 @@
 		</div>
 	</div>
 </body>
+<script src="js/jquery-3.5.1.min.js"></script>
+<script src="js/bootstrap.min.js"></script>
+<script type="text/javascript">
+$("#reveal").on('click',function() {
+    var $pw = $("#inputMdp");
+    if ($pw.attr('type') === 'password') {
+        $pw.attr('type', 'text');
+    } else {
+        $pw.attr('type', 'password');
+    }
+});
+</script>
 </html>
