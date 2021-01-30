@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Hôte : 127.0.0.1
--- Généré le :  sam. 30 jan. 2021 à 12:24
+-- Généré le :  sam. 30 jan. 2021 à 19:21
 -- Version du serveur :  10.4.8-MariaDB
 -- Version de PHP :  7.1.32
 
@@ -22,6 +22,8 @@ SET time_zone = "+00:00";
 -- Base de données :  `rdvmedecin`
 --
 
+DROP TABLE assignement,rdv,specialite,utilisateur,centre;
+
 -- --------------------------------------------------------
 
 --
@@ -32,15 +34,8 @@ CREATE TABLE `assignement` (
   `assignement_id` int(11) NOT NULL,
   `medecin_id` int(11) NOT NULL,
   `centre_id` int(11) NOT NULL,
-  `specialite` varchar(25) NOT NULL
+  `specialite_id` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
-
---
--- Déchargement des données de la table `assignement`
---
-
-INSERT INTO `assignement` (`assignement_id`, `medecin_id`, `centre_id`, `specialite`) VALUES
-(2, 2, 2, 'Covid 19');
 
 -- --------------------------------------------------------
 
@@ -92,6 +87,38 @@ CREATE TABLE `rdv` (
 -- --------------------------------------------------------
 
 --
+-- Structure de la table `specialite`
+--
+
+CREATE TABLE `specialite` (
+  `specialite_id` int(11) NOT NULL,
+  `specialite` varchar(25) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Déchargement des données de la table `specialite`
+--
+
+INSERT INTO `specialite` (`specialite_id`, `specialite`) VALUES
+(1, 'Médecine générale'),
+(2, 'Immunologie'),
+(3, 'Cardiologie'),
+(4, 'Chirurgie'),
+(5, 'Dermatologie'),
+(6, 'Gériatrie'),
+(7, 'Gynécologie'),
+(8, 'Hématologie'),
+(9, 'Infectiologie'),
+(10, 'Ophtalmologie'),
+(11, 'Pédiatrie'),
+(12, 'Orthopédie'),
+(13, 'Neurologie'),
+(14, 'Psychatrie'),
+(15, 'Odontologie');
+
+-- --------------------------------------------------------
+
+--
 -- Structure de la table `utilisateur`
 --
 
@@ -118,13 +145,7 @@ CREATE TABLE `utilisateur` (
 INSERT INTO `utilisateur` (`utilisateur_id`, `nom`, `prenom`, `telephone`, `mail`, `naissance`, `sexe`, `adresse`, `code_postal`, `ville`, `role`, `actif`, `motdepasse`) VALUES
 (1, 'xu', 'nicolas', '0622723426', 'nicolas.xu@dauphine.eu', 1997, 'homme', '265 rue du faubourg saint martin', 75010, 'Paris', 'PATIENT', 1, '$2a$12$Aevb3UsVyWTfi7Qtchg0fe/8BqAeiOx1RiqsR9df9mXk7yrIQZc3K'),
 (2, 'monrocq', 'pierre', '0638487370', 'pierre.monrocq@dauphine.eu', 1998, 'femme', '16, Rue Louis Dain', 93400, 'Saint-Ouen-sur-Seine', 'MEDECIN', 1, '$2a$12$FYiEmzpMXTiTKCGe4Zdys.rCZxV6jRM1pJrsltxEqa1CxBh3l4Ex.'),
-(3, 'admin', 'admin', '0144054405', 'admin@gmail.com', 0000, 'autre', '', 0, '', 'ADMIN', 1, '$2a$12$0M/7lU86joVBnnxk2M75quRLVB90spBmVKZAfdv/WPeWViSwUKEP6'),
-(17, 'fraise', 'charlotte', '0780808080', 'charlotte@gmail.com', 2001, 'sexe', '8 rue de la fantaisie', 75016, 'Paris', 'MEDECIN', 0, '$2a$12$bY/Fz1O3acH/71XBl5ntUugiEspmKcQOfMNeO7jcZfdE.Tg.IP8eS'),
-(24, 'xu', 'franck', '0622222222', 'franck@gmail.com', 1999, 'sexe', '265 r du fb st martin', 75010, 'Paris', 'MEDECIN', 0, '$2a$12$BOFfk5kxO8TLhcWKy/PVDO7EZyTb8CmsSdJ3W7s1UTmrCShfDnWHu'),
-(25, 'xu', 'franck', '0622222222', 'julien@gmail.com', 1991, 'sexe', '273 rue de la paix', 75010, 'Paris', 'MEDECIN', 0, '$2a$12$S23nuVmBdDJ.8PRWpDznD.zg3wjSbs4TDDVmqcodTMDgBh2AMf4li'),
-(29, 'xu', 'franck', '0622723426', 'franck.xu@gmail.com', 1999, 'sexe', '265 r du faubourg saint martin', 75010, 'Paris', 'PATIENT', 0, '$2a$12$XKaroRw18JrXxUudl6qsLe54kk0tVBpVSZa1Xdw6xpKi1yJQLW9jy'),
-(30, 'monrocq', 'chloe', '0677889944', 'chloe@gmail.com', 2002, 'sexe', '2 rue de la pierre', 75001, 'Paris', 'PATIENT', 0, '$2a$12$iKGDbWcxRNhgKv.Q/DVGKOQE7P9RmHciXiebcYC0YIJ1/xbJ.OA/S'),
-(31, 'monrocq', 'arthur', '0622723426', 'arthur@gmail.com', 2021, 'sexe', '1 rue de la paix', 75018, 'Paris', 'PATIENT', 0, '$2a$12$cg/mQvrSZX6TDp.EpQzYQ.N0QQ7Y8Qpb0p/m0DmljOsvhs.IdTZTi');
+(3, 'admin', 'admin', '0144054405', 'admin@gmail.com', 0000, 'autre', '', 0, '', 'ADMIN', 1, '$2a$12$0M/7lU86joVBnnxk2M75quRLVB90spBmVKZAfdv/WPeWViSwUKEP6');
 
 --
 -- Index pour les tables déchargées
@@ -135,8 +156,9 @@ INSERT INTO `utilisateur` (`utilisateur_id`, `nom`, `prenom`, `telephone`, `mail
 --
 ALTER TABLE `assignement`
   ADD PRIMARY KEY (`assignement_id`),
-  ADD KEY `medecin_id` (`medecin_id`),
-  ADD KEY `centre_id` (`centre_id`) USING BTREE;
+  ADD KEY `fk_medecin_id` (`medecin_id`),
+  ADD KEY `fk_centre_id` (`centre_id`),
+  ADD KEY `fk_specialite_id` (`specialite_id`) USING BTREE;
 
 --
 -- Index pour la table `centre`
@@ -154,6 +176,12 @@ ALTER TABLE `rdv`
   ADD KEY `fk_patient_id` (`patient_id`);
 
 --
+-- Index pour la table `specialite`
+--
+ALTER TABLE `specialite`
+  ADD PRIMARY KEY (`specialite_id`);
+
+--
 -- Index pour la table `utilisateur`
 --
 ALTER TABLE `utilisateur`
@@ -168,7 +196,7 @@ ALTER TABLE `utilisateur`
 -- AUTO_INCREMENT pour la table `assignement`
 --
 ALTER TABLE `assignement`
-  MODIFY `assignement_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `assignement_id` int(11) NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT pour la table `centre`
@@ -183,10 +211,16 @@ ALTER TABLE `rdv`
   MODIFY `rdv_id` int(11) NOT NULL AUTO_INCREMENT;
 
 --
+-- AUTO_INCREMENT pour la table `specialite`
+--
+ALTER TABLE `specialite`
+  MODIFY `specialite_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=16;
+
+--
 -- AUTO_INCREMENT pour la table `utilisateur`
 --
 ALTER TABLE `utilisateur`
-  MODIFY `utilisateur_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=76;
+  MODIFY `utilisateur_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- Contraintes pour les tables déchargées
@@ -197,7 +231,8 @@ ALTER TABLE `utilisateur`
 --
 ALTER TABLE `assignement`
   ADD CONSTRAINT `fk_assignement_centre_id` FOREIGN KEY (`centre_id`) REFERENCES `centre` (`centre_id`) ON DELETE CASCADE ON UPDATE CASCADE,
-  ADD CONSTRAINT `fk_assignement_medecin_id` FOREIGN KEY (`medecin_id`) REFERENCES `utilisateur` (`utilisateur_id`) ON DELETE CASCADE ON UPDATE CASCADE;
+  ADD CONSTRAINT `fk_assignement_medecin_id` FOREIGN KEY (`medecin_id`) REFERENCES `utilisateur` (`utilisateur_id`) ON DELETE CASCADE ON UPDATE CASCADE,
+  ADD CONSTRAINT `fk_assignement_specialite_id` FOREIGN KEY (`specialite_id`) REFERENCES `specialite` (`specialite_id`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
 -- Contraintes pour la table `rdv`
