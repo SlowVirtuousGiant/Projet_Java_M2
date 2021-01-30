@@ -28,8 +28,10 @@ public class Espace extends HttpServlet {
 		
 		CentreDao centreDao = new CentreDao();
 		List<Centre> moncentre = centreDao.getAllCentre();
-    	System.out.println("toto");
-    	System.out.println(moncentre);
+
+    	for(Centre centre : moncentre) {
+    		System.out.println(centre.getNom());
+    	}
 		
 	}
 

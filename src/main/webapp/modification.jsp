@@ -41,10 +41,8 @@
 								: </label> <input id="inputTelephone" name="code_postal" type="password"
 								size="20" maxlength="60" class="form-control mb-3"
 								value="${utilisateur.motdepasse}" required autofocus /> <br />
-							<a href="<%=request.getContextPath()%>/profil"
-								class="w-100 btn btn-lg btn-outline-light mt-3">Confirmer</a> <a
-								href="<%=request.getContextPath()%>/profil"
-								class="w-100 btn btn-lg btn-outline-light mt-3">Annuler</a>
+							<input type="submit" value="Confirmer" /> <a
+								href="<%=request.getContextPath()%>/profil"">Annuler</a>
 	</form>
 </body>
 </html>

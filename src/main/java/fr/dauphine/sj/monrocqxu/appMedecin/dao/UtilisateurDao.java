@@ -85,6 +85,24 @@ public class UtilisateurDao {
 		}
 		return false; 
 	}
+	
+	public boolean modification (Utilisateur utilisateur) {
+		String sql = "Update Utilisateur set telephone =?, adresse=?, code_postal=?, ville=?, motdepasse=? where mail=? ";
+		Session session = null; 
+		return false;
+	}
+	
+	public boolean supppression (Utilisateur utilisateur) {
+		String sql = "Update Utilisateur set actif=0 where mail=? ";
+		Session session = null; 
+		return false;
+	}
+	
+	public boolean reactivation (Utilisateur utilisateur) {
+		String sql = "Update Utilisateur set actif=1 where mail=? ";
+		Session session = null; 
+		return false;
+	}
 
 
 

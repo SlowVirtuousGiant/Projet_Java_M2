@@ -31,6 +31,7 @@ public class Modification extends HttpServlet {
 
 	@Override
 	public void doPost(HttpServletRequest request, HttpServletResponse response ) throws ServletException, IOException {
-
+		Utilisateur utilisateur = (Utilisateur)request.getSession().getAttribute(ATT_SESSION_USER);
+		
 	}
 }
