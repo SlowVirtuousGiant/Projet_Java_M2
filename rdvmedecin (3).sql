@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Hôte : 127.0.0.1
--- Généré le :  sam. 30 jan. 2021 à 12:16
+-- Généré le :  sam. 30 jan. 2021 à 12:24
 -- Version du serveur :  10.4.8-MariaDB
 -- Version de PHP :  7.1.32
 
@@ -85,7 +85,7 @@ CREATE TABLE `rdv` (
   `centre_id` int(11) NOT NULL,
   `date` datetime NOT NULL,
   `creneau` int(11) NOT NULL,
-  `statut` tinyint(1) NOT NULL DEFAULT 1,
+  `actif` tinyint(1) NOT NULL DEFAULT 1,
   `commentaire` varchar(25) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
