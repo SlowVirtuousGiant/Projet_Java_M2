@@ -1,18 +1,8 @@
 package fr.dauphine.sj.monrocqxu.appMedecin.util;
 
-import static fr.dauphine.sj.monrocqxu.appMedecin.util.AppMedecinUtil.ATT_SESSION_USER;
-import static fr.dauphine.sj.monrocqxu.appMedecin.util.AppMedecinUtil.CHEMIN_CONNEXION;
-import static fr.dauphine.sj.monrocqxu.appMedecin.util.AppMedecinUtil.CHEMIN_ESPACE;
-import static fr.dauphine.sj.monrocqxu.appMedecin.util.AppMedecinUtil.isAuthenticated;
-
-import java.io.IOException;
-
-import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-import fr.dauphine.sj.monrocqxu.appMedecin.model.Utilisateur;
 
 public class AppMedecinUtil {
 	//Variable globale
@@ -22,6 +12,7 @@ public class AppMedecinUtil {
 	public static final String CHEMIN_ESPACE ="/appMedecin/espace";
 	public static final String CHEMIN_CONNEXION ="/appMedecin/connexion";
 	public static final String CHEMIN_INSCRIPTION ="/appMedecin/inscription";
+	public static final String CHEMIN_AJOUT ="/appMedecin/ajout";
 	public static final String CHEMIN_RACINE = "/appMedecin/";
 
 	//Mail

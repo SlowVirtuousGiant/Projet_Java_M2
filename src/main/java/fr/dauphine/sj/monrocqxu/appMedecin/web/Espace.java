@@ -3,15 +3,11 @@ package fr.dauphine.sj.monrocqxu.appMedecin.web;
 import static fr.dauphine.sj.monrocqxu.appMedecin.util.AppMedecinUtil.*;
 
 import java.io.IOException;
-import java.util.List;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-
-import fr.dauphine.sj.monrocqxu.appMedecin.dao.CentreDao;
-import fr.dauphine.sj.monrocqxu.appMedecin.model.Centre;
 
 public class Espace extends HttpServlet {
 
@@ -25,14 +21,6 @@ public class Espace extends HttpServlet {
 		}else {
 			this.getServletContext().getRequestDispatcher("/espace.jsp").forward( request, response );
 		}
-		
-		CentreDao centreDao = new CentreDao();
-		List<Centre> moncentre = centreDao.getAllCentre();
-
-    	for(Centre centre : moncentre) {
-    		System.out.println(centre.getNom());
-    	}
-		
 	}
 
 }

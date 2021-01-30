@@ -15,6 +15,8 @@ import javax.servlet.http.HttpServletResponse;
 import fr.dauphine.sj.monrocqxu.appMedecin.model.Utilisateur;
 
 public class Profil extends HttpServlet {
+	private static final long serialVersionUID = 1L;
+
 	@Override
 	public void doGet( HttpServletRequest request, HttpServletResponse response ) throws ServletException, IOException {
 		if (isAuthenticated(request) ) {

@@ -9,24 +9,19 @@ import static fr.dauphine.sj.monrocqxu.appMedecin.util.AppMedecinUtil.isAuthenti
 import java.io.IOException;
 import java.util.ArrayList;
 
-import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
 
 import org.mindrot.jbcrypt.BCrypt;
 
-import com.mysql.jdbc.Connection;
-import com.mysql.jdbc.PreparedStatement;
-
 import fr.dauphine.sj.monrocqxu.appMedecin.dao.UtilisateurDao;
 import fr.dauphine.sj.monrocqxu.appMedecin.model.Utilisateur;
-import fr.dauphine.sj.monrocqxu.appMedecin.util.AppMedecinUtil;
 
 
 public class Inscription extends HttpServlet {
+	private static final long serialVersionUID = 1L;
 	private ArrayList<String> erreurs = new ArrayList<String>();
 
 	@Override

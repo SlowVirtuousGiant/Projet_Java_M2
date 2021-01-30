@@ -116,15 +116,16 @@
 											<td>
 												<div class="custom-control custom-checkbox">
 													<input type="checkbox" class="custom-control-input"
-														id="customCheck${item.id}" name="centre_${item.id}"> <label
-														class="custom-control-label" for="customCheck${item.id}">${item.nom}</label>
+														id="customCheck${item.id}" name="centre_${item.id}">
+													<label class="custom-control-label"
+														for="customCheck${item.id}">${item.nom}</label>
 												</div>
 											</td>
-											<td><div class="form-group">
-													<input id="inputVille" name="spec_${item.id}" type="text" size="20"
-														maxlength="60" class="form-control"
-														placeholder="Spécialité" />
-												</div></td>
+											<td><select name="sp_${item.id}" class="form-select">
+													<c:forEach items="${specialites}" var="specia">
+														<option value="${specia.id}" ${specia.id == 1 ? 'selected' : ''}>${specia.specialite}</option>
+													</c:forEach>
+											</select></td>
 										</tr>
 									</c:forEach>
 

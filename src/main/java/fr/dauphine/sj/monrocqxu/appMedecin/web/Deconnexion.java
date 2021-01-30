@@ -12,6 +12,7 @@ import javax.servlet.http.HttpSession;
 import static fr.dauphine.sj.monrocqxu.appMedecin.util.AppMedecinUtil.*;
 
 public class Deconnexion extends HttpServlet {
+	private static final long serialVersionUID = 1L;
 
 	@Override
     public void doGet( HttpServletRequest request, HttpServletResponse response ) throws ServletException, IOException {

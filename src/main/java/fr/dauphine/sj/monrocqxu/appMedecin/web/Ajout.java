@@ -14,6 +14,7 @@ import org.mindrot.jbcrypt.BCrypt;
 
 import fr.dauphine.sj.monrocqxu.appMedecin.dao.AssignementDao;
 import fr.dauphine.sj.monrocqxu.appMedecin.dao.CentreDao;
+import fr.dauphine.sj.monrocqxu.appMedecin.dao.SpecialiteDao;
 import fr.dauphine.sj.monrocqxu.appMedecin.dao.UtilisateurDao;
 import fr.dauphine.sj.monrocqxu.appMedecin.model.Assignement;
 import fr.dauphine.sj.monrocqxu.appMedecin.model.Centre;
@@ -33,6 +34,8 @@ public class Ajout extends HttpServlet {
 			} else {
 
 				centreDao = new CentreDao();
+				SpecialiteDao specialiteDao = new SpecialiteDao();
+				request.setAttribute("specialites", specialiteDao.getAllSpecialite());
 				request.setAttribute("centres", centreDao.getAllCentre());
 				this.getServletContext().getRequestDispatcher("/ajout.jsp").forward(request, response);
 			}
@@ -72,11 +75,11 @@ public class Ajout extends HttpServlet {
 					assignement.setCentre_id(centre.getId());
 					System.out.println(centre.getId());
 					assignement.setMedecin_id(utilisateur.getId());
-					assignement.setSpecialite(request.getParameter("spec_" + id));
+					assignement.setSpecialite_id(Integer.valueOf(request.getParameter("sp_"+id)));
 					assignementDao.ajouter(assignement);
 				}
 			}
 		}
-
+		response.sendRedirect(CHEMIN_AJOUT);
 	}
 }

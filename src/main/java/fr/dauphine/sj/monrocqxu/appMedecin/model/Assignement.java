@@ -20,7 +20,7 @@ public class Assignement implements Serializable{
     private int id;
  	private int medecin_id;
  	private int centre_id;
- 	private String specialite;
+ 	private int specialite_id;
  	
 	public int getId() {
 		return id;
@@ -40,12 +40,13 @@ public class Assignement implements Serializable{
 	public void setCentre_id(int centre_id) {
 		this.centre_id = centre_id;
 	}
-	public String getSpecialite() {
-		return specialite;
+	public int getSpecialite_id() {
+		return specialite_id;
 	}
-	public void setSpecialite(String specialite) {
-		this.specialite = specialite;
+	public void setSpecialite_id(int specialite_id) {
+		this.specialite_id = specialite_id;
 	}
+	
 	
  	
  	

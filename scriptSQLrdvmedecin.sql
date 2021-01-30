@@ -22,8 +22,6 @@ SET time_zone = "+00:00";
 -- Base de données :  `rdvmedecin`
 --
 
-DROP TABLE assignement,rdv,specialite,utilisateur,centre;
-
 -- --------------------------------------------------------
 
 --
