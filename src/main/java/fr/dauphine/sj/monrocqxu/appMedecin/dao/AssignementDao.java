@@ -6,6 +6,7 @@ import org.hibernate.Session;
 import org.hibernate.query.Query;
 
 import fr.dauphine.sj.monrocqxu.appMedecin.model.Assignement;
+import fr.dauphine.sj.monrocqxu.appMedecin.model.Centre;
 import fr.dauphine.sj.monrocqxu.appMedecin.model.Utilisateur;
 import fr.dauphine.sj.monrocqxu.appMedecin.util.HibernateUtil;
 
@@ -45,6 +46,12 @@ public class AssignementDao {
 		Query q = session.createQuery("from assignement a where a.medecin_id = :id");
 		q.setParameter("id", medecin_id);
 		List<Assignement> list = q.list();
+		return list;
+	}
+	
+	public List<Assignement> getAllAssignement(){
+		Session session = HibernateUtil.getSessionFactory().openSession();
+		List<Assignement> list = (List<Assignement>) session.createSQLQuery("SELECT * FROM assignement").addEntity(Assignement.class).list();
 		return list;
 	}
 }

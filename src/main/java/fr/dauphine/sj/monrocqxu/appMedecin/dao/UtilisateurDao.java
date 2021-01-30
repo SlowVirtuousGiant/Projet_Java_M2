@@ -2,16 +2,26 @@ package fr.dauphine.sj.monrocqxu.appMedecin.dao;
 
 
 
+import java.util.List;
+
 import org.hibernate.Session;
 import org.hibernate.Transaction;
 import org.mindrot.jbcrypt.BCrypt;
 
+import fr.dauphine.sj.monrocqxu.appMedecin.model.Centre;
 import fr.dauphine.sj.monrocqxu.appMedecin.model.Utilisateur;
 import fr.dauphine.sj.monrocqxu.appMedecin.util.HibernateUtil;
 
 
 public class UtilisateurDao {
 
+	public List<Utilisateur> getAllMedecin(){
+		Session session = HibernateUtil.getSessionFactory().openSession();
+		List<Utilisateur> list = (List<Utilisateur>) session.createSQLQuery("SELECT * FROM utilisateur where role = 'MEDECIN' ").addEntity(Utilisateur.class).list();
+		return list;
+
+	}
+	
 	public Utilisateur validate(String userName, String password) {
 		Transaction transaction = null;
 		Utilisateur utilisateur = null;

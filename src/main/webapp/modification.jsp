@@ -54,11 +54,11 @@
 					</div>
 					<div class="row justify-content-center mt-5">
 						<div class="col-md-4">
-							<a href="<%=request.getContextPath()%>/profil" type="submit"
+							<a href="<%=request.getContextPath()%>/profil"
 								class="w-100 btn btn-lg btn-secondary">Annuler</a>
 						</div>
 						<div class="col-md-4">
-							<a class="w-100 btn btn-lg btn-outline-success">Confirmer</a>
+							<a class="w-100 btn btn-lg btn-outline-success" type = "submit">Confirmer</a>
 						</div>
 					</div>
 				</div>
