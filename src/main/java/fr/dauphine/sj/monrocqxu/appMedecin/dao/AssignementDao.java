@@ -12,13 +12,20 @@ import fr.dauphine.sj.monrocqxu.appMedecin.util.HibernateUtil;
 
 public class AssignementDao {
 	
-	public void ajouter(Assignement assignement) {
-		Session session = HibernateUtil.getSessionFactory().openSession();
+	public boolean ajouter (Assignement assignement) {
+		Session session = null; 
 		try {
-		session.save(assignement);
-		}catch(Exception e) {
+			session = HibernateUtil.getSessionFactory().openSession();
+			session.beginTransaction();
+			session.save(assignement);
+			session.getTransaction().commit();
+			return true;
+		} catch (Exception e) {
 			e.printStackTrace();
+		}finally {
+			session.close();
 		}
+		return false; 
 	}
 	
 	public void supprimer(Assignement assignement) {
