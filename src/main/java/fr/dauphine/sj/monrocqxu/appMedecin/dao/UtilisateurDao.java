@@ -1,10 +1,18 @@
 package fr.dauphine.sj.monrocqxu.appMedecin.dao;
 
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.PreparedStatement;
+import java.sql.SQLException;
+import java.util.ArrayList;
+
 import org.hibernate.Session;
+import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
-
-
+import org.hibernate.query.Query;
 import org.mindrot.jbcrypt.BCrypt;
+
+import com.mysql.jdbc.Statement;
 
 import fr.dauphine.sj.monrocqxu.appMedecin.model.Utilisateur;
 import fr.dauphine.sj.monrocqxu.appMedecin.util.HibernateUtil;
@@ -77,9 +85,9 @@ public class UtilisateurDao {
 		}
 		return false; 
 	}
-	
-	public void supprimer(Utilisateur utilisateur) {
-		
-	}
+
+
+
+
 }
 

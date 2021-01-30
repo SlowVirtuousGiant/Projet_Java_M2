@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Hôte : 127.0.0.1
--- Généré le :  lun. 25 jan. 2021 à 22:13
+-- Généré le :  sam. 30 jan. 2021 à 12:16
 -- Version du serveur :  10.4.8-MariaDB
 -- Version de PHP :  7.1.32
 
@@ -34,6 +34,13 @@ CREATE TABLE `assignement` (
   `centre_id` int(11) NOT NULL,
   `specialite` varchar(25) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Déchargement des données de la table `assignement`
+--
+
+INSERT INTO `assignement` (`assignement_id`, `medecin_id`, `centre_id`, `specialite`) VALUES
+(2, 2, 2, 'Covid 19');
 
 -- --------------------------------------------------------
 
@@ -78,7 +85,7 @@ CREATE TABLE `rdv` (
   `centre_id` int(11) NOT NULL,
   `date` datetime NOT NULL,
   `creneau` int(11) NOT NULL,
-  `statut` tinyint(1) NOT NULL,
+  `statut` tinyint(1) NOT NULL DEFAULT 1,
   `commentaire` varchar(25) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
@@ -95,6 +102,7 @@ CREATE TABLE `utilisateur` (
   `telephone` varchar(25) NOT NULL,
   `mail` varchar(100) NOT NULL,
   `naissance` year(4) NOT NULL,
+  `sexe` varchar(10) NOT NULL,
   `adresse` varchar(60) NOT NULL,
   `code_postal` int(5) NOT NULL,
   `ville` varchar(25) NOT NULL,
@@ -107,10 +115,16 @@ CREATE TABLE `utilisateur` (
 -- Déchargement des données de la table `utilisateur`
 --
 
-INSERT INTO `utilisateur` (`utilisateur_id`, `nom`, `prenom`, `telephone`, `mail`, `naissance`, `adresse`, `code_postal`, `ville`, `role`, `actif`, `motdepasse`) VALUES
-(1, 'xu', 'nicolas', '0622723426', 'nicolas.xu@dauphine.eu', 1997, '265 rue du faubourg saint martin', 75010, 'Paris', 'PATIENT', 1, '$2a$12$Aevb3UsVyWTfi7Qtchg0fe/8BqAeiOx1RiqsR9df9mXk7yrIQZc3K'),
-(2, 'monrocq', 'pierre', '0638487370', 'pierre.monrocq@dauphine.eu', 1998, '16, Rue Louis Dain', 93400, 'Saint-Ouen-sur-Seine', 'MEDECIN', 1, '$2a$12$FYiEmzpMXTiTKCGe4Zdys.rCZxV6jRM1pJrsltxEqa1CxBh3l4Ex.'),
-(3, 'admin', 'admin', '0144054405', 'admin@gmail.com', 0000, '', 0, '', 'ADMIN', 1, '$2a$12$0M/7lU86joVBnnxk2M75quRLVB90spBmVKZAfdv/WPeWViSwUKEP6');
+INSERT INTO `utilisateur` (`utilisateur_id`, `nom`, `prenom`, `telephone`, `mail`, `naissance`, `sexe`, `adresse`, `code_postal`, `ville`, `role`, `actif`, `motdepasse`) VALUES
+(1, 'xu', 'nicolas', '0622723426', 'nicolas.xu@dauphine.eu', 1997, 'homme', '265 rue du faubourg saint martin', 75010, 'Paris', 'PATIENT', 1, '$2a$12$Aevb3UsVyWTfi7Qtchg0fe/8BqAeiOx1RiqsR9df9mXk7yrIQZc3K'),
+(2, 'monrocq', 'pierre', '0638487370', 'pierre.monrocq@dauphine.eu', 1998, 'femme', '16, Rue Louis Dain', 93400, 'Saint-Ouen-sur-Seine', 'MEDECIN', 1, '$2a$12$FYiEmzpMXTiTKCGe4Zdys.rCZxV6jRM1pJrsltxEqa1CxBh3l4Ex.'),
+(3, 'admin', 'admin', '0144054405', 'admin@gmail.com', 0000, 'autre', '', 0, '', 'ADMIN', 1, '$2a$12$0M/7lU86joVBnnxk2M75quRLVB90spBmVKZAfdv/WPeWViSwUKEP6'),
+(17, 'fraise', 'charlotte', '0780808080', 'charlotte@gmail.com', 2001, 'sexe', '8 rue de la fantaisie', 75016, 'Paris', 'MEDECIN', 0, '$2a$12$bY/Fz1O3acH/71XBl5ntUugiEspmKcQOfMNeO7jcZfdE.Tg.IP8eS'),
+(24, 'xu', 'franck', '0622222222', 'franck@gmail.com', 1999, 'sexe', '265 r du fb st martin', 75010, 'Paris', 'MEDECIN', 0, '$2a$12$BOFfk5kxO8TLhcWKy/PVDO7EZyTb8CmsSdJ3W7s1UTmrCShfDnWHu'),
+(25, 'xu', 'franck', '0622222222', 'julien@gmail.com', 1991, 'sexe', '273 rue de la paix', 75010, 'Paris', 'MEDECIN', 0, '$2a$12$S23nuVmBdDJ.8PRWpDznD.zg3wjSbs4TDDVmqcodTMDgBh2AMf4li'),
+(29, 'xu', 'franck', '0622723426', 'franck.xu@gmail.com', 1999, 'sexe', '265 r du faubourg saint martin', 75010, 'Paris', 'PATIENT', 0, '$2a$12$XKaroRw18JrXxUudl6qsLe54kk0tVBpVSZa1Xdw6xpKi1yJQLW9jy'),
+(30, 'monrocq', 'chloe', '0677889944', 'chloe@gmail.com', 2002, 'sexe', '2 rue de la pierre', 75001, 'Paris', 'PATIENT', 0, '$2a$12$iKGDbWcxRNhgKv.Q/DVGKOQE7P9RmHciXiebcYC0YIJ1/xbJ.OA/S'),
+(31, 'monrocq', 'arthur', '0622723426', 'arthur@gmail.com', 2021, 'sexe', '1 rue de la paix', 75018, 'Paris', 'PATIENT', 0, '$2a$12$cg/mQvrSZX6TDp.EpQzYQ.N0QQ7Y8Qpb0p/m0DmljOsvhs.IdTZTi');
 
 --
 -- Index pour les tables déchargées
@@ -143,7 +157,8 @@ ALTER TABLE `rdv`
 -- Index pour la table `utilisateur`
 --
 ALTER TABLE `utilisateur`
-  ADD PRIMARY KEY (`utilisateur_id`);
+  ADD PRIMARY KEY (`utilisateur_id`),
+  ADD UNIQUE KEY `mail` (`mail`);
 
 --
 -- AUTO_INCREMENT pour les tables déchargées
@@ -153,7 +168,7 @@ ALTER TABLE `utilisateur`
 -- AUTO_INCREMENT pour la table `assignement`
 --
 ALTER TABLE `assignement`
-  MODIFY `assignement_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `assignement_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- AUTO_INCREMENT pour la table `centre`
@@ -171,7 +186,7 @@ ALTER TABLE `rdv`
 -- AUTO_INCREMENT pour la table `utilisateur`
 --
 ALTER TABLE `utilisateur`
-  MODIFY `utilisateur_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=16;
+  MODIFY `utilisateur_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=76;
 
 --
 -- Contraintes pour les tables déchargées
