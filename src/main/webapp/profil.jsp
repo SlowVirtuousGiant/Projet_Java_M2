@@ -82,7 +82,7 @@
 								<%
 									if (role.equals("PATIENT")) {
 								%>
-								<p>[MSG PATIENT]Votre compte sera désactivé et vos rendez-vous annulés.</p>
+								<p>Votre compte sera désactivé et vos rendez-vous annulés.</p>
 								<%
 									}
 								%>
@@ -90,7 +90,7 @@
 								<%
 									if (role.equals("MEDECIN")) {
 								%>
-								<p>[MSG MEDECIN]Veuillez annuler vos RDV avant de désactiver votre compte.</p>
+								<p>Veuillez annuler vos RDV avant de désactiver votre compte.</p>
 								<%
 									}
 								%>

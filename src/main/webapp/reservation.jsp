@@ -72,9 +72,9 @@
 											for (Assignement as : assignements) {
 										%>
 										<%
-											Utilisateur medecin = utilisateurDao.getUtilisateurById(as.getMedecin_id());
-										Centre centre = centreDao.getCentre(as.getCentre_id());
-										Specialite specialite = specialiteDao.getSpecialite(as.getSpecialite_id());
+											Utilisateur medecin = utilisateurDao.getUtilisateurByID(as.getMedecin_id());
+										Centre centre = centreDao.getCentreByID(as.getCentre_id());
+										Specialite specialite = specialiteDao.getSpecialiteByID(as.getSpecialite_id());
 										%>
 
 										<tr>

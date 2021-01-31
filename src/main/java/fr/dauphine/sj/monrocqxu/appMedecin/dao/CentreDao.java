@@ -5,13 +5,14 @@ import java.util.List;
 import org.hibernate.Session;
 
 import fr.dauphine.sj.monrocqxu.appMedecin.model.Centre;
+import fr.dauphine.sj.monrocqxu.appMedecin.model.Specialite;
 import fr.dauphine.sj.monrocqxu.appMedecin.util.HibernateUtil;
 
 public class CentreDao {
 	
-	public Centre getCentre(int centre_id){
+	public Centre getCentreByID(int centre_id){
 		Session session = HibernateUtil.getSessionFactory().openSession();
-		Centre centre = (Centre) session.createQuery("from centre where centre_id = :id").setParameter("id", centre_id).uniqueResult();
+		Centre centre = (Centre) session.get(Centre.class, centre_id);
 		return centre;
 	}
 	

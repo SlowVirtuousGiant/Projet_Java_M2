@@ -36,7 +36,7 @@ public class Modification extends HttpServlet {
 		System.out.println("bouton confirmer modif");
 		HttpSession session = request.getSession();
 		Utilisateur utilisateur = (Utilisateur)request.getSession().getAttribute(ATT_SESSION_USER);
-		if(request.getParameter("motdepasse")!=null && !validationMotDePasse(request.getParameter("motdepasse"))) {
+		if(request.getParameter("motdepasse")==null && !validationMotDePasse(request.getParameter("motdepasse"))) {
 			erreurs.add("Mot de passe non valide.");
 		}
 

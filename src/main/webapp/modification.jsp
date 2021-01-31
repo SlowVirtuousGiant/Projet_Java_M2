@@ -48,7 +48,7 @@
 						<div class="form-group">
 							<label class="form-control-label text-muted">Changer de
 								mot de passe : </label> <input id="inputTelephone" name="motdepasse"
-								type="password" size="20" maxlength="60" value = null
+								type="password" size="20" maxlength="60" value = ""
 								class="form-control mb-3"  autofocus />
 						</div>
 					</div>

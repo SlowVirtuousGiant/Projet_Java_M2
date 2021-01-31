@@ -36,11 +36,9 @@ public class UtilisateurDao {
 		return map;
 	}
 	
-	public Utilisateur getUtilisateurById(int id){
+	public Utilisateur getUtilisateurByID(int utilisateur_id){
 		Session session = HibernateUtil.getSessionFactory().openSession();
-		Utilisateur utilisateur = (Utilisateur) session.createQuery("from utilisateur where utilisateur_id = :id")
-				.setParameter("utilisateur_id", id)
-				.uniqueResult();
+		Utilisateur utilisateur = (Utilisateur) session.get(Utilisateur.class, utilisateur_id);
 		return utilisateur;
 	}
 

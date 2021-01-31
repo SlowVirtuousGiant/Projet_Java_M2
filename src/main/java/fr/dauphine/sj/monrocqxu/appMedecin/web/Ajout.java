@@ -60,6 +60,7 @@ public class Ajout extends HttpServlet {
 		utilisateur.setRole("MEDECIN");
 		utilisateur.setMotdepasse(BCrypt.hashpw(request.getParameter("motdepasse"), BCrypt.gensalt(12)));
 		utilisateur.setSexe(request.getParameter("sexe"));
+		utilisateur.setActif(true);
 
 		boolean result = utilisateurDao.ajouter(utilisateur);
 		AssignementDao assignementDao = new AssignementDao();

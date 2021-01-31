@@ -50,6 +50,7 @@ public class Inscription extends HttpServlet {
 			utilisateur.setVille(request.getParameter("ville"));
 			utilisateur.setRole("PATIENT");
 			utilisateur.setMotdepasse(BCrypt.hashpw(request.getParameter("motdepasse"),BCrypt.gensalt(12)));
+			utilisateur.setActif(true);
 
 			if(utilisateurDao.ajouter(utilisateur)) {
 				response.sendRedirect( CHEMIN_CONNEXION );

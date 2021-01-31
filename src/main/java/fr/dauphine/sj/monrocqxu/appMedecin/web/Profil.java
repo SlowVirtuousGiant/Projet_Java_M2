@@ -54,6 +54,7 @@ public class Profil extends HttpServlet {
 				response.sendRedirect(CHEMIN_PROFIL);
 				request.setAttribute( ERREUR, erreurs );
 			}
+			
 		}else {
 			System.out.println("passage en role inactif pour docteur");
 			utilisateur.setActif(false);
