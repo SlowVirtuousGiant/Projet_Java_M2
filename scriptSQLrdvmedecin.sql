@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Hôte : 127.0.0.1
--- Généré le :  sam. 30 jan. 2021 à 19:21
+-- Généré le :  Dim 31 jan. 2021 à 21:29
 -- Version du serveur :  10.4.8-MariaDB
 -- Version de PHP :  7.1.32
 
@@ -34,6 +34,18 @@ CREATE TABLE `assignement` (
   `centre_id` int(11) NOT NULL,
   `specialite_id` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Déchargement des données de la table `assignement`
+--
+
+INSERT INTO `assignement` (`assignement_id`, `medecin_id`, `centre_id`, `specialite_id`) VALUES
+(1, 4, 1, 1),
+(2, 4, 2, 3),
+(3, 4, 3, 8),
+(4, 4, 9, 10),
+(8, 2, 7, 7),
+(9, 2, 6, 15);
 
 -- --------------------------------------------------------
 
@@ -81,6 +93,13 @@ CREATE TABLE `rdv` (
   `actif` tinyint(1) NOT NULL DEFAULT 1,
   `commentaire` varchar(25) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Déchargement des données de la table `rdv`
+--
+
+INSERT INTO `rdv` (`rdv_id`, `medecin_id`, `patient_id`, `centre_id`, `date`, `creneau`, `actif`, `commentaire`) VALUES
+(1, 2, 1, 2, '2021-02-05 00:00:00', 3, 1, '');
 
 -- --------------------------------------------------------
 
@@ -141,9 +160,10 @@ CREATE TABLE `utilisateur` (
 --
 
 INSERT INTO `utilisateur` (`utilisateur_id`, `nom`, `prenom`, `telephone`, `mail`, `naissance`, `sexe`, `adresse`, `code_postal`, `ville`, `role`, `actif`, `motdepasse`) VALUES
-(1, 'xu', 'nicolas', '0622723426', 'nicolas.xu@dauphine.eu', 1997, 'homme', '265 rue du faubourg saint martin', 75010, 'Paris', 'PATIENT', 1, '$2a$12$Aevb3UsVyWTfi7Qtchg0fe/8BqAeiOx1RiqsR9df9mXk7yrIQZc3K'),
+(1, 'xu', 'nicolas', '0622723426', 'nicolas.xu@dauphine.eu', 1997, 'homme', '16 rue de la frite', 75016, 'Paris', 'PATIENT', 1, '$2a$12$ruYql14vPXTYTXi1i3lcee36sbPx074b9h3GrobSPJXj0Qff8VZ6m'),
 (2, 'monrocq', 'pierre', '0638487370', 'pierre.monrocq@dauphine.eu', 1998, 'femme', '16, Rue Louis Dain', 93400, 'Saint-Ouen-sur-Seine', 'MEDECIN', 1, '$2a$12$FYiEmzpMXTiTKCGe4Zdys.rCZxV6jRM1pJrsltxEqa1CxBh3l4Ex.'),
-(3, 'admin', 'admin', '0144054405', 'admin@gmail.com', 0000, 'autre', '', 0, '', 'ADMIN', 1, '$2a$12$0M/7lU86joVBnnxk2M75quRLVB90spBmVKZAfdv/WPeWViSwUKEP6');
+(3, 'admin', 'admin', '0144054405', 'admin@gmail.com', 0000, 'autre', '', 0, '', 'ADMIN', 1, '$2a$12$0M/7lU86joVBnnxk2M75quRLVB90spBmVKZAfdv/WPeWViSwUKEP6'),
+(4, 'joe', 'debile', '0622334455', 'joe@gmail.com', 1980, 'sexe', '4 rue du debil', 75011, 'Paris', 'MEDECIN', 0, '$2a$12$xIqdbPZC1Q.UKaVh5NeVCenx3G5tpXbolAzGyGyFUP3g516pWXJs6');
 
 --
 -- Index pour les tables déchargées
@@ -194,7 +214,7 @@ ALTER TABLE `utilisateur`
 -- AUTO_INCREMENT pour la table `assignement`
 --
 ALTER TABLE `assignement`
-  MODIFY `assignement_id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `assignement_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=14;
 
 --
 -- AUTO_INCREMENT pour la table `centre`
@@ -206,7 +226,7 @@ ALTER TABLE `centre`
 -- AUTO_INCREMENT pour la table `rdv`
 --
 ALTER TABLE `rdv`
-  MODIFY `rdv_id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `rdv_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- AUTO_INCREMENT pour la table `specialite`
@@ -218,7 +238,7 @@ ALTER TABLE `specialite`
 -- AUTO_INCREMENT pour la table `utilisateur`
 --
 ALTER TABLE `utilisateur`
-  MODIFY `utilisateur_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `utilisateur_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
 -- Contraintes pour les tables déchargées

@@ -24,7 +24,7 @@ public class Rdv implements Serializable {
 	private int medecin_id;
 	private int centre_id;
 	private Date date;
-	private String status;
+	private boolean actif;
 	private String commentaire;
 	public int getId() {
 		return id;
@@ -56,11 +56,11 @@ public class Rdv implements Serializable {
 	public void setDate(Date date) {
 		this.date = date;
 	}
-	public String getStatus() {
-		return status;
+	public boolean isActif() {
+		return actif;
 	}
-	public void setStatus(String status) {
-		this.status = status;
+	public void setActif(boolean actif) {
+		this.actif = actif;
 	}
 	public String getCommentaire() {
 		return commentaire;
