@@ -71,14 +71,14 @@ public class Reservation extends HttpServlet {
 		assignementDao = new AssignementDao();
 		List<Assignement> assignements = assignementDao.getAllAssignement();		
 				
-		for(Assignement assignement : assignements) {
-			
-			if(request.getParameter("rechercherNom").equals(assignement.getMedecin_id())&&
-					request.getParameter("sp_id").equals(assignement.getSpecialite_id())&&
-							request.getParameter("ct_id").equals(assignement.getCentre_id())){
-				
-			}
-		}
+//		for(Assignement assignement : assignements) {
+//			
+//			if(request.getParameter("rechercherNom").equals(assignement.getMedecin_id())&&
+//					request.getParameter("sp_id").equals(assignement.getSpecialite_id())&&
+//							request.getParameter("ct_id").equals(assignement.getCentre_id())){
+//				
+//			}
+//		}
 		
 //		for(Utilisateur utilisateur : medecins) {
 //			if(request.getParameter("rechercherNom").equals(utilisateur.getNom())) {

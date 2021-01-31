@@ -11,10 +11,13 @@ public class AppMedecinUtil {
 	public static final String ERREUR = "erreur";
 	public static final String CHEMIN_ESPACE ="/appMedecin/espace";
 	public static final String CHEMIN_CONNEXION ="/appMedecin/connexion";
+	public static final String CHEMIN_DECONNEXION ="/appMedecin/deconnexion";
 	public static final String CHEMIN_INSCRIPTION ="/appMedecin/inscription";
 	public static final String CHEMIN_AJOUT ="/appMedecin/ajout";
 	public static final String CHEMIN_RACINE = "/appMedecin/";
-
+	public static final String CHEMIN_PROFIL = "/appMedecin/profil";
+	public static final String CHEMIN_MODIFICATION = "/appMedecin/modification";
+	
 	//Mail
 	public static final String MAIL_HOST = "localhost";//Utilisation FAKESMTP
 	public static final String MAIL_WEBSITE_ADRESS = "noreply@rdvmedecin.fr";
@@ -32,4 +35,19 @@ public class AppMedecinUtil {
 		return false;
 	}
 
+	public static boolean validationEmail( String email ) {
+		if ( email != null && !email.matches( "([^.@]+)(\\.[^.@]+)*@([^.@]+\\.)+([^.@]+)" ) ) {
+			return false;
+		}
+		return true;
+	}
+
+	public static boolean validationMotDePasse( String motDePasse ) {
+		if ( motDePasse != null ) {
+			if ( motDePasse.length() < 3 ) {
+				return false;
+			}
+		}
+		return true;
+	}
 }

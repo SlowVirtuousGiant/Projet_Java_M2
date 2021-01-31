@@ -41,15 +41,15 @@
 						</div>
 						<div class="form-group">
 							<label class="form-control-label text-muted">Ville : </label> <input
-								id="inputTelephone" name="code_postal" type="text" size="20"
+								id="inputTelephone" name="ville" type="text" size="20"
 								maxlength="60" class="form-control mb-3"
 								value="${utilisateur.ville}" required autofocus />
 						</div>
 						<div class="form-group">
 							<label class="form-control-label text-muted">Changer de
-								mot de passe : </label> <input id="inputTelephone" name="code_postal"
-								type="password" size="20" maxlength="60"
-								class="form-control mb-3" required autofocus />
+								mot de passe : </label> <input id="inputTelephone" name="motdepasse"
+								type="password" size="20" maxlength="60" value = null
+								class="form-control mb-3"  autofocus />
 						</div>
 					</div>
 					<div class="row justify-content-center mt-5">
@@ -58,7 +58,8 @@
 								class="w-100 btn btn-lg btn-secondary">Annuler</a>
 						</div>
 						<div class="col-md-4">
-							<a class="w-100 btn btn-lg btn-outline-success" type = "submit">Confirmer</a>
+							<button type="submit" name="submit" value="submit"
+										class="w-100 btn btn-lg btn-outline-success">Confirmer</button>
 						</div>
 					</div>
 				</div>
