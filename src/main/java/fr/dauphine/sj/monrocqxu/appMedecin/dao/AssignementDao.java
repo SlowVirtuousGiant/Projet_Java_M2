@@ -43,9 +43,7 @@ public class AssignementDao {
 	
 	public List<Assignement> getAssignement(int medecin_id){
 		Session session = HibernateUtil.getSessionFactory().openSession();
-		Query q = session.createQuery("from assignement a where a.medecin_id = :id");
-		q.setParameter("id", medecin_id);
-		List<Assignement> list = q.list();
+		List<Assignement> list = (List<Assignement>) session.createSQLQuery("SELECT * FROM assignement WHERE medecin_id = :id").setParameter("id", medecin_id).addEntity(Assignement.class).list();
 		return list;
 	}
 	

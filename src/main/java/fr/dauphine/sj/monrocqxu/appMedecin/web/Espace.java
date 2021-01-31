@@ -3,11 +3,17 @@ package fr.dauphine.sj.monrocqxu.appMedecin.web;
 import static fr.dauphine.sj.monrocqxu.appMedecin.util.AppMedecinUtil.*;
 
 import java.io.IOException;
+import java.util.HashMap;
+import java.util.List;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+
+import fr.dauphine.sj.monrocqxu.appMedecin.dao.AssignementDao;
+import fr.dauphine.sj.monrocqxu.appMedecin.dao.UtilisateurDao;
+import fr.dauphine.sj.monrocqxu.appMedecin.model.Assignement;
 
 public class Espace extends HttpServlet {
 
@@ -21,6 +27,9 @@ public class Espace extends HttpServlet {
 		}else {
 			this.getServletContext().getRequestDispatcher("/espace.jsp").forward( request, response );
 		}
+		AssignementDao assignementDao = new AssignementDao();
+		List<Assignement> assignements = assignementDao.getAssignement(2);
+		System.out.println(assignements);
 	}
 
 }

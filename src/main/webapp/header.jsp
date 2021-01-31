@@ -27,10 +27,10 @@
 					aria-current="page" href="<c:url value='/espace' />">Accueil</a></li>
 				<% if(role.equals("PATIENT")){ %>
 				<li class="nav-item dropdown"><a
-					class="nav-link dropdown-toggle" href="#" data-bs-toggle="dropdown"
+					class="nav-link dropdown-toggle ${page.endsWith('/reservation') ? 'active' : ''}" href="#" data-bs-toggle="dropdown"
 					aria-expanded="false">Rendez-vous</a>
 					<ul class="dropdown-menu">
-						<li><a class="dropdown-item" href="#">Prendre un
+						<li><a class="dropdown-item" href="<c:url value='/reservation' />">Prendre un
 								rendez-vous</a></li>
 						<li><a class="dropdown-item" href="#">Gérer mes
 								rendez-vous</a></li>

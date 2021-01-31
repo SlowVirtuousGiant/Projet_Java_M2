@@ -13,6 +13,7 @@ public class AppMedecinUtil {
 	public static final String CHEMIN_CONNEXION ="/appMedecin/connexion";
 	public static final String CHEMIN_INSCRIPTION ="/appMedecin/inscription";
 	public static final String CHEMIN_AJOUT ="/appMedecin/ajout";
+	public static final String CHEMIN_RESERVATION ="/appMedecin/reservation";
 	public static final String CHEMIN_RACINE = "/appMedecin/";
 
 	//Mail
