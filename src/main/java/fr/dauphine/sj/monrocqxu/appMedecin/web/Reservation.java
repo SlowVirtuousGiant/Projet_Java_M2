@@ -64,8 +64,6 @@ public class Reservation extends HttpServlet {
 		// request.getParameter("sp_id").equals(assignement.getSpecialite_id())&&
 		// request.getParameter("ct_id").equals(assignement.getCentre_id()))
 		List<Assignement> assignements = findWithNom(request.getParameter("rechercheNom"));
-		
-		System.out.println(assignements.size());
 		request.setAttribute( "assignements", assignements);
 		
 		this.getServletContext().getRequestDispatcher("/reservation.jsp").forward( request, response );

@@ -68,7 +68,6 @@
 										<%
 											List<Assignement> assignements = (List<Assignement>) request.getAttribute("assignements");
 											if(assignements != null){
-												System.out.println("on rentre");
 											for (Assignement as : assignements) {
 										%>
 										<%

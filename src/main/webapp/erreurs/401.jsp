@@ -2,7 +2,9 @@
 <!DOCTYPE html>
 <html>
 <head>
+<link rel="stylesheet" href="css/bootstrap.min.css">
 <link rel="stylesheet" href="css/style.css">
+<link rel="stylesheet" href="css/index.css">
 <meta charset="UTF-8">
 <title>Erreur 401</title>
 </head>

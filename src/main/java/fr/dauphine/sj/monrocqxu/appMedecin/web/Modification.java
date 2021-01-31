@@ -39,7 +39,7 @@ public class Modification extends HttpServlet {
 		if(request.getParameter("motdepasse")==null && !validationMotDePasse(request.getParameter("motdepasse"))) {
 			erreurs.add("Mot de passe non valide.");
 		}
-
+System.out.println("erreurs");
 		if ( erreurs.isEmpty() ) {
 
 			utilisateur.setTelephone(request.getParameter("telephone"));
