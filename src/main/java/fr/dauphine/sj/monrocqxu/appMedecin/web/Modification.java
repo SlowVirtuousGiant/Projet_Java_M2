@@ -11,6 +11,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import org.mindrot.jbcrypt.BCrypt;
+
 import fr.dauphine.sj.monrocqxu.appMedecin.dao.UtilisateurDao;
 import fr.dauphine.sj.monrocqxu.appMedecin.model.Utilisateur;
 
@@ -36,28 +38,39 @@ public class Modification extends HttpServlet {
 		System.out.println("bouton confirmer modif");
 		HttpSession session = request.getSession();
 		Utilisateur utilisateur = (Utilisateur)request.getSession().getAttribute(ATT_SESSION_USER);
-		if(request.getParameter("motdepasse")==null && !validationMotDePasse(request.getParameter("motdepasse"))) {
-			erreurs.add("Mot de passe non valide.");
-		}
-System.out.println("erreurs");
-		if ( erreurs.isEmpty() ) {
 
-			utilisateur.setTelephone(request.getParameter("telephone"));
-			utilisateur.setAdresse(request.getParameter("adresse"));
-			utilisateur.setCode_postal(Integer.parseInt(request.getParameter("code_postal")));
-			utilisateur.setVille(request.getParameter("ville"));
 
-			UtilisateurDao utilisateurDao = new UtilisateurDao();
-			if(utilisateurDao.update(utilisateur)) {
-				response.sendRedirect( CHEMIN_PROFIL );
+
+
+
+
+		if ( utilisateur !=null ) {
+			if(request.getParameter("newmotdepasse")!=null && !validationMotDePasse(request.getParameter("newmotdepasse"))) {
+				erreurs.add("Mot de passe trop court.");
 			}else {
-				System.out.println("erreurs");
-				response.sendRedirect(CHEMIN_MODIFICATION);
-				request.setAttribute( ERREUR, erreurs );
-			}
+				boolean auth = BCrypt.checkpw(request.getParameter("motdepasse"), utilisateur.getMotdepasse());
+				utilisateur.setMotdepasse(BCrypt.hashpw(request.getParameter("newmotdepasse"),BCrypt.gensalt(12)));
+				utilisateur.setTelephone(request.getParameter("telephone"));
+				utilisateur.setAdresse(request.getParameter("adresse"));
+				utilisateur.setCode_postal(Integer.parseInt(request.getParameter("code_postal")));
+				utilisateur.setVille(request.getParameter("ville"));
 
+				UtilisateurDao utilisateurDao = new UtilisateurDao();
 
-		}
-
+				if(auth) {
+					if(utilisateurDao.update(utilisateur)) {
+						response.sendRedirect( CHEMIN_PROFIL );
+						System.out.println("mise à jour du profil effectuée");
+					}else {
+						System.out.println("erreur inconnue");
+						response.sendRedirect(CHEMIN_MODIFICATION);
+						erreurs.add("N'a pas pu mettre à jour pour de sombres raisons");
+					}
+				}else {
+					System.out.println("erreur pas les meme mdp");
+					erreurs.add("Mot de passe incorrect");
+				}
+			}}
+		request.setAttribute( ERREUR, erreurs );
 	}
 }
