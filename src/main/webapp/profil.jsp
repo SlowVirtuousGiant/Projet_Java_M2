@@ -16,9 +16,15 @@
 
 	<div class="container">
 		<div class="col-md-12 col-10">
+
 			<h2 class="mb-5 mt-5 text-center heading">Profil de
 				${sessionScope.utilisateur.prenom} ${sessionScope.utilisateur.nom}</h2>
 			<div class="row register-form justify-content-center">
+				<c:forEach items="${erreur}" var="item">
+					<div class="alert alert-danger" role="alert">
+						${item}<br>
+					</div>
+				</c:forEach>
 				<div class="col-md-8">
 					<h5>
 						Adresse mail : <strong class="text-value">${sessionScope.utilisateur.mail}</strong>
