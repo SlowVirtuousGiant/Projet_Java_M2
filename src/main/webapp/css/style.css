@@ -78,7 +78,7 @@ a{
 
 .form-control {
     display: block;
-    width: 98%;
+    width: 100%;
     margin: auto;
     padding: .375rem .75rem;
     font-size: 1rem;
@@ -146,4 +146,13 @@ button:focus {
 .form-control-label {
     font-size: 12px;
     margin-left: 15px
+}
+
+.table>thead {
+	background:#2e8b57;
+	color:white;
+}
+
+.table{
+	border: 1px solid black;
 }

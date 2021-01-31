@@ -93,3 +93,8 @@ a:hover {
     padding-top: 80px;
     font-size: 40px;
 }
+
+.form-control {
+	width:98%;
+}
+

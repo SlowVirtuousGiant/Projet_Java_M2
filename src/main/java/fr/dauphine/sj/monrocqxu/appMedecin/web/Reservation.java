@@ -3,15 +3,12 @@ package fr.dauphine.sj.monrocqxu.appMedecin.web;
 import static fr.dauphine.sj.monrocqxu.appMedecin.util.AppMedecinUtil.ATT_SESSION_USER;
 import static fr.dauphine.sj.monrocqxu.appMedecin.util.AppMedecinUtil.CHEMIN_CONNEXION;
 import static fr.dauphine.sj.monrocqxu.appMedecin.util.AppMedecinUtil.CHEMIN_ESPACE;
-import static fr.dauphine.sj.monrocqxu.appMedecin.util.AppMedecinUtil.CHEMIN_RESERVATION;
-import static fr.dauphine.sj.monrocqxu.appMedecin.util.AppMedecinUtil.ERREUR;
 import static fr.dauphine.sj.monrocqxu.appMedecin.util.AppMedecinUtil.isAuthenticated;
 
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 import java.util.Map.Entry;
 
 import javax.servlet.ServletException;
@@ -27,6 +24,8 @@ import fr.dauphine.sj.monrocqxu.appMedecin.model.Assignement;
 import fr.dauphine.sj.monrocqxu.appMedecin.model.Utilisateur;
 
 public class Reservation extends HttpServlet {
+	private static final long serialVersionUID = 1L;
+	
 	private CentreDao centreDao;
 	private UtilisateurDao utilisateurDao;
 	private AssignementDao assignementDao;

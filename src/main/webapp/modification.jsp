@@ -96,7 +96,7 @@
 									<button type="button" class="btn btn-secondary"
 										data-bs-dismiss="modal">Annuler</button>
 									<button type="submit" name="submit" value="submit"
-										class=" btn btn-outline-success">Confirmer</button>
+										class="btn btn-outline-success">Confirmer</button>
 								</div>
 							</div>
 						</div>
