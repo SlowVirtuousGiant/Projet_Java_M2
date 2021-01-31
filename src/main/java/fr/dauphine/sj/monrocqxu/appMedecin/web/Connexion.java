@@ -11,6 +11,8 @@ import javax.servlet.http.HttpSession;
 
 import fr.dauphine.sj.monrocqxu.appMedecin.dao.UtilisateurDao;
 import fr.dauphine.sj.monrocqxu.appMedecin.model.Utilisateur;
+import fr.dauphine.sj.monrocqxu.appMedecin.util.AppMedecinUtil;
+
 import static fr.dauphine.sj.monrocqxu.appMedecin.util.AppMedecinUtil.*;
 
 public class Connexion extends HttpServlet {
@@ -30,57 +32,41 @@ public class Connexion extends HttpServlet {
 	@Override
 	public void doPost( HttpServletRequest request, HttpServletResponse response ) throws ServletException, IOException {
 
-			HttpSession session = request.getSession();
-			String email = request.getParameter("email");
-			String password = request.getParameter("motdepasse");
+		HttpSession session = request.getSession();
+		String email = request.getParameter("email");
+		String password = request.getParameter("motdepasse");
 
-			if(!validationEmail(email)) {
-				erreurs.add("Email non valide.");
-			}
+		if(!validationEmail(email)) {
+			erreurs.add("Email non valide.");
+		}
 
-			if(!validationMotDePasse(password)) {
-				erreurs.add("Mot de passe non valide.");
-			}
+		if(!validationMotDePasse(password)) {
+			erreurs.add("Mot de passe non valide.");
+		}
 
-			System.out.println(erreurs);
+		System.out.println(erreurs);
 
-			if ( erreurs.isEmpty() ) {
-				UtilisateurDao utilisateurDao = new UtilisateurDao();
-				Utilisateur utilisateur = utilisateurDao.validate(email, password);
-				if(utilisateur != null) {
+		if ( erreurs.isEmpty() ) {
+			UtilisateurDao utilisateurDao = new UtilisateurDao();
+			Utilisateur utilisateur = utilisateurDao.validate(email, password);
+			if(utilisateur != null) {
+				if(utilisateur.isActif()==true) {
 					System.out.println("login succes");
 					session.setAttribute( ATT_SESSION_USER, utilisateur);
-					//session.setAttribute( ATT_SESSION_ROLE, utilisateur.getRole());
 					response.sendRedirect( CHEMIN_ESPACE );
-				
 				}else {
-					System.out.println("login erreur");
-					erreurs.add("Erreur d'authentification.");
+					erreurs.add("Compte désactivé.");
 				}
-			}
-			request.setAttribute( ERREUR, erreurs );
-
-			this.getServletContext().getRequestDispatcher("/connexion.jsp").forward( request, response );
-
-			erreurs.clear();
-			
-			
-	}
-
-	private boolean validationEmail( String email ) {
-		if ( email != null && !email.matches( "([^.@]+)(\\.[^.@]+)*@([^.@]+\\.)+([^.@]+)" ) ) {
-			return false;
-		}
-		return true;
-	}
-
-	private boolean validationMotDePasse( String motDePasse ) {
-		if ( motDePasse != null ) {
-			if ( motDePasse.length() < 3 ) {
-				return false;
+			}else {
+				System.out.println("login erreur");
+				erreurs.add("Erreur d'authentification.");
 			}
 		}
-		return true;
+		request.setAttribute( ERREUR, erreurs );
+		this.getServletContext().getRequestDispatcher("/connexion.jsp").forward( request, response );
+		erreurs.clear();		
 	}
+
+
 
 }

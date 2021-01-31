@@ -26,6 +26,6 @@ public class Deconnexion extends HttpServlet {
             cookie.setPath("/");
             response.addCookie(cookie);
         }
-        response.sendRedirect( CHEMIN_RACINE );
+        this.getServletContext().getRequestDispatcher("/deconnexion.jsp").forward( request, response );
     }
 }

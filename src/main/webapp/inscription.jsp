@@ -93,10 +93,10 @@
 										<div class="form-group">
 											<div class="mt-5">
 												<label class="radio inline"> <input type="radio"
-													name="gender" value="female" class="ml-5 pl-5" required>
+													name="sexe" value="femme" class="ml-5 pl-5" required>
 													<span> Femme </span>
 												</label> <label class="radio inline"> <input type="radio"
-													name="gender" value="male" required> <span>
+													name="sexe" value="homme" required> <span>
 														Homme </span>
 												</label>
 											</div>

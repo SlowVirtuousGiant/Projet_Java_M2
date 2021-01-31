@@ -109,22 +109,24 @@ public class UtilisateurDao {
 		return false;
 	}
 
-	public boolean modification(Utilisateur utilisateur) {
-		String sql = "Update Utilisateur set telephone =?, adresse=?, code_postal=?, ville=?, motdepasse=? where mail=? ";
-		Session session = null;
-		return false;
+	public boolean update (Utilisateur utilisateur) {
+		Session session = null; 
+		try {
+			session = HibernateUtil.getSessionFactory().openSession();
+			session.beginTransaction();
+			session.update(utilisateur);
+			session.getTransaction().commit();
+			return true;
+		} catch (Exception e) {
+			e.printStackTrace();
+		}finally {
+			session.close();
+		}
+		return false; 
 	}
 
-	public boolean supppression(Utilisateur utilisateur) {
-		String sql = "Update Utilisateur set actif=0 where mail=? ";
-		Session session = null;
-		return false;
-	}
 
-	public boolean reactivation(Utilisateur utilisateur) {
-		String sql = "Update Utilisateur set actif=1 where mail=? ";
-		Session session = null;
-		return false;
-	}
+
+	
 
 }

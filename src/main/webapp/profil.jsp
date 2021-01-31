@@ -16,7 +16,6 @@
 
 	<div class="container">
 		<div class="col-md-12 col-10">
-			<form method="post" action="<%=request.getContextPath()%>/profil">
 				<h2 class="mb-5 mt-5 text-center heading">Profil de
 					${sessionScope.utilisateur.prenom} ${sessionScope.utilisateur.nom}</h2>
 				<div class="row register-form justify-content-center">
@@ -55,29 +54,47 @@
 					</div>
 					<div class="col-md-4">
 						<a class="w-100 btn btn-lg btn-danger" data-bs-toggle="modal"
-							data-bs-target="#supprModal">Supprimer mon compte</a>
+							data-bs-target="#supprModal">Désactiver mon compte</a>
 					</div>
 
 				</div>
-			</form>
+			
 
 			<!-- Modal -->
 			<div class="modal fade" id="supprModal" data-bs-backdrop="static"
 				tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-				<form method="post" action="<c:url value='/suppression' />">
+				<form method="post" action="<%=request.getContextPath()%>/profil">
 					<div class="modal-dialog modal-dialog-centered">
 						<div class="modal-content">
 							<div class="modal-header">
-								<h5 class="modal-title" id="exampleModalLabel">Suppression
+								<h5 class="modal-title" id="exampleModalLabel">Désactivation
 									de votre compte</h5>
 								<button type="button" class="btn-close" data-bs-dismiss="modal"
 									aria-label="Close"></button>
 							</div>
 							<div class="modal-body">
-								<p>Attention la suppresion de votre compte est irréversible.</p>
+
+								<p>Attention la désactivation de votre compte est
+									irréversible.</p>
 								<p>Après vérification de votre mot de passe vous recevrez un
-									lien de confirmation sur votre adresse mail.</p>
-								<p>Votre compte sera désactivé.</p>
+									lien de confirmation de la désactivation sur votre adresse
+									mail.</p>
+								<%
+									if (role.equals("PATIENT")) {
+								%>
+								<p>[MSG PATIENT]Votre compte sera désactivé et vos rendez-vous annulés.</p>
+								<%
+									}
+								%>
+								
+								<%
+									if (role.equals("MEDECIN")) {
+								%>
+								<p>[MSG MEDECIN]Veuillez annuler vos RDV avant de désactiver votre compte.</p>
+								<%
+									}
+								%>
+
 
 								<div class="form-group">
 									<label class="form-control-label text-muted">Mot de
@@ -90,7 +107,8 @@
 							<div class="modal-footer">
 								<button type="button" class="btn btn-secondary"
 									data-bs-dismiss="modal">Annuler</button>
-								<button type="button" type="submit" class="btn btn-outline-success">Confirmer</button>
+								<button type="submit" name="submit" value="submit"
+									class="w-100 btn btn-lg btn-outline-success">Confirmer</button>
 							</div>
 						</div>
 					</div>

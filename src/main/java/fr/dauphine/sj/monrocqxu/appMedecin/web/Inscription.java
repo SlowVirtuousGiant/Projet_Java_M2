@@ -39,14 +39,13 @@ public class Inscription extends HttpServlet {
 		Utilisateur utilisateur = new Utilisateur();
 		UtilisateurDao utilisateurDao = new UtilisateurDao();
 		if(!utilisateurDao.isPresent(request.getParameter("mail"))) {
-			System.out.println("Réagit au formulaire");
 			utilisateur.setNom(request.getParameter("nom"));
 			utilisateur.setPrenom(request.getParameter("prenom"));
 			utilisateur.setTelephone(request.getParameter("telephone"));
 			utilisateur.setAdresse(request.getParameter("adresse"));
 			utilisateur.setMail(request.getParameter("mail"));
 			utilisateur.setNaissance(Integer.parseInt(request.getParameter("naissance")));
-			utilisateur.setSexe("sexe");
+			utilisateur.setSexe(request.getParameter("sexe"));
 			utilisateur.setCode_postal(Integer.parseInt(request.getParameter("code_postal")));
 			utilisateur.setVille(request.getParameter("ville"));
 			utilisateur.setRole("PATIENT");
