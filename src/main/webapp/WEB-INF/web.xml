@@ -92,4 +92,12 @@
     <servlet-name>Reservation</servlet-name>
     <url-pattern>/reservation</url-pattern>
   </servlet-mapping>
+    <servlet>
+    <servlet-name>ReservationDetails</servlet-name>
+    <servlet-class>fr.dauphine.sj.monrocqxu.appMedecin.web.ReservationDetails</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>ReservationDetails</servlet-name>
+    <url-pattern>/reservationdetails</url-pattern>
+  </servlet-mapping>
 </web-app>

@@ -25,10 +25,10 @@ public class Modification extends HttpServlet {
 			Utilisateur utilisateur = (Utilisateur)request.getSession().getAttribute(ATT_SESSION_USER);
 			if(utilisateur!=null && !utilisateur.getRole().equals("ADMIN")) {
 				this.getServletContext().getRequestDispatcher("/modification.jsp").forward( request, response );
-			}else {
+			}	else {
 				response.sendRedirect( CHEMIN_ESPACE );
 			}
-		}else {
+		}	else {
 			response.sendRedirect( CHEMIN_CONNEXION );
 		}
 	}
@@ -39,38 +39,40 @@ public class Modification extends HttpServlet {
 		HttpSession session = request.getSession();
 		Utilisateur utilisateur = (Utilisateur)request.getSession().getAttribute(ATT_SESSION_USER);
 
+		boolean auth = BCrypt.checkpw(request.getParameter("motdepasse"), utilisateur.getMotdepasse());
 
+		if(!request.getParameter("newmotdepasse").equals(null) && validationMotDePasse(request.getParameter("newmotdepasse"))) {
+			utilisateur.setMotdepasse(BCrypt.hashpw(request.getParameter("newmotdepasse"),BCrypt.gensalt(12)));
+		}if(!request.getParameter("newmotdepasse").equals(null) && validationMotDePasse(request.getParameter("newmotdepasse"))) {
+			System.out.println("mdp trop court");
+			erreurs.add("Mot de passe trop court.");
+		}
 
+		utilisateur.setTelephone(request.getParameter("telephone"));
+		utilisateur.setAdresse(request.getParameter("adresse"));
+		utilisateur.setCode_postal(Integer.parseInt(request.getParameter("code_postal")));
+		utilisateur.setVille(request.getParameter("ville"));
 
+		UtilisateurDao utilisateurDao = new UtilisateurDao();
 
-
-		if ( utilisateur !=null ) {
-			if(request.getParameter("newmotdepasse")!=null && !validationMotDePasse(request.getParameter("newmotdepasse"))) {
-				erreurs.add("Mot de passe trop court.");
+		if(auth) {
+			if(utilisateurDao.update(utilisateur)) {
+				response.sendRedirect( CHEMIN_PROFIL );
+				System.out.println("mise à jour du profil effectuée");
+				session.setAttribute(ATT_SESSION_USER,utilisateur);
 			}else {
-				boolean auth = BCrypt.checkpw(request.getParameter("motdepasse"), utilisateur.getMotdepasse());
-				utilisateur.setMotdepasse(BCrypt.hashpw(request.getParameter("newmotdepasse"),BCrypt.gensalt(12)));
-				utilisateur.setTelephone(request.getParameter("telephone"));
-				utilisateur.setAdresse(request.getParameter("adresse"));
-				utilisateur.setCode_postal(Integer.parseInt(request.getParameter("code_postal")));
-				utilisateur.setVille(request.getParameter("ville"));
+				System.out.println("erreur inconnue BDD ?");
+				response.sendRedirect(CHEMIN_MODIFICATION);
+				erreurs.add("N'a pas pu mettre à jour pour de sombres raisons");
+			}
+		}else {
+			System.out.println("erreur pas les meme mdp");
+			erreurs.add("Mot de passe incorrect");
+			response.sendRedirect(CHEMIN_MODIFICATION);
+		}
 
-				UtilisateurDao utilisateurDao = new UtilisateurDao();
-
-				if(auth) {
-					if(utilisateurDao.update(utilisateur)) {
-						response.sendRedirect( CHEMIN_PROFIL );
-						System.out.println("mise à jour du profil effectuée");
-					}else {
-						System.out.println("erreur inconnue");
-						response.sendRedirect(CHEMIN_MODIFICATION);
-						erreurs.add("N'a pas pu mettre à jour pour de sombres raisons");
-					}
-				}else {
-					System.out.println("erreur pas les meme mdp");
-					erreurs.add("Mot de passe incorrect");
-				}
-			}}
 		request.setAttribute( ERREUR, erreurs );
+
+
 	}
 }
