@@ -26,6 +26,7 @@ public class Rdv implements Serializable {
 	private Date date;
 	private boolean actif;
 	private String commentaire;
+	private int creneau;
 	public int getId() {
 		return id;
 	}
@@ -67,6 +68,12 @@ public class Rdv implements Serializable {
 	}
 	public void setCommentaire(String commentaire) {
 		this.commentaire = commentaire;
+	}
+	public int getCreneau() {
+		return creneau;
+	}
+	public void setCreneau(int creneau) {
+		this.creneau = creneau;
 	}
 	
 }

@@ -85,7 +85,7 @@
 				</div>
 				<div class="col-5 mt-3">
 					<h5>
-						Médecin : <strong class="text-value">Dr. </strong>
+						Médecin : <strong class="text-value">Dr.</strong>
 					</h5>
 					<h5>
 						Centre : <strong class="text-value">Centre</strong>

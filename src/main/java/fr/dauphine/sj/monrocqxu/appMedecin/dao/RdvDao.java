@@ -4,6 +4,7 @@ import java.sql.Date;
 import java.util.List;
 
 import org.hibernate.Session;
+import org.hibernate.Transaction;
 
 import fr.dauphine.sj.monrocqxu.appMedecin.model.Centre;
 import fr.dauphine.sj.monrocqxu.appMedecin.model.Creneau;
@@ -53,6 +54,48 @@ public class RdvDao {
 		return rdvs;
 	}
 	
+	public boolean ajouter(Rdv rdv) {
+		Session session = null;
+		try {
+			session = HibernateUtil.getSessionFactory().openSession();
+			session.beginTransaction();
+			session.save(rdv);
+			session.getTransaction().commit();
+			return true;
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			session.close();
+		}
+		return false;
+	}
+	
+	public boolean isPresent(Rdv rdv) {
+		Transaction transaction = null;
+		Utilisateur utilisateur = null;
+		Session session = null;
+		try {
+			session = HibernateUtil.getSessionFactory().openSession();
+			transaction = session.beginTransaction();
+			utilisateur = (Utilisateur) session.createQuery("FROM Rdv R WHERE R.date = :date and R.creneau:creneau ")
+					.setParameter("date",rdv.getDate())
+					.setParameter("creneau", rdv.getCreneau())
+					.uniqueResult();
+			if (utilisateur != null) {
+				System.out.println("Un utilisateur a bien été trouvé");
+				return true;
+			}
+			transaction.commit();
+		} catch (Exception e) {
+			if (transaction != null) {
+				transaction.rollback();
+			}
+			e.printStackTrace();
+		} finally {
+			session.close();
+		}
+		return false;
+	}
 	
 	public void ajouterRdv(int patient_id, int medecin_id, int centre_id, Date date, Creneau creneau) {
 		
