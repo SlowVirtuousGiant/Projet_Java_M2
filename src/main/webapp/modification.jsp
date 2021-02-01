@@ -55,7 +55,7 @@
 						<div class="form-group">
 							<label class="form-control-label text-muted">Changer de
 								mot de passe : </label> <input id="inputMotdepasse" name="newmotdepasse"
-								type="password" size="20" maxlength="60" value=""
+								type="password" size="20" maxlength="60" value= ""
 								class="form-control mb-3" autofocus />
 						</div>
 					</div>
