@@ -18,7 +18,7 @@
 		</h1>
 	</div>
 	<section>
-		<div class="container px-4 py-5 mx-auto">
+		<div class="container mx-auto">
 			<div class="d-flex flex-lg-row flex-column-reverse">
 				<div class="card card1">
 					<div class="row justify-content-center my-auto">

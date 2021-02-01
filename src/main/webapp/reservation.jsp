@@ -64,7 +64,7 @@
 					%>
 					<h2 class="mb-5 mt-4 text-center heading">Résultat de la
 						recherche</h2>
-					<div class="row justify-content-center">
+					<div class="row justify-content-center mb-5">
 						<div class="col-md-10">
 							<table class="table table-striped table-hover">
 								<thead>
@@ -95,8 +95,8 @@
 										<td><%=centre.getNom()%></td>
 										<td><%=centre.getAdresse() + " " + centre.getVille() + " " + centre.getCode_postal()%></td>
 										<td><%=centre.getTelephone()%></td>
-										<td><button name="submit" value="submit"
-												class="btn btn-success">Consulter</button></td>
+										<td><a href="/details"
+												class="btn btn-success">Consulter</a></td>
 									</tr>
 									<%
 										}

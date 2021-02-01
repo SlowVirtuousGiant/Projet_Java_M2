@@ -39,11 +39,6 @@ public class Modification extends HttpServlet {
 		HttpSession session = request.getSession();
 		Utilisateur utilisateur = (Utilisateur)request.getSession().getAttribute(ATT_SESSION_USER);
 
-
-
-
-
-
 		if ( utilisateur !=null ) {
 			if(request.getParameter("newmotdepasse")!=null && !validationMotDePasse(request.getParameter("newmotdepasse"))) {
 				erreurs.add("Mot de passe trop court.");
