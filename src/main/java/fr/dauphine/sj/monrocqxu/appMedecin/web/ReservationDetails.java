@@ -25,6 +25,7 @@ import fr.dauphine.sj.monrocqxu.appMedecin.dao.UtilisateurDao;
 import fr.dauphine.sj.monrocqxu.appMedecin.model.Affectation;
 import fr.dauphine.sj.monrocqxu.appMedecin.model.Centre;
 import fr.dauphine.sj.monrocqxu.appMedecin.model.Rdv;
+import fr.dauphine.sj.monrocqxu.appMedecin.model.Specialite;
 import fr.dauphine.sj.monrocqxu.appMedecin.model.Utilisateur;
 import fr.dauphine.sj.monrocqxu.appMedecin.util.TimeMedecinUtil;
 import static fr.dauphine.sj.monrocqxu.appMedecin.util.AppMedecinUtil.CHEMIN_RESERVATIONDE;
@@ -55,21 +56,24 @@ public class ReservationDetails extends HttpServlet {
 				Utilisateur medecin = new Utilisateur();
 				UtilisateurDao utilisateurDao = new UtilisateurDao();
 				medecin = utilisateurDao.getUtilisateurByID(affectation.getMedecin_id());
-				request.setAttribute("medecin", medecin);
-				System.out.println(medecin.getNom());
+				//request.setAttribute("medecinnom", medecin.getNom());
+				//request.setAttribute("medecinprenom", medecin.getPrenom());
 				
 				Centre centre = new Centre();
 				CentreDao centreDao = new CentreDao();
 				centre = centreDao.getCentreByID(affectation.getCentre_id());
-				request.setAttribute("centre", centre);
-				System.out.println(centre.getNom());
+				//request.setAttribute("centrenom", centre.getNom());
+				//request.setAttribute("centreadresse", centre.getAdresse());
+				//request.setAttribute("centretelephone", centre.getTelephone());
+				
+				Specialite specialite = new Specialite();
+				SpecialiteDao specialiteDao = new SpecialiteDao();
+				specialite = specialiteDao.getSpecialiteByID(affectation.getSpecialite_id());
+				//request.setAttribute("specialitenom", specialite.getSpecialite());
 				
 			} else {
 				response.sendRedirect(CHEMIN_ESPACE);
 			}
-			//} else {
-			//response.sendRedirect(CHEMIN_CONNEXION);
-			//}
 		}
 	}
 

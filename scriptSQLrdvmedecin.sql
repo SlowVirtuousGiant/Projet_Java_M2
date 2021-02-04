@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Hôte : 127.0.0.1
--- Généré le :  jeu. 04 fév. 2021 à 17:23
+-- Généré le :  jeu. 04 fév. 2021 à 19:59
 -- Version du serveur :  10.4.8-MariaDB
 -- Version de PHP :  7.1.32
 
@@ -25,40 +25,27 @@ SET time_zone = "+00:00";
 -- --------------------------------------------------------
 
 --
--- Structure de la table `affectation`
+-- Structure de la table `assignement`
 --
 
-CREATE TABLE `affectation` (
-  `affectation_id` int(11) NOT NULL,
+CREATE TABLE `assignement` (
+  `assignement_id` int(11) NOT NULL,
   `medecin_id` int(11) NOT NULL,
   `centre_id` int(11) NOT NULL,
-  `specialite_id` int(11) NOT NULL,
-  `disponible` tinyint(4) NOT NULL
+  `specialite_id` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
--- Déchargement des données de la table `affectation`
+-- Déchargement des données de la table `assignement`
 --
 
-INSERT INTO `affectation` (`affectation_id`, `medecin_id`, `centre_id`, `specialite_id`, `disponible`) VALUES
-(1, 4, 1, 1, 1),
-(2, 4, 2, 3, 1),
-(3, 4, 3, 8, 0),
-(4, 4, 9, 10, 0),
-(8, 2, 7, 7, 1),
-(9, 2, 6, 15, 1);
-
--- --------------------------------------------------------
-
---
--- Structure de la table `agenda`
---
-
-CREATE TABLE `agenda` (
-  `affectation_id` int(11) NOT NULL,
-  `semaine` int(2) NOT NULL,
-  `annee` int(4) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+INSERT INTO `assignement` (`assignement_id`, `medecin_id`, `centre_id`, `specialite_id`) VALUES
+(1, 4, 1, 1),
+(2, 4, 2, 3),
+(3, 4, 3, 8),
+(4, 4, 9, 10),
+(8, 2, 7, 7),
+(9, 2, 6, 15);
 
 -- --------------------------------------------------------
 
@@ -101,6 +88,7 @@ CREATE TABLE `rdv` (
   `medecin_id` int(11) NOT NULL,
   `patient_id` int(11) NOT NULL,
   `centre_id` int(11) NOT NULL,
+  `specialite_id` int(11) NOT NULL,
   `date` datetime NOT NULL,
   `creneau` int(11) NOT NULL,
   `actif` tinyint(1) NOT NULL DEFAULT 1,
@@ -111,8 +99,8 @@ CREATE TABLE `rdv` (
 -- Déchargement des données de la table `rdv`
 --
 
-INSERT INTO `rdv` (`rdv_id`, `medecin_id`, `patient_id`, `centre_id`, `date`, `creneau`, `actif`, `commentaire`) VALUES
-(1, 2, 1, 2, '2021-02-05 00:00:00', 3, 1, '');
+INSERT INTO `rdv` (`rdv_id`, `medecin_id`, `patient_id`, `centre_id`, `specialite_id`, `date`, `creneau`, `actif`, `commentaire`) VALUES
+(1, 2, 1, 6, 15, '2021-02-05 00:00:00', 3, 1, '');
 
 -- --------------------------------------------------------
 
@@ -183,19 +171,13 @@ INSERT INTO `utilisateur` (`utilisateur_id`, `nom`, `prenom`, `telephone`, `mail
 --
 
 --
--- Index pour la table `affectation`
+-- Index pour la table `assignement`
 --
-ALTER TABLE `affectation`
-  ADD PRIMARY KEY (`affectation_id`),
+ALTER TABLE `assignement`
+  ADD PRIMARY KEY (`assignement_id`),
   ADD KEY `fk_medecin_id` (`medecin_id`),
   ADD KEY `fk_centre_id` (`centre_id`),
   ADD KEY `fk_specialite_id` (`specialite_id`) USING BTREE;
-
---
--- Index pour la table `agenda`
---
-ALTER TABLE `agenda`
-  ADD KEY (`affectation_id`);
 
 --
 -- Index pour la table `centre`
@@ -210,6 +192,7 @@ ALTER TABLE `rdv`
   ADD PRIMARY KEY (`rdv_id`),
   ADD KEY `fk_centre_id` (`centre_id`),
   ADD KEY `fk_medecin_id` (`medecin_id`),
+  ADD KEY `fk_specialite_id` (`specialite_id`),
   ADD KEY `fk_patient_id` (`patient_id`);
 
 --
@@ -230,10 +213,10 @@ ALTER TABLE `utilisateur`
 --
 
 --
--- AUTO_INCREMENT pour la table `affectation`
+-- AUTO_INCREMENT pour la table `assignement`
 --
-ALTER TABLE `affectation`
-  MODIFY `affectation_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=14;
+ALTER TABLE `assignement`
+  MODIFY `assignement_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=14;
 
 --
 -- AUTO_INCREMENT pour la table `centre`
@@ -262,15 +245,11 @@ ALTER TABLE `utilisateur`
 --
 -- Contraintes pour les tables déchargées
 --
+
 --
--- Contraintes pour la table `agenda`
+-- Contraintes pour la table `assignement`
 --
-ALTER TABLE `agenda`
-  ADD CONSTRAINT `fk_assignement_affectation` FOREIGN KEY (`affectation_id`) REFERENCES `affectation` (`affectation_id`) ON DELETE CASCADE ON UPDATE CASCADE;
---
--- Contraintes pour la table `affectation`
---
-ALTER TABLE `affectation`
+ALTER TABLE `assignement`
   ADD CONSTRAINT `fk_assignement_centre_id` FOREIGN KEY (`centre_id`) REFERENCES `centre` (`centre_id`) ON DELETE CASCADE ON UPDATE CASCADE,
   ADD CONSTRAINT `fk_assignement_medecin_id` FOREIGN KEY (`medecin_id`) REFERENCES `utilisateur` (`utilisateur_id`) ON DELETE CASCADE ON UPDATE CASCADE,
   ADD CONSTRAINT `fk_assignement_specialite_id` FOREIGN KEY (`specialite_id`) REFERENCES `specialite` (`specialite_id`) ON DELETE CASCADE ON UPDATE CASCADE;
@@ -281,6 +260,7 @@ ALTER TABLE `affectation`
 ALTER TABLE `rdv`
   ADD CONSTRAINT `fk_rdv_centre_id` FOREIGN KEY (`centre_id`) REFERENCES `centre` (`centre_id`) ON DELETE CASCADE ON UPDATE CASCADE,
   ADD CONSTRAINT `fk_rdv_medecin_id` FOREIGN KEY (`medecin_id`) REFERENCES `utilisateur` (`utilisateur_id`) ON DELETE CASCADE ON UPDATE CASCADE,
+  ADD CONSTRAINT `fk_rdv_specialite_id` FOREIGN KEY (`specialite_id`) REFERENCES `specialite` (`specialite_id`) ON DELETE CASCADE ON UPDATE CASCADE,
   ADD CONSTRAINT `fk_rdv_patient_id` FOREIGN KEY (`patient_id`) REFERENCES `utilisateur` (`utilisateur_id`) ON DELETE CASCADE ON UPDATE CASCADE;
 COMMIT;
 

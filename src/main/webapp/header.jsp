@@ -32,7 +32,7 @@
 					<ul class="dropdown-menu">
 						<li><a class="dropdown-item" href="<c:url value='/reservation' />">Prendre un
 								rendez-vous</a></li>
-						<li><a class="dropdown-item" href="#">Gérer mes
+						<li><a class="dropdown-item" href="<c:url value='/visualisationrdv' />">Gérer mes
 								rendez-vous</a></li>
 					</ul></li>
 				<%}

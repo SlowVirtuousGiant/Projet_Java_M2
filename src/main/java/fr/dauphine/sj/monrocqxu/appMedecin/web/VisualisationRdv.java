@@ -18,6 +18,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import fr.dauphine.sj.monrocqxu.appMedecin.dao.AffectationDao;
 import fr.dauphine.sj.monrocqxu.appMedecin.dao.CentreDao;
+import fr.dauphine.sj.monrocqxu.appMedecin.dao.RdvDao;
 import fr.dauphine.sj.monrocqxu.appMedecin.dao.SpecialiteDao;
 import fr.dauphine.sj.monrocqxu.appMedecin.dao.UtilisateurDao;
 import fr.dauphine.sj.monrocqxu.appMedecin.model.Affectation;
@@ -30,6 +31,7 @@ public class VisualisationRdv extends HttpServlet{
 	private UtilisateurDao utilisateurDao;
 	private AffectationDao affectationDao;
 	private SpecialiteDao specialiteDao;
+	private RdvDao rdvDao;
 	ArrayList<Affectation> resaffectation = new ArrayList<Affectation>();
 
 	@Override
@@ -41,14 +43,16 @@ public class VisualisationRdv extends HttpServlet{
 				centreDao = new CentreDao();
 				utilisateurDao = new UtilisateurDao();
 				specialiteDao = new SpecialiteDao();
+				rdvDao  = new RdvDao();
+				
+				request.setAttribute("rdvs", rdvDao.getRdv(utilisateur.getId()));
+				
+				System.out.println(rdvDao.getRdv(utilisateur.getId()));
 
 				request.setAttribute("specialites", specialiteDao.getAllSpecialite());
 				request.setAttribute("centres", centreDao.getAllCentre());
-				this.getServletContext().getRequestDispatcher("/reservation.jsp").forward(request, response);
-//				System.out.println("centre : ");
-//				System.out.println(centreDao.getAllCentre());
-//				System.out.println("medecin : ");
-//				System.out.println(utilisateurDao.getAllMedecin());
+				this.getServletContext().getRequestDispatcher("/visualisationrdv.jsp").forward(request, response);
+
 			} else {
 				response.sendRedirect(CHEMIN_ESPACE);
 			}
@@ -60,12 +64,11 @@ public class VisualisationRdv extends HttpServlet{
 	@Override
 	public void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		affectationDao = new AffectationDao();
-		// request.getParameter("sp_id").equals(affectation.getSpecialite_id())&&
-		// request.getParameter("ct_id").equals(affectation.getCentre_id()))
+
 		List<Affectation> affectations = findWithNom(request.getParameter("rechercheNom"));
 		request.setAttribute( "affectations", affectations);
 		
-		this.getServletContext().getRequestDispatcher("/reservation.jsp").forward( request, response );
+		this.getServletContext().getRequestDispatcher("/visualisationrdv.jsp").forward( request, response );
 		//response.sendRedirect(CHEMIN_RESERVATION);
 	}
 

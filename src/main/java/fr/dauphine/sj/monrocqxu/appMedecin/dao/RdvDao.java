@@ -6,6 +6,7 @@ import java.util.List;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
 
+import fr.dauphine.sj.monrocqxu.appMedecin.model.Affectation;
 import fr.dauphine.sj.monrocqxu.appMedecin.model.Centre;
 import fr.dauphine.sj.monrocqxu.appMedecin.model.Creneau;
 import fr.dauphine.sj.monrocqxu.appMedecin.model.Rdv;
@@ -20,21 +21,18 @@ public class RdvDao {
 //		this.session = HibernateUtil.getSessionFactory().openSession();
 //	}
 
-	public List<Rdv> getRdvActifPatient(int patient_id, int actif){
+	public List<Rdv> getRdvActifPatient(int patient_id){
 		Session session = HibernateUtil.getSessionFactory().openSession();
-		List<Rdv> rdvs = (List<Rdv>) session.createQuery("from rdv where patient_id = :id and actif = :actif")
+		List<Rdv> rdvs = (List<Rdv>) session.createQuery("from rdv where patient_id = :id and actif = 1")
 				.setParameter("patient_id", patient_id)
-				.setParameter("actif", actif)
 				.uniqueResult();
 		return rdvs;
 	}
 	
-	public List<Rdv> getRdvPatient(int patient_id){
+	public List<Rdv> getRdv(int patient_id){
 		Session session = HibernateUtil.getSessionFactory().openSession();
-		List<Rdv> rdvs = (List<Rdv>) session.createQuery("from rdv where patient_id = :id")
-				.setParameter("patient_id", patient_id)
-				.uniqueResult();
-		return rdvs;
+		List<Rdv> list = (List<Rdv>) session.createSQLQuery("SELECT * FROM rdv WHERE patient_id = :id").setParameter("id", patient_id).addEntity(Rdv.class).list();
+		return list;
 	}
 	
 	public List<Rdv> getRdvActifMedecin(int medecin_id, int actif){

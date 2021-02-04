@@ -2,6 +2,7 @@ package fr.dauphine.sj.monrocqxu.appMedecin.model;
 
 import java.io.Serializable;
 import java.sql.Date;
+import java.time.LocalDate;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -27,6 +28,7 @@ public class Rdv implements Serializable {
 	private boolean actif;
 	private String commentaire;
 	private int creneau;
+	private int specialite_id;
 	public int getId() {
 		return id;
 	}
@@ -74,6 +76,15 @@ public class Rdv implements Serializable {
 	}
 	public void setCreneau(int creneau) {
 		this.creneau = creneau;
+	}
+	public int getSpecialite_id() {
+		return specialite_id;
+	}
+	public void setSpecialite_id(int specialite_id) {
+		this.specialite_id = specialite_id;
+	}
+	public LocalDate convertToLocalDateViaSqlDate() {
+	    return new java.sql.Date(this.date.getTime()).toLocalDate();
 	}
 	
 }

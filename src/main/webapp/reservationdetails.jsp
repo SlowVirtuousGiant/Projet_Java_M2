@@ -79,17 +79,42 @@
 					</div>
 				</div>
 				<div class="col-5 mt-3">
+								<%
+				String[] idaffectation = request.getQueryString().split("=");
+				Affectation affectation = new Affectation();
+				AffectationDao affectationDao = new AffectationDao();
+				affectation = affectationDao.getAffectationByID(Integer.parseInt(idaffectation[1]));
+				Utilisateur medecin = new Utilisateur();
+				UtilisateurDao utilisateurDao = new UtilisateurDao();
+				medecin = utilisateurDao.getUtilisateurByID(affectation.getMedecin_id());
+				Centre centre = new Centre();
+				CentreDao centreDao = new CentreDao();
+				centre = centreDao.getCentreByID(affectation.getCentre_id());
+				Specialite specialite = new Specialite();
+				SpecialiteDao specialiteDao = new SpecialiteDao();
+				specialite = specialiteDao.getSpecialiteByID(affectation.getSpecialite_id());
+				
+				System.out.println(Integer.parseInt(idaffectation[1]));
+				System.out.println(medecin.getNom());
+				System.out.println(medecin.getPrenom());
+				System.out.println(centre.getNom());
+				System.out.println(centre.getAdresse());
+				System.out.println(specialite.getSpecialite());
+				%>
 					<h5>
-						Médecin : <strong class="text-value">Dr.${medecin.nom}</strong>
+						Médecin : <strong class="text-value">Dr.<%=medecin.getNom()%> <%=medecin.getPrenom() %></strong>
 					</h5>
 					<h5>
-						Centre : <strong class="text-value">Centre ${centre.nom }</strong>
+					Specialité : <strong class="text-value"><%=specialite.getSpecialite() %></strong>
 					</h5>
 					<h5>
-						Adresse : <strong class="text-value">Adresse ${centre.adresse }</strong>
+						Centre : <strong class="text-value"> <%=centre.getNom() %></strong>
 					</h5>
 					<h5>
-						Téléphone : <strong class="text-value">${centre.telephone }</strong>
+						Adresse : <strong class="text-value"> <%=centre.getAdresse() %></strong>
+					</h5>
+					<h5>
+						Téléphone : <strong class="text-value"> <%=centre.getTelephone() %> </strong>
 					</h5>
 					<div class="tab-content mt-4">
 						<div class="tab-pane fade show active" id="red">
@@ -98,7 +123,7 @@
 								<div class="card-body">
 									<h5 class="card-title">Le Date à h</h5>
 									<p class="card-text">Après votre validation, le rendez-vous
-										avec le Dr.${medecin.nom} sera pris en compte.</p>
+										avec le Dr.<%=medecin.getNom()%> sera pris en compte.</p>
 									<p class="card-text">Vous allez reçevoir un mail de
 										confirmation et un mail de rappel un jour avant le
 										rendez-vous.</p>
