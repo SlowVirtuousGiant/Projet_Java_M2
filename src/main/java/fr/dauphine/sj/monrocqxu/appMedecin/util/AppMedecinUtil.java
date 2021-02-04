@@ -18,6 +18,7 @@ public class AppMedecinUtil {
 	public static final String CHEMIN_RACINE = "/appMedecin/";
 	public static final String CHEMIN_PROFIL = "/appMedecin/profil";
 	public static final String CHEMIN_MODIFICATION = "/appMedecin/modification";
+	public static final String CHEMIN_RESERVATIONDE = "/appMedecin/reservationdetails";
 	
 	//Mail
 	public static final String MAIL_HOST = "localhost";//Utilisation FAKESMTP

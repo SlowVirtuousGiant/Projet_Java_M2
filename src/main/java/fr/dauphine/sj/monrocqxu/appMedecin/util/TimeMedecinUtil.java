@@ -12,12 +12,16 @@ public class TimeMedecinUtil {
 	
 	public ArrayList<String> getNext20Days(){
 		ArrayList<String> res = new ArrayList<String>();
-		LocalDate currentDate =  LocalDate.now();
+		LocalDate currentDate = LocalDate.now();
 		for(int i = 0; i < 20; i++) {
 			currentDate = currentDate.plusDays(1);
 			res.add(currentDate.format(DateTimeFormatter.ofPattern("dd/MM/yyyy")));
 		}
 		return res;
+	}
+	
+	public String getFirstRdvDay() {
+		return LocalDate.now().plusDays(1).format(DateTimeFormatter.ofPattern("dd/MM/yyyy"));
 	}
 	
 }
