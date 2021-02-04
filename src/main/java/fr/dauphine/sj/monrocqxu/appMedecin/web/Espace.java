@@ -15,9 +15,9 @@ import javax.servlet.http.HttpServletResponse;
 
 import com.mysql.jdbc.TimeUtil;
 
-import fr.dauphine.sj.monrocqxu.appMedecin.dao.AssignementDao;
+import fr.dauphine.sj.monrocqxu.appMedecin.dao.AffectationDao;
 import fr.dauphine.sj.monrocqxu.appMedecin.dao.UtilisateurDao;
-import fr.dauphine.sj.monrocqxu.appMedecin.model.Assignement;
+import fr.dauphine.sj.monrocqxu.appMedecin.model.Affectation;
 import fr.dauphine.sj.monrocqxu.appMedecin.model.Creneau;
 import fr.dauphine.sj.monrocqxu.appMedecin.util.TimeMedecinUtil;
 

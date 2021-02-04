@@ -80,16 +80,16 @@
 				</div>
 				<div class="col-5 mt-3">
 					<h5>
-						Médecin : <strong class="text-value">Dr.</strong>
+						Médecin : <strong class="text-value">Dr.${medecin.nom}</strong>
 					</h5>
 					<h5>
-						Centre : <strong class="text-value">Centre</strong>
+						Centre : <strong class="text-value">Centre ${centre.nom }</strong>
 					</h5>
 					<h5>
-						Adresse : <strong class="text-value">Adresse</strong>
+						Adresse : <strong class="text-value">Adresse ${centre.adresse }</strong>
 					</h5>
 					<h5>
-						Téléphone : <strong class="text-value">Téléphone</strong>
+						Téléphone : <strong class="text-value">${centre.telephone }</strong>
 					</h5>
 					<div class="tab-content mt-4">
 						<div class="tab-pane fade show active" id="red">
@@ -98,7 +98,7 @@
 								<div class="card-body">
 									<h5 class="card-title">Le Date à h</h5>
 									<p class="card-text">Après votre validation, le rendez-vous
-										avec le Dr. ""nom"" sera pris en compte.</p>
+										avec le Dr.${medecin.nom} sera pris en compte.</p>
 									<p class="card-text">Vous allez reçevoir un mail de
 										confirmation et un mail de rappel un jour avant le
 										rendez-vous.</p>

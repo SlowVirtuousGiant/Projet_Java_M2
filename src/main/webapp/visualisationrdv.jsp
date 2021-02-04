@@ -56,12 +56,14 @@
 					<%
 						SpecialiteDao specialiteDao = new SpecialiteDao();
 
-					List<Assignement> assignements = (List<Assignement>) request.getAttribute("assignements");
-					if (assignements != null) {
-						if (assignements.size() == 0) { %>
-							<h4 class="mb-5 mt-4 text-center heading">Désolé nous n'avons trouvé aucun résultat pour votre recherche.</h4>
-						<%} else {
+								List<Affectation> assignements = (List<Affectation>) request.getAttribute("assignements");
+								if (assignements != null) {
+									if (assignements.size() == 0) {
 					%>
+							<h4 class="mb-5 mt-4 text-center heading">Désolé nous n'avons trouvé aucun résultat pour votre recherche.</h4>
+						<%
+							} else {
+						%>
 					<h2 class="mb-5 mt-4 text-center heading">Résultat de la
 						recherche</h2>
 					<div class="row justify-content-center mb-5">
@@ -80,7 +82,7 @@
 								<tbody>
 
 									<%
-										for (Assignement as : assignements) {
+										for (Affectation as : assignements) {
 									%>
 									<%
 										Utilisateur medecin = utilisateurDao.getUtilisateurByID(as.getMedecin_id());
