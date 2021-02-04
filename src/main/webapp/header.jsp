@@ -37,11 +37,11 @@
 					</ul></li>
 				<%}
 				if(!role.equals("ADMIN")){%>
-				<li class="nav-item"><a class="nav-link ${page.endsWith('/profil') ? 'active' : ''} }" 
+				<li class="nav-item"><a class="nav-link ${page.endsWith('/profil') ? 'active' : ''}" 
 					href="<c:url value='/profil' />">Mon profil</a></li>
 				<% }
 				if(role.equals("MEDECIN")){ %>
-				<li class="nav-item"><a class="nav-link" href="#">Gérer mon
+				<li class="nav-item"><a class="nav-link ${page.endsWith('/agenda') ? 'active' : ''}" href="<c:url value='/agenda' />">Gérer mon
 						agenda</a></li>
 				<%}
 				if(role.equals("ADMIN")){%>
