@@ -13,10 +13,9 @@
 <link rel="stylesheet" href="css/style.css">
 </head>
 <body>
-
 	<%@include file="header.jsp"%>
 
-	<div class="container">
+	<div class="container mb-5">
 		<div class="col-md-12 col-10">
 			<h2 class="mb-4 mt-5 text-center heading">Recherche</h2>
 			<form method="post" action="<c:url value='/reservation' />">
@@ -58,9 +57,12 @@
 
 					List<Assignement> assignements = (List<Assignement>) request.getAttribute("assignements");
 					if (assignements != null) {
-						if (assignements.size() == 0) { %>
-							<h4 class="mb-5 mt-4 text-center heading">Désolé nous n'avons trouvé aucun résultat pour votre recherche.</h4>
-						<%} else {
+						if (assignements.size() == 0) {
+					%>
+					<h4 class="mb-5 mt-4 text-center heading">Désolé nous n'avons
+						trouvé aucun résultat pour votre recherche.</h4>
+					<%
+						} else {
 					%>
 					<h2 class="mb-5 mt-4 text-center heading">Résultat de la
 						recherche</h2>
@@ -95,8 +97,7 @@
 										<td><%=centre.getNom()%></td>
 										<td><%=centre.getAdresse() + " " + centre.getVille() + " " + centre.getCode_postal()%></td>
 										<td><%=centre.getTelephone()%></td>
-										<td><a href="/details"
-												class="btn btn-success">Consulter</a></td>
+										<td><a href="/details" class="btn btn-success">Consulter</a></td>
 									</tr>
 									<%
 										}

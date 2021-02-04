@@ -1,9 +1,4 @@
 @font-face {
-    font-family: "Helvetica black";
-    src: url("helvetica_black1.ttf")
-}
-
-@font-face {
     font-family: "Bitter";
     src: url("Bitter.ttf")
    }
@@ -162,4 +157,23 @@ button:focus {
     overflow-y:scroll;
     overflow-x: hidden;
     -webkit-overflow-scrolling: touch;
+}
+
+#footer{
+	background: #2e8b57 !important;
+}
+
+#footer {
+  position: absolute;
+  bottom: 0;
+  width: 100%;
+}
+
+#page-container {
+  position: relative;
+  min-height: 100vh;
+}
+
+.desc{
+color: rgba(255,255,255,.70);
 }

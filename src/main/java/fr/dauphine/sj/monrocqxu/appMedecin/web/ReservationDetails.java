@@ -24,9 +24,11 @@ import fr.dauphine.sj.monrocqxu.appMedecin.dao.UtilisateurDao;
 import fr.dauphine.sj.monrocqxu.appMedecin.model.Assignement;
 import fr.dauphine.sj.monrocqxu.appMedecin.model.Rdv;
 import fr.dauphine.sj.monrocqxu.appMedecin.model.Utilisateur;
+import fr.dauphine.sj.monrocqxu.appMedecin.util.TimeMedecinUtil;
 
 public class ReservationDetails extends HttpServlet {
-
+	private static final long serialVersionUID = 1L;
+	
 	private ArrayList<String> erreurs = new ArrayList<String>();
 	private CentreDao centreDao;
 	private UtilisateurDao utilisateurDao;
@@ -35,6 +37,7 @@ public class ReservationDetails extends HttpServlet {
 	private Rdv rdv;
 	private RdvDao rdvDao;
 	ArrayList<Assignement> resAssignement = new ArrayList<Assignement>();
+	private ArrayList<String> datesPossibles;
 
 	@Override
 	public void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
@@ -46,8 +49,13 @@ public class ReservationDetails extends HttpServlet {
 				utilisateurDao = new UtilisateurDao();
 				specialiteDao = new SpecialiteDao();
 
-				request.setAttribute("specialites", specialiteDao.getAllSpecialite());
-				request.setAttribute("centres", centreDao.getAllCentre());
+				//request.setAttribute("specialites", specialiteDao.getAllSpecialite());//charger dans un EJB
+				//request.setAttribute("centres", centreDao.getAllCentre());
+				TimeMedecinUtil timeMedecinUtil = new TimeMedecinUtil();
+				datesPossibles = timeMedecinUtil.getNext20Days();
+				System.out.println(datesPossibles);
+				request.setAttribute("madate", datesPossibles);
+				
 				this.getServletContext().getRequestDispatcher("/reservation.jsp").forward(request, response);
 			} else {
 				response.sendRedirect(CHEMIN_ESPACE);
