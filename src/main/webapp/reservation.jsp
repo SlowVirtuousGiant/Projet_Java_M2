@@ -97,7 +97,7 @@
 										<td><%=centre.getNom()%></td>
 										<td><%=centre.getAdresse() + " " + centre.getVille() + " " + centre.getCode_postal()%></td>
 										<td><%=centre.getTelephone()%></td>
-										<td><a href="/details" class="btn btn-success">Consulter</a></td>
+										<td><a href="<c:url value='<%= "/reservationdetails?idassignement=" + as.getId() %>' />" class="btn btn-success">Consulter</a></td>
 									</tr>
 									<%
 										}

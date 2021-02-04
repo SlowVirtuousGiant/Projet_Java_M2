@@ -56,7 +56,7 @@ public class ReservationDetails extends HttpServlet {
 				System.out.println(datesPossibles);
 				request.setAttribute("madate", datesPossibles);
 				
-				this.getServletContext().getRequestDispatcher("/reservation.jsp").forward(request, response);
+				this.getServletContext().getRequestDispatcher("/reservationdetails.jsp").forward(request, response);
 			} else {
 				response.sendRedirect(CHEMIN_ESPACE);
 			}
