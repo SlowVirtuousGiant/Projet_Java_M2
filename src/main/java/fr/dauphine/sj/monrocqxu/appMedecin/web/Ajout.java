@@ -12,11 +12,11 @@ import javax.servlet.http.HttpServletResponse;
 
 import org.mindrot.jbcrypt.BCrypt;
 
-import fr.dauphine.sj.monrocqxu.appMedecin.dao.AssignementDao;
+import fr.dauphine.sj.monrocqxu.appMedecin.dao.AffectationDao;
 import fr.dauphine.sj.monrocqxu.appMedecin.dao.CentreDao;
 import fr.dauphine.sj.monrocqxu.appMedecin.dao.SpecialiteDao;
 import fr.dauphine.sj.monrocqxu.appMedecin.dao.UtilisateurDao;
-import fr.dauphine.sj.monrocqxu.appMedecin.model.Assignement;
+import fr.dauphine.sj.monrocqxu.appMedecin.model.Affectation;
 import fr.dauphine.sj.monrocqxu.appMedecin.model.Centre;
 import fr.dauphine.sj.monrocqxu.appMedecin.model.Utilisateur;
 
@@ -63,21 +63,21 @@ public class Ajout extends HttpServlet {
 		utilisateur.setActif(true);
 
 		boolean result = utilisateurDao.ajouter(utilisateur);
-		AssignementDao assignementDao = new AssignementDao();
-		Assignement assignement = new Assignement();
+		AffectationDao affectationDao = new AffectationDao();
+		Affectation affectation = new Affectation();
 
-		System.out.println("Ajout médecin assignement");
 		if (result) {
 			List<Centre> moncentre = centreDao.getAllCentre();
 			for (Centre centre : moncentre) {
 
 				String id = String.valueOf(centre.getId());
 				if (request.getParameter("centre_" + id) != null) {
-					assignement.setCentre_id(centre.getId());
+					affectation.setCentre_id(centre.getId());
 					System.out.println(centre.getId());
-					assignement.setMedecin_id(utilisateur.getId());
-					assignement.setSpecialite_id(Integer.valueOf(request.getParameter("sp_"+id)));
-					assignementDao.ajouter(assignement);
+					affectation.setMedecin_id(utilisateur.getId());
+					affectation.setSpecialite_id(Integer.valueOf(request.getParameter("sp_"+id)));
+					affectation.setDisponible(false);
+					affectationDao.ajouter(affectation);
 				}
 			}
 		}

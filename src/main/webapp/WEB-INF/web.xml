@@ -100,4 +100,20 @@
     <servlet-name>ReservationDetails</servlet-name>
     <url-pattern>/reservationdetails</url-pattern>
   </servlet-mapping>
+      <servlet>
+    <servlet-name>Agenda</servlet-name>
+    <servlet-class>fr.dauphine.sj.monrocqxu.appMedecin.web.Agenda</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>Agenda</servlet-name>
+    <url-pattern>/agenda</url-pattern>
+  </servlet-mapping>
+      <servlet>
+    <servlet-name>ModificationAgenda</servlet-name>
+    <servlet-class>fr.dauphine.sj.monrocqxu.appMedecin.web.ModificationAgenda</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>ModificationAgenda</servlet-name>
+    <url-pattern>/modificationagenda</url-pattern>
+  </servlet-mapping>
 </web-app>

@@ -10,17 +10,18 @@ import javax.persistence.Id;
 import javax.persistence.Table;
 
 @Entity
-@Table(name = "assignement")
-public class Assignement implements Serializable{
+@Table(name = "affectation")
+public class Affectation implements Serializable{
 	private static final long serialVersionUID = 1L;
 
  	@Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "assignement_id", unique = true, nullable = false)
+    @Column(name = "affectation_id", unique = true, nullable = false)
     private int id;
  	private int medecin_id;
  	private int centre_id;
  	private int specialite_id;
+ 	private boolean disponible;
  	
 	public int getId() {
 		return id;
@@ -46,6 +47,14 @@ public class Assignement implements Serializable{
 	public void setSpecialite_id(int specialite_id) {
 		this.specialite_id = specialite_id;
 	}
+	public boolean isDisponible() {
+		return disponible;
+	}
+	public void setDisponible(boolean disponible) {
+		this.disponible = disponible;
+	}
+	
+	
 	
 	
  	

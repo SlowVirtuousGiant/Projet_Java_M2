@@ -8,7 +8,7 @@ import org.hibernate.cfg.AvailableSettings;
 import org.hibernate.cfg.Configuration;
 import org.hibernate.service.ServiceRegistry;
 
-import fr.dauphine.sj.monrocqxu.appMedecin.model.Assignement;
+import fr.dauphine.sj.monrocqxu.appMedecin.model.Affectation;
 import fr.dauphine.sj.monrocqxu.appMedecin.model.Centre;
 import fr.dauphine.sj.monrocqxu.appMedecin.model.Rdv;
 import fr.dauphine.sj.monrocqxu.appMedecin.model.Specialite;
@@ -45,7 +45,7 @@ public class HibernateUtil {
                 configuration.addAnnotatedClass(Utilisateur.class);
                 configuration.addAnnotatedClass(Centre.class);
                 configuration.addAnnotatedClass(Rdv.class);
-                configuration.addAnnotatedClass(Assignement.class);
+                configuration.addAnnotatedClass(Affectation.class);
                 configuration.addAnnotatedClass(Specialite.class);
                 
                 ServiceRegistry serviceRegistry = new StandardServiceRegistryBuilder()

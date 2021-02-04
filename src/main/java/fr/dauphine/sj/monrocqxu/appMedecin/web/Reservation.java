@@ -16,11 +16,11 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import fr.dauphine.sj.monrocqxu.appMedecin.dao.AssignementDao;
+import fr.dauphine.sj.monrocqxu.appMedecin.dao.AffectationDao;
 import fr.dauphine.sj.monrocqxu.appMedecin.dao.CentreDao;
 import fr.dauphine.sj.monrocqxu.appMedecin.dao.SpecialiteDao;
 import fr.dauphine.sj.monrocqxu.appMedecin.dao.UtilisateurDao;
-import fr.dauphine.sj.monrocqxu.appMedecin.model.Assignement;
+import fr.dauphine.sj.monrocqxu.appMedecin.model.Affectation;
 import fr.dauphine.sj.monrocqxu.appMedecin.model.Utilisateur;
 
 public class Reservation extends HttpServlet {
@@ -28,9 +28,9 @@ public class Reservation extends HttpServlet {
 	
 	private CentreDao centreDao;
 	private UtilisateurDao utilisateurDao;
-	private AssignementDao assignementDao;
+	private AffectationDao affectationDao;
 	private SpecialiteDao specialiteDao;
-	ArrayList<Assignement> resAssignement = new ArrayList<Assignement>();
+	ArrayList<Affectation> resaffectation = new ArrayList<Affectation>();
 
 	@Override
 	public void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
@@ -59,22 +59,22 @@ public class Reservation extends HttpServlet {
 
 	@Override
 	public void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		assignementDao = new AssignementDao();
-		// request.getParameter("sp_id").equals(assignement.getSpecialite_id())&&
-		// request.getParameter("ct_id").equals(assignement.getCentre_id()))
-		List<Assignement> assignements = findWithNom(request.getParameter("rechercheNom"));
-		request.setAttribute( "assignements", assignements);
+		affectationDao = new AffectationDao();
+		// request.getParameter("sp_id").equals(affectation.getSpecialite_id())&&
+		// request.getParameter("ct_id").equals(affectation.getCentre_id()))
+		List<Affectation> affectations = findWithNom(request.getParameter("rechercheNom"));
+		request.setAttribute( "affectations", affectations);
 		
 		this.getServletContext().getRequestDispatcher("/reservation.jsp").forward( request, response );
 		//response.sendRedirect(CHEMIN_RESERVATION);
 	}
 
-	public List<Assignement> findWithNom(String search) {
+	public List<Affectation> findWithNom(String search) {
 		HashMap<Integer, String> medecins = utilisateurDao.getAllMedecinName();
-		List<Assignement> res = new ArrayList<Assignement>();
+		List<Affectation> res = new ArrayList<Affectation>();
 		for(Entry<Integer, String> entry : medecins.entrySet()) {
 		    if(entry.getValue().contains(search)) {
-		    	res.addAll(assignementDao.getAssignement(entry.getKey()));
+		    	res.addAll(affectationDao.getAffectation(entry.getKey()));
 		    }
 		}
 		return res;
