@@ -2,7 +2,8 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ page import="fr.dauphine.sj.monrocqxu.appMedecin.model.*"%>
 <%@ page import="fr.dauphine.sj.monrocqxu.appMedecin.dao.*"%>
-<%@ page import="java.util.List"%>
+<%@ page import="fr.dauphine.sj.monrocqxu.appMedecin.util.TimeMedecinUtil"%>
+<%@ page import="java.util.ArrayList"%>
 
 <!DOCTYPE html>
 <html>
@@ -22,13 +23,21 @@
 
 			<div class="row justify-content-center mt-5">
 				<div class="col-2">
+					<form id="dateForm" method="post" action="<c:url value='/reservationdetails'/>">
 					<label class="form-control-label text-muted">Date de votre
 						consultation : </label> <select name="date_id" class="form-select">
-
-						<c:forEach items="${madate}" var="date">
-							<option value="${date}">${date}</option>
-						</c:forEach>
+						<%
+						TimeMedecinUtil timeMedecinUtil = new TimeMedecinUtil();
+						ArrayList<String> datesPossibles = timeMedecinUtil.getNext20Days();
+						String sDate = (String) request.getAttribute("selectedDate");
+						
+						for(String date: datesPossibles){
+						%>
+							<option <%=(date.equals(sDate) ? "selected":"")%> value="<%=date%>"> <%=date%></option>
+						<%}
+						%>
 					</select>
+					</form>
 					<div class="list-group mt-4" id="list-tab" role="tablist">
 						<a class="list-group-item list-group-item-action active"
 							href="#red" data-toggle="tab">Date 1</a> <a
@@ -144,6 +153,11 @@
 				$(this).removeClass("active show");
 		});
 	});
+	$('select').on('change', function() {
+			$('#dateForm').submit();
+		});
+
+	
 </script>
 
 </html>
