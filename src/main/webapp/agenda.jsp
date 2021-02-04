@@ -1,5 +1,11 @@
+<%@page import="fr.dauphine.sj.monrocqxu.appMedecin.model.Creneau"%>
 <%@ page pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
+<%@ page
+	import="fr.dauphine.sj.monrocqxu.appMedecin.util.TimeMedecinUtil"%>
+<%@ page import="java.util.ArrayList"%>
+<%@ page import="java.util.HashMap"%>
 
 <!DOCTYPE html>
 <html>
@@ -17,113 +23,101 @@
 		<div class="container">
 			<div class="col-md-12 col-10">
 
-				<h2 class="mb-5 mt-5 text-center heading">Votre agenda</h2>
-				<div class="row register-form justify-content-center">
-					<c:forEach items="${erreur}" var="item">
-						<div class="alert alert-danger" role="alert">
-							${item}<br>
-						</div>
-					</c:forEach>
+				<h2 class="mt-5 text-center heading">Votre agenda</h2>
+				<div class="row justify-content-center">
 					<div class="col-md-8">
-						<h5>
-							Adresse mail : <strong class="text-value">${sessionScope.utilisateur.mail}</strong>
-						</h5>
-						<h5>
-							Année de naissance : <strong class="text-value">${sessionScope.utilisateur.naissance}</strong>
-						</h5>
-						<h5>
-							Téléphone : <strong class="text-value">${sessionScope.utilisateur.telephone}</strong>
-						</h5>
-						<h5>
-							Sexe : <strong class="text-value">${sessionScope.utilisateur.sexe}</strong>
-						</h5>
-						<h5>
-							Adresse : <strong class="text-value">${sessionScope.utilisateur.adresse}</strong>
-						</h5>
-						<h5>
-							Code postal : <strong class="text-value">${sessionScope.utilisateur.code_postal}</strong>
-						</h5>
-						<h5>
-							Ville : <strong class="text-value">${sessionScope.utilisateur.ville}</strong>
-						</h5>
 
-						<h5 class="mt-5">
-							Vous êtes <strong class="text-value">${sessionScope.utilisateur.role}</strong>
-						</h5>
-					</div>
-				</div>
-				<div class="row justify-content-center mt-5">
-					<div class="col-md-4">
-						<a href="<c:url value='/modification' />" type="submit"
-							class=" btn  btn-warning">Modifier mon profil</a>
-					</div>
-					<div class="col-md-4">
-						<a class=" btn  btn-danger" data-bs-toggle="modal"
-							data-bs-target="#supprModal">Désactiver mon compte</a>
-					</div>
-
-				</div>
-
-
-				<!-- Modal -->
-				<div class="modal fade" id="supprModal" data-bs-backdrop="static"
-					tabindex="-1" aria-labelledby="exampleModalLabel"
-					aria-hidden="true">
-					<form method="post" action="<%=request.getContextPath()%>/profil">
-						<div class="modal-dialog modal-dialog-centered">
-							<div class="modal-content">
-								<div class="modal-header">
-									<h5 class="modal-title" id="exampleModalLabel">Désactivation
-										de votre compte</h5>
-									<button type="button" class="btn-close" data-bs-dismiss="modal"
-										aria-label="Close"></button>
-								</div>
-								<div class="modal-body">
-
-									<p>Attention la désactivation de votre compte est
-										irréversible.</p>
-									<p>Après vérification de votre mot de passe vous recevrez
-										un lien de confirmation de la désactivation sur votre adresse
-										mail.</p>
+						<c:choose>
+							<c:when test="${fn:length(centres) gt 50}">
+								<label class="form-control-label text-muted mt-3">Vos
+									centres : </label>
+								<select name="centre_id" class="form-select">
+									<c:forEach items="${centres}" var="centre">
+										<option value="${centre.id}"
+											${centre.id == 1 ? 'selected' : ''}>${centre.nom}</option>
+									</c:forEach>
+								</select>
+							</c:when>
+							<c:otherwise>
+								<c:if test="${empty sessionScope.selectedCentre}">
+									<c:set var="selectedCentre" value="${centres[0]}"
+										scope="session" />
 									<%
-										if (role.equals("PATIENT")) {
+										session.setAttribute("selectedWeek", TimeMedecinUtil.getCurrentWeek());
 									%>
-									<p>Votre compte sera désactivé et vos rendez-vous annulés.</p>
+								</c:if>
+							</c:otherwise>
+						</c:choose>
+					</div>
+					<c:if test="${!empty sessionScope.selectedCentre}">
+						<h4 class="text-center">${selectedCentre.nom}
+							<br> pour la semaine ${selectedWeek}
+						</h4>
+						<%
+							HashMap<String, ArrayList<String>> weeks = TimeMedecinUtil.getDatesByWeekNumber(4);
+
+						ArrayList<String> jours = weeks.get(session.getAttribute("selectedWeek"));
+						%>
+
+						<div class="col-md-8 mt-3 pb-5">
+							<table class="table table-bordered border-success table-hover">
+								<thead>
+									<tr>
+										<th>Horaires</th>
+										<%
+											for (String j : jours) {
+										%>
+										<th scope="col"><%=j%></th>
+										<%
+											}
+										%>
+									</tr>
+								</thead>
+								<tbody>
+									<%
+										for (int i = 1; i < 24; i++) {
+									%>
+									<tr>
+										<%
+											for (int j = 0; j < 8; j++) {
+											if (j == 0) {
+										%>
+										<td class=<%=i % 2 == 0 ? "horaire" : "horaire-alt"%>>
+											<%
+												Creneau c = Creneau.valeurIdCreneau(i);
+											out.println(c.name);
+											%>
+										</td>
+										<%
+											} else {
+										%>
+										<td></td>
+										<%
+											}
+										}
+										%>
+									</tr>
 									<%
 										}
 									%>
-
-									<%
-										if (role.equals("MEDECIN")) {
-									%>
-									<p>Veuillez annuler vos RDV avant de désactiver votre
-										compte.</p>
-									<%
-										}
-									%>
-
-
-									<div class="form-group">
-										<label class="form-control-label text-muted">Mot de
-											passe</label> <input id="inputMdp" name="motdepasse" type="password"
-											size="20" maxlength="60" class="form-control mb-1"
-											placeholder="Mot de passe" required>
-									</div>
-
-								</div>
-								<div class="modal-footer">
-									<button type="button" class="btn btn-secondary"
-										data-bs-dismiss="modal">Annuler</button>
-									<button type="submit" name="submit" value="submit"
-										class=" btn btn-outline-success">Confirmer</button>
-								</div>
-							</div>
+								</tbody>
+							</table>
 						</div>
-					</form>
+						<div class="col-md-8 mt-5">
+							<input
+								type="checkbox" id="reveal"> Agenda actif
+							<select name="centre_id" class="form-select mt-5">
+
+							</select> <a href="#" type="submit" class="btn btn-lg btn-warning mt-5">Editer votre agenda</a>
+						</div>
+
+					</c:if>
+
+
 				</div>
 			</div>
 		</div>
-		<%@include file="footer.jsp"%>
+
 	</div>
 </body>
 <script src="js/jquery-3.5.1.min.js"></script>

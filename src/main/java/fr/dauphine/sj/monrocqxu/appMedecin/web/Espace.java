@@ -34,8 +34,6 @@ public class Espace extends HttpServlet {
 			this.getServletContext().getRequestDispatcher("/espace.jsp").forward( request, response );
 		}
 		
-		Creneau c = Creneau.valeurIdCreneau(1);
-		System.out.println(c.name);
 	}
 
 }
