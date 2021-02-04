@@ -3,6 +3,8 @@ package fr.dauphine.sj.monrocqxu.appMedecin.web;
 import static fr.dauphine.sj.monrocqxu.appMedecin.util.AppMedecinUtil.*;
 
 import java.io.IOException;
+import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
@@ -11,9 +13,12 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import com.mysql.jdbc.TimeUtil;
+
 import fr.dauphine.sj.monrocqxu.appMedecin.dao.AssignementDao;
 import fr.dauphine.sj.monrocqxu.appMedecin.dao.UtilisateurDao;
 import fr.dauphine.sj.monrocqxu.appMedecin.model.Assignement;
+import fr.dauphine.sj.monrocqxu.appMedecin.util.TimeMedecinUtil;
 
 public class Espace extends HttpServlet {
 
@@ -27,9 +32,10 @@ public class Espace extends HttpServlet {
 		}else {
 			this.getServletContext().getRequestDispatcher("/espace.jsp").forward( request, response );
 		}
-		AssignementDao assignementDao = new AssignementDao();
-		List<Assignement> assignements = assignementDao.getAssignement(2);
-		System.out.println(assignements);
+		
+		TimeMedecinUtil medecinUtil = new TimeMedecinUtil();
+		ArrayList<String> dates =  medecinUtil.getNext20Days();
+		System.out.println(dates);
 	}
 
 }

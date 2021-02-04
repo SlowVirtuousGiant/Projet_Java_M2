@@ -24,8 +24,9 @@
 				<div class="col-2">
 					<label class="form-control-label text-muted">Date de votre
 						consultation : </label> <select name="date_id" class="form-select">
-						<c:forEach items="${specialites}" var="specia">
-							<option value="${specia.id}" ${specia.id == 1 ? 'selected' : ''}>${specia.specialite}</option>
+
+						<c:forEach items="${madate}" var="date">
+							<option value="${date}">${date}</option>
 						</c:forEach>
 					</select>
 					<div class="list-group mt-4" id="list-tab" role="tablist">
@@ -34,53 +35,38 @@
 							class="list-group-item list-group-item-action" href="#blue"
 							data-toggle="tab">Date 2</a> <a
 							class="list-group-item list-group-item-action" href="#green"
-							data-toggle="tab">Date 3</a>
-							<a
+							data-toggle="tab">Date 3</a> <a
+							class="list-group-item list-group-item-action" href="#green"
+							data-toggle="tab">Date 3</a> <a
+							class="list-group-item list-group-item-action" href="#green"
+							data-toggle="tab">Date 3</a> <a
+							class="list-group-item list-group-item-action" href="#green"
+							data-toggle="tab">Date 3</a> <a
+							class="list-group-item list-group-item-action" href="#green"
+							data-toggle="tab">Date 3</a> <a
+							class="list-group-item list-group-item-action" href="#green"
+							data-toggle="tab">Date 3</a> <a
+							class="list-group-item list-group-item-action" href="#green"
+							data-toggle="tab">Date 3</a> <a
+							class="list-group-item list-group-item-action" href="#green"
+							data-toggle="tab">Date 3</a> <a
+							class="list-group-item list-group-item-action" href="#green"
+							data-toggle="tab">Date 3</a> <a
+							class="list-group-item list-group-item-action" href="#green"
+							data-toggle="tab">Date 3</a> <a
+							class="list-group-item list-group-item-action" href="#green"
+							data-toggle="tab">Date 3</a> <a
+							class="list-group-item list-group-item-action" href="#green"
+							data-toggle="tab">Date 3</a> <a
+							class="list-group-item list-group-item-action" href="#green"
+							data-toggle="tab">Date 3</a> <a
+							class="list-group-item list-group-item-action" href="#green"
+							data-toggle="tab">Date 3</a> <a
+							class="list-group-item list-group-item-action" href="#green"
+							data-toggle="tab">Date 3</a> <a
 							class="list-group-item list-group-item-action" href="#green"
 							data-toggle="tab">Date 3</a>
-							<a
-							class="list-group-item list-group-item-action" href="#green"
-							data-toggle="tab">Date 3</a>
-							<a
-							class="list-group-item list-group-item-action" href="#green"
-							data-toggle="tab">Date 3</a>
-							<a
-							class="list-group-item list-group-item-action" href="#green"
-							data-toggle="tab">Date 3</a>
-							<a
-							class="list-group-item list-group-item-action" href="#green"
-							data-toggle="tab">Date 3</a>
-							<a
-							class="list-group-item list-group-item-action" href="#green"
-							data-toggle="tab">Date 3</a>
-							<a
-							class="list-group-item list-group-item-action" href="#green"
-							data-toggle="tab">Date 3</a>
-							<a
-							class="list-group-item list-group-item-action" href="#green"
-							data-toggle="tab">Date 3</a>
-							<a
-							class="list-group-item list-group-item-action" href="#green"
-							data-toggle="tab">Date 3</a>
-							<a
-							class="list-group-item list-group-item-action" href="#green"
-							data-toggle="tab">Date 3</a>
-							<a
-							class="list-group-item list-group-item-action" href="#green"
-							data-toggle="tab">Date 3</a>
-							<a
-							class="list-group-item list-group-item-action" href="#green"
-							data-toggle="tab">Date 3</a>
-							<a
-							class="list-group-item list-group-item-action" href="#green"
-							data-toggle="tab">Date 3</a>
-							<a
-							class="list-group-item list-group-item-action" href="#green"
-							data-toggle="tab">Date 3</a>
-							<a
-							class="list-group-item list-group-item-action" href="#green"
-							data-toggle="tab">Date 3</a>
-							
+
 					</div>
 				</div>
 				<div class="col-5 mt-3">

@@ -5,7 +5,8 @@ body {
     background: rgba(48,87,65,1);
     background: linear-gradient(0deg, rgba(48,87,65,1) 0%, rgba(46,139,87,1) 84%);
     background-repeat: no-repeat;
-    background-size: auto;
+    background-size: cover;
+    
 }
 
 input,
