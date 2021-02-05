@@ -17,10 +17,9 @@
 
 		<section>
 			<div class="container">
-
-				<h2>Bienvenue ${sessionScope.utilisateur.prenom}, vous êtes
-					${sessionScope.utilisateur.role}</h2>
-
+				<h2>Bienvenue <%= utilisateur.getPrenom() %></h2>
+				
+				<% if(utilisateur.getRole().equals("PATIENT") || utilisateur.getRole().equals("MEDECIN")){ %>
 				<h4 class="mt-5">Vos rendez-vous en cours</h4>
 
 				<div class="col-md-8">
@@ -32,6 +31,7 @@
 							un rendez-vous »</a>
 					</div>
 				</div>
+				<% }%>
 				<h4 class="mt-5">Vos anciens rendez-vous</h4>
 				<div class="col-md-8">
 					<ul class="list-group mt-3">
