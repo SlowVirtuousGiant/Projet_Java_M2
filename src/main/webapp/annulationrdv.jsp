@@ -14,7 +14,7 @@
 </head>
 <body>
 	<%@include file="header.jsp"%>
-Souhaitez-vous
+Souhaitez-vous annuler votre rendez-vous avec le Dr 
 
 </body>
 </html>

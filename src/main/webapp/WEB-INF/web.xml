@@ -127,4 +127,12 @@
 		<servlet-name>ModificationAgenda</servlet-name>
 		<url-pattern>/modificationagenda</url-pattern>
 	</servlet-mapping>
+		<servlet>
+		<servlet-name>AnnulationRdv</servlet-name>
+		<servlet-class>fr.dauphine.sj.monrocqxu.appMedecin.web.AnnulationRdv</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>AnnulationRdv</servlet-name>
+		<url-pattern>/annulationrdv</url-pattern>
+	</servlet-mapping>
 </web-app>
