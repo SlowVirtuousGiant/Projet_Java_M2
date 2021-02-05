@@ -76,7 +76,7 @@
 										<td><%=centre.getNom()%></td>
 										<td><%=centre.getAdresse() + " " + centre.getVille() + " " + centre.getCode_postal()%></td>
 										<td><%=centre.getTelephone()%></td>
-										<td class="text-nowrap"><%=rdv.convertToLocalDateViaSqlDate()%></td>
+										<td class="text-nowrap"><%=rdv.getDate()%></td>
 										<td><%=c.getName()%></td>
 										<td><a class="btn btn-success" href="<c:url value='<%= "/annulationrdv?idrdv=" + rdv.getId() %>' />">Annuler</a></td>
 										</div>

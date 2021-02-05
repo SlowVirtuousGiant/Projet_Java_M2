@@ -25,7 +25,7 @@ public class Rdv implements Serializable {
 	private int patient_id;
 	private int medecin_id;
 	private int centre_id;
-	private Date date;
+	private String date;
 	private boolean actif;
 	private String commentaire;
 	private int creneau;
@@ -54,10 +54,10 @@ public class Rdv implements Serializable {
 	public void setCentre_id(int centre_id) {
 		this.centre_id = centre_id;
 	}
-	public Date getDate() {
+	public String getDate() {
 		return date;
 	}
-	public void setDate(Date date) {
+	public void setDate(String date) {
 		this.date = date;
 	}
 	public boolean isActif() {
@@ -83,9 +83,6 @@ public class Rdv implements Serializable {
 	}
 	public void setSpecialite_id(int specialite_id) {
 		this.specialite_id = specialite_id;
-	}
-	public String convertToLocalDateViaSqlDate() {
-	    return new java.sql.Date(this.date.getTime()).toLocalDate().format(DateTimeFormatter.ofPattern("dd/MM/yyyy"));
 	}
 	
 }
