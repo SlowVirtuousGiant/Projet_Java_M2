@@ -3,6 +3,7 @@ package fr.dauphine.sj.monrocqxu.appMedecin.model;
 import java.io.Serializable;
 import java.sql.Date;
 import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -83,8 +84,8 @@ public class Rdv implements Serializable {
 	public void setSpecialite_id(int specialite_id) {
 		this.specialite_id = specialite_id;
 	}
-	public LocalDate convertToLocalDateViaSqlDate() {
-	    return new java.sql.Date(this.date.getTime()).toLocalDate();
+	public String convertToLocalDateViaSqlDate() {
+	    return new java.sql.Date(this.date.getTime()).toLocalDate().format(DateTimeFormatter.ofPattern("dd/MM/yyyy"));
 	}
 	
 }

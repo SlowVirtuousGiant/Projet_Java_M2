@@ -25,21 +25,21 @@ SET time_zone = "+00:00";
 -- --------------------------------------------------------
 
 --
--- Structure de la table `assignement`
+-- Structure de la table `affectation`
 --
 
-CREATE TABLE `assignement` (
-  `assignement_id` int(11) NOT NULL,
+CREATE TABLE `affectation` (
+  `affectation_id` int(11) NOT NULL,
   `medecin_id` int(11) NOT NULL,
   `centre_id` int(11) NOT NULL,
   `specialite_id` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
--- Déchargement des données de la table `assignement`
+-- Déchargement des données de la table `affectation`
 --
 
-INSERT INTO `assignement` (`assignement_id`, `medecin_id`, `centre_id`, `specialite_id`) VALUES
+INSERT INTO `affectation` (`affectation_id`, `medecin_id`, `centre_id`, `specialite_id`) VALUES
 (1, 4, 1, 1),
 (2, 4, 2, 3),
 (3, 4, 3, 8),
@@ -171,10 +171,10 @@ INSERT INTO `utilisateur` (`utilisateur_id`, `nom`, `prenom`, `telephone`, `mail
 --
 
 --
--- Index pour la table `assignement`
+-- Index pour la table `affectation`
 --
-ALTER TABLE `assignement`
-  ADD PRIMARY KEY (`assignement_id`),
+ALTER TABLE `affectation`
+  ADD PRIMARY KEY (`affectation_id`),
   ADD KEY `fk_medecin_id` (`medecin_id`),
   ADD KEY `fk_centre_id` (`centre_id`),
   ADD KEY `fk_specialite_id` (`specialite_id`) USING BTREE;
@@ -213,10 +213,10 @@ ALTER TABLE `utilisateur`
 --
 
 --
--- AUTO_INCREMENT pour la table `assignement`
+-- AUTO_INCREMENT pour la table `affectation`
 --
-ALTER TABLE `assignement`
-  MODIFY `assignement_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=14;
+ALTER TABLE `affectation`
+  MODIFY `affectation_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=14;
 
 --
 -- AUTO_INCREMENT pour la table `centre`
@@ -247,12 +247,12 @@ ALTER TABLE `utilisateur`
 --
 
 --
--- Contraintes pour la table `assignement`
+-- Contraintes pour la table `affectation`
 --
-ALTER TABLE `assignement`
-  ADD CONSTRAINT `fk_assignement_centre_id` FOREIGN KEY (`centre_id`) REFERENCES `centre` (`centre_id`) ON DELETE CASCADE ON UPDATE CASCADE,
-  ADD CONSTRAINT `fk_assignement_medecin_id` FOREIGN KEY (`medecin_id`) REFERENCES `utilisateur` (`utilisateur_id`) ON DELETE CASCADE ON UPDATE CASCADE,
-  ADD CONSTRAINT `fk_assignement_specialite_id` FOREIGN KEY (`specialite_id`) REFERENCES `specialite` (`specialite_id`) ON DELETE CASCADE ON UPDATE CASCADE;
+ALTER TABLE `affectation`
+  ADD CONSTRAINT `fk_affectation_centre_id` FOREIGN KEY (`centre_id`) REFERENCES `centre` (`centre_id`) ON DELETE CASCADE ON UPDATE CASCADE,
+  ADD CONSTRAINT `fk_affectation_medecin_id` FOREIGN KEY (`medecin_id`) REFERENCES `utilisateur` (`utilisateur_id`) ON DELETE CASCADE ON UPDATE CASCADE,
+  ADD CONSTRAINT `fk_affectation_specialite_id` FOREIGN KEY (`specialite_id`) REFERENCES `specialite` (`specialite_id`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
 -- Contraintes pour la table `rdv`

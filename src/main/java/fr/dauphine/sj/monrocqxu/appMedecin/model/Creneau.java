@@ -47,6 +47,10 @@ public enum Creneau {
 		
 	}
 	
+	public String getName() {
+		return name;
+	}
+
 	public static Creneau valeurEnHeure(String label) {
         return PAR_HEURE.get(label);
     }

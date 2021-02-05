@@ -2,6 +2,7 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ page import="fr.dauphine.sj.monrocqxu.appMedecin.model.*"%>
 <%@ page import="fr.dauphine.sj.monrocqxu.appMedecin.dao.*"%>
+<%@ page import="java.time.format.DateTimeFormatter"%>
 <%@ page import="java.util.List"%>
 
 <!DOCTYPE html>
@@ -21,7 +22,7 @@
 			<h2 class="mb-4 mt-5 text-center heading">Mes rendez-vous</h2>
 			<form method="post" action="<c:url value='/visualisationrdv' />">
 				<div class="row register-form justify-content-center">
-					
+
 					<%
 						UtilisateurDao utilisateurDao = new UtilisateurDao();
 					%>
@@ -31,15 +32,16 @@
 					<%
 						SpecialiteDao specialiteDao = new SpecialiteDao();
 
-								List<Rdv> rdvs = (List<Rdv>) request.getAttribute("rdvs");
-								if (rdvs != null) {
-									if (rdvs.size() == 0) {
+					List<Rdv> rdvs = (List<Rdv>) request.getAttribute("rdvs");
+					if (rdvs != null) {
+						if (rdvs.size() == 0) {
 					%>
-							<h4 class="mb-5 mt-4 text-center heading">Vous n'avez pas de rendez-vous.</h4>
-						<%
-							} else {
-						%>
-					
+					<h4 class="mb-5 mt-4 text-center heading">Vous n'avez pas de
+						rendez-vous.</h4>
+					<%
+						} else {
+					%>
+
 					<div class="row justify-content-center mb-5">
 						<div class="col-md-10">
 							<table class="table table-striped table-hover">
@@ -64,6 +66,7 @@
 										Utilisateur medecin = utilisateurDao.getUtilisateurByID(rdv.getMedecin_id());
 									Centre centre = centreDao.getCentreByID(rdv.getCentre_id());
 									Specialite specialite = specialiteDao.getSpecialiteByID(rdv.getSpecialite_id());
+									Creneau c = Creneau.valeurIdCreneau(rdv.getCreneau());
 									%>
 
 									<tr>
@@ -74,9 +77,9 @@
 										<td><%=centre.getAdresse() + " " + centre.getVille() + " " + centre.getCode_postal()%></td>
 										<td><%=centre.getTelephone()%></td>
 										<td class="text-nowrap"><%=rdv.convertToLocalDateViaSqlDate()%></td>
-										<td><%=rdv.getCreneau()%></td>
-										<td><a href="/details"
-												class="btn btn-success">Consulter</a></td>
+										<td><%=c.getName()%></td>
+										<td><a class="btn btn-success" href="<c:url value='<%= "/annulationrdv?idrdv=" + rdv.getId() %>' />">Annuler</a></td>
+										</div>
 									</tr>
 									<%
 										}
