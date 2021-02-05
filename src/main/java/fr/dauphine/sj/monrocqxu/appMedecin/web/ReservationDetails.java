@@ -17,6 +17,8 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.hibernate.internal.build.AllowSysOut;
+
 import fr.dauphine.sj.monrocqxu.appMedecin.dao.AffectationDao;
 import fr.dauphine.sj.monrocqxu.appMedecin.dao.CentreDao;
 import fr.dauphine.sj.monrocqxu.appMedecin.dao.RdvDao;
@@ -52,65 +54,66 @@ public class ReservationDetails extends HttpServlet {
 				AffectationDao affectationDao = new AffectationDao();
 				affectation = affectationDao.getAffectationByID(Integer.parseInt(idaffectation[1]));
 				System.out.println(Integer.parseInt(idaffectation[1]));
-				
+
 				Utilisateur medecin = new Utilisateur();
 				UtilisateurDao utilisateurDao = new UtilisateurDao();
 				medecin = utilisateurDao.getUtilisateurByID(affectation.getMedecin_id());
-				//request.setAttribute("medecinnom", medecin.getNom());
-				//request.setAttribute("medecinprenom", medecin.getPrenom());
-				
+				request.setAttribute("medecin",medecin);
+				System.out.println(medecin.getNom() + medecin.getPrenom() );
+
 				Centre centre = new Centre();
 				CentreDao centreDao = new CentreDao();
 				centre = centreDao.getCentreByID(affectation.getCentre_id());
-				//request.setAttribute("centrenom", centre.getNom());
-				//request.setAttribute("centreadresse", centre.getAdresse());
-				//request.setAttribute("centretelephone", centre.getTelephone());
-				
+				request.setAttribute("centre",centre);
+
 				Specialite specialite = new Specialite();
 				SpecialiteDao specialiteDao = new SpecialiteDao();
 				specialite = specialiteDao.getSpecialiteByID(affectation.getSpecialite_id());
-				//request.setAttribute("specialitenom", specialite.getSpecialite());
-				
+				request.setAttribute("specialite", specialite);
+
 			} else {
 				response.sendRedirect(CHEMIN_ESPACE);
 			}
+		}else {
+			response.sendRedirect(CHEMIN_CONNEXION);
 		}
 	}
 
 	@Override
 	public void doPost( HttpServletRequest request, HttpServletResponse response ) throws ServletException, IOException {
 
-		String date = request.getParameter("date_id");
-		System.out.println(date);
-		request.setAttribute("selectedDate", date);
-		// RECUPERE ET FORMALISE UN RDV
-		Utilisateur utilisateur = (Utilisateur)request.getSession().getAttribute(ATT_SESSION_USER);
-		//		//Integer medecin_id = Integer.parseInt(request.getParameter("medecin_id"));
-		//		Integer patient_id = utilisateur.getId();
-		//		Integer centre_id = Integer.parseInt(request.getParameter("centre_id"));
-		//		SimpleDateFormat formatDate = new SimpleDateFormat("dd-MM-yyyy");
-		//		Integer creneau = Integer.parseInt(request.getParameter("creneau"));
-		//
-		//		try {
-		//			Date date_id = formatDate.parse(request.getParameter("date_id"));
-		//		} catch (ParseException e) {
-		//			throw new IllegalStateException(e);
-		//		}
-		//		//rdv.setDate(date_id); Bug sur la date ?? du moins le format ?? ou bug eclipse chez moi
-		//		
-		//		
-		//		//CREATION RDV
-		//		rdv = new Rdv();
-		//		rdv.setMedecin_id(medecin_id);
-		//		rdv.setPatient_id(patient_id);
-		//		rdv.setCentre_id(centre_id);
-		//		rdv.setCreneau(creneau);
-		//		rdv.setActif(true);
-		//
-		//		// AJOUT RDV SI INEXISTANT
-		//		if(!rdvDao.isPresent(rdv)) { // si pas présent
-		//			rdvDao.ajouter(rdv);	// ajoute à la bdd
-		//		}
+//		String date = request.getParameter("date_id");
+//		System.out.println(date);
+//		request.setAttribute("selectedDate", date);
+//		// RECUPERE ET FORMALISE UN RDV
+//		Utilisateur utilisateur = (Utilisateur)request.getSession().getAttribute(ATT_SESSION_USER);
+//
+//		Integer medecin_id = Integer.parseInt(request.getParameter("medecin_id"));
+//		Integer patient_id = utilisateur.getId();
+//		Integer centre_id = Integer.parseInt(request.getParameter("centre_id"));
+//		SimpleDateFormat formatDate = new SimpleDateFormat("dd-MM-yyyy");
+//		Integer creneau = Integer.parseInt(request.getParameter("creneau"));
+//
+//		try {
+//			Date date_id = formatDate.parse(request.getParameter("date_id"));
+//		} catch (ParseException e) {
+//			throw new IllegalStateException(e);
+//		}
+//		//rdv.setDate(date_id); Bug sur la date ?? du moins le format ?? ou bug eclipse chez moi
+//
+//
+//		//CREATION RDV
+//		rdv = new Rdv();
+//		rdv.setMedecin_id(medecin_id);
+//		rdv.setPatient_id(patient_id);
+//		rdv.setCentre_id(centre_id);
+//		rdv.setCreneau(creneau);
+//		rdv.setActif(true);
+//
+//		// AJOUT RDV SI INEXISTANT
+//		if(!rdvDao.isPresent(rdv)) { // si pas présent
+//			rdvDao.ajouter(rdv);	// ajoute à la bdd
+//		}
 		this.getServletContext().getRequestDispatcher("/reservationdetails.jsp").forward( request, response );
 		//response.sendRedirect(CHEMIN_RESERVATIONDE);
 	}

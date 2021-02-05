@@ -23,24 +23,25 @@ public class RdvDao {
 
 	public List<Rdv> getRdvActifPatient(int patient_id){
 		Session session = HibernateUtil.getSessionFactory().openSession();
-		List<Rdv> rdvs = (List<Rdv>) session.createQuery("from rdv where patient_id = :id and actif = 1")
+		List<Rdv> rdvs = (List<Rdv>) session.createSQLQuery("SELECT * FROM rdv where patient_id = :patient_id and actif = 1")
 				.setParameter("patient_id", patient_id)
-				.uniqueResult();
+				.addEntity(Rdv.class).list();
 		return rdvs;
 	}
 	
-	public List<Rdv> getRdv(int patient_id){
+	public List<Rdv> getRdvPatient(int patient_id){
 		Session session = HibernateUtil.getSessionFactory().openSession();
-		List<Rdv> list = (List<Rdv>) session.createSQLQuery("SELECT * FROM rdv WHERE patient_id = :id").setParameter("id", patient_id).addEntity(Rdv.class).list();
+		List<Rdv> list = (List<Rdv>) session.createSQLQuery("SELECT * FROM rdv WHERE patient_id = :id")
+				.setParameter("id", patient_id)
+				.addEntity(Rdv.class).list();
 		return list;
 	}
 	
-	public List<Rdv> getRdvActifMedecin(int medecin_id, int actif){
+	public List<Rdv> getRdvActifMedecin(int medecin_id){
 		Session session = HibernateUtil.getSessionFactory().openSession();
-		List<Rdv> rdvs = (List<Rdv>) session.createQuery("from rdv where medecin_id = :id and actif = :actif")
+		List<Rdv> rdvs = (List<Rdv>) session.createSQLQuery("SELECT * FROM rdv where medecin_id = :id and actif = :actif")
 				.setParameter("medecin_id", medecin_id)
-				.setParameter("actif", actif)
-				.uniqueResult();
+				.addEntity(Rdv.class).list();
 		return rdvs;
 	}
 	
@@ -95,16 +96,10 @@ public class RdvDao {
 		return false;
 	}
 	
-	public void ajouterRdv(int patient_id, int medecin_id, int centre_id, Date date, Creneau creneau) {
-		
-	}
-	
-	public void ajouterCommentaireRdv(int rdv_id) {
-		
-	}
-
-	public void supprimerRdv(Utilisateur utilisateur) {
-		
+	public Rdv getRdvByID(int rdv_id){
+		Session session = HibernateUtil.getSessionFactory().openSession();
+		Rdv rdv = (Rdv) session.get(Rdv.class, rdv_id);
+		return rdv;
 	}
 	
 }
