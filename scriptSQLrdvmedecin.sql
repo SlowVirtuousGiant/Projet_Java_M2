@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Hôte : 127.0.0.1
--- Généré le :  jeu. 04 fév. 2021 à 19:59
+-- Généré le :  ven. 05 fév. 2021 à 18:27
 -- Version du serveur :  10.4.8-MariaDB
 -- Version de PHP :  7.1.32
 
@@ -32,20 +32,21 @@ CREATE TABLE `affectation` (
   `affectation_id` int(11) NOT NULL,
   `medecin_id` int(11) NOT NULL,
   `centre_id` int(11) NOT NULL,
-  `specialite_id` int(11) NOT NULL
+  `specialite_id` int(11) NOT NULL,
+  `disponible` bit(1) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
 -- Déchargement des données de la table `affectation`
 --
 
-INSERT INTO `affectation` (`affectation_id`, `medecin_id`, `centre_id`, `specialite_id`) VALUES
-(1, 4, 1, 1),
-(2, 4, 2, 3),
-(3, 4, 3, 8),
-(4, 4, 9, 10),
-(8, 2, 7, 7),
-(9, 2, 6, 15);
+INSERT INTO `affectation` (`affectation_id`, `medecin_id`, `centre_id`, `specialite_id`, `disponible`) VALUES
+(1, 4, 1, 1, b'0'),
+(2, 4, 2, 3, b'0'),
+(3, 4, 3, 8, b'0'),
+(4, 4, 9, 10, b'0'),
+(8, 2, 7, 7, b'0'),
+(9, 2, 6, 15, b'0');
 
 -- --------------------------------------------------------
 
@@ -89,7 +90,7 @@ CREATE TABLE `rdv` (
   `patient_id` int(11) NOT NULL,
   `centre_id` int(11) NOT NULL,
   `specialite_id` int(11) NOT NULL,
-  `date` datetime NOT NULL,
+  `date` varchar(15) NOT NULL,
   `creneau` int(11) NOT NULL,
   `actif` tinyint(1) NOT NULL DEFAULT 1,
   `commentaire` varchar(25) NOT NULL
@@ -100,7 +101,7 @@ CREATE TABLE `rdv` (
 --
 
 INSERT INTO `rdv` (`rdv_id`, `medecin_id`, `patient_id`, `centre_id`, `specialite_id`, `date`, `creneau`, `actif`, `commentaire`) VALUES
-(1, 2, 1, 6, 15, '2021-02-05 00:00:00', 3, 1, '');
+(1, 2, 1, 6, 15, '06/02/2021', 3, 1, '');
 
 -- --------------------------------------------------------
 
@@ -260,8 +261,8 @@ ALTER TABLE `affectation`
 ALTER TABLE `rdv`
   ADD CONSTRAINT `fk_rdv_centre_id` FOREIGN KEY (`centre_id`) REFERENCES `centre` (`centre_id`) ON DELETE CASCADE ON UPDATE CASCADE,
   ADD CONSTRAINT `fk_rdv_medecin_id` FOREIGN KEY (`medecin_id`) REFERENCES `utilisateur` (`utilisateur_id`) ON DELETE CASCADE ON UPDATE CASCADE,
-  ADD CONSTRAINT `fk_rdv_specialite_id` FOREIGN KEY (`specialite_id`) REFERENCES `specialite` (`specialite_id`) ON DELETE CASCADE ON UPDATE CASCADE,
-  ADD CONSTRAINT `fk_rdv_patient_id` FOREIGN KEY (`patient_id`) REFERENCES `utilisateur` (`utilisateur_id`) ON DELETE CASCADE ON UPDATE CASCADE;
+  ADD CONSTRAINT `fk_rdv_patient_id` FOREIGN KEY (`patient_id`) REFERENCES `utilisateur` (`utilisateur_id`) ON DELETE CASCADE ON UPDATE CASCADE,
+  ADD CONSTRAINT `fk_rdv_specialite_id` FOREIGN KEY (`specialite_id`) REFERENCES `specialite` (`specialite_id`) ON DELETE CASCADE ON UPDATE CASCADE;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
