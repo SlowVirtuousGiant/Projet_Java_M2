@@ -14,7 +14,7 @@ public class TimeMedecinUtil {
 	public TimeMedecinUtil() {
 	}
 	
-	public ArrayList<String> getNext20Days(){
+	public static ArrayList<String> getNext20Days(){
 		ArrayList<String> res = new ArrayList<String>();
 		LocalDate currentDate = LocalDate.now();
 		for(int i = 0; i < 20; i++) {

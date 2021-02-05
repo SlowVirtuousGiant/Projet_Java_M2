@@ -35,12 +35,12 @@ import static fr.dauphine.sj.monrocqxu.appMedecin.util.AppMedecinUtil.CHEMIN_RES
 public class ReservationDetails extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
-	private UtilisateurDao utilisateurDao;
-	private AffectationDao AffectationDao;
-	private SpecialiteDao specialiteDao;
-	private Rdv rdv;
-	private RdvDao rdvDao;
 	ArrayList<Affectation> resAffectation = new ArrayList<Affectation>();
+	
+	private UtilisateurDao utilisateurDao;
+	private AffectationDao affectationDao;
+	private CentreDao centreDao;
+	private SpecialiteDao specialiteDao;
 
 	@Override
 	public void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
@@ -48,28 +48,20 @@ public class ReservationDetails extends HttpServlet {
 		if (isAuthenticated(request)) {
 			Utilisateur utilisateur = (Utilisateur) request.getSession().getAttribute(ATT_SESSION_USER);
 			if (utilisateur != null && utilisateur.getRole().equals("PATIENT")) {
-				this.getServletContext().getRequestDispatcher("/reservationdetails.jsp").forward(request, response);
 				String[] idaffectation = request.getQueryString().split("=");
-				Affectation affectation = new Affectation();
-				AffectationDao affectationDao = new AffectationDao();
-				affectation = affectationDao.getAffectationByID(Integer.parseInt(idaffectation[1]));
-				System.out.println(Integer.parseInt(idaffectation[1]));
+				
+				affectationDao = new AffectationDao();
+				utilisateurDao = new UtilisateurDao();
+				centreDao = new CentreDao();
+				specialiteDao = new SpecialiteDao();
+				
+				Affectation affectation = affectationDao.getAffectationByID(Integer.parseInt(idaffectation[1]));
 
-				Utilisateur medecin = new Utilisateur();
-				UtilisateurDao utilisateurDao = new UtilisateurDao();
-				medecin = utilisateurDao.getUtilisateurByID(affectation.getMedecin_id());
-				request.setAttribute("medecin",medecin);
-				System.out.println(medecin.getNom() + medecin.getPrenom() );
-
-				Centre centre = new Centre();
-				CentreDao centreDao = new CentreDao();
-				centre = centreDao.getCentreByID(affectation.getCentre_id());
-				request.setAttribute("centre",centre);
-
-				Specialite specialite = new Specialite();
-				SpecialiteDao specialiteDao = new SpecialiteDao();
-				specialite = specialiteDao.getSpecialiteByID(affectation.getSpecialite_id());
-				request.setAttribute("specialite", specialite);
+				request.setAttribute("medecin", utilisateurDao.getUtilisateurByID(affectation.getMedecin_id()));
+				request.setAttribute("centre",centreDao.getCentreByID(affectation.getCentre_id()));
+				request.setAttribute("specialite", specialiteDao.getSpecialiteByID(affectation.getSpecialite_id()));
+				
+				this.getServletContext().getRequestDispatcher("/reservationdetails.jsp").forward(request, response);
 
 			} else {
 				response.sendRedirect(CHEMIN_ESPACE);
@@ -82,9 +74,9 @@ public class ReservationDetails extends HttpServlet {
 	@Override
 	public void doPost( HttpServletRequest request, HttpServletResponse response ) throws ServletException, IOException {
 
-//		String date = request.getParameter("date_id");
-//		System.out.println(date);
-//		request.setAttribute("selectedDate", date);
+		String date = request.getParameter("date_id");
+		System.out.println(date);
+		request.setAttribute("selectedDate", date);
 //		// RECUPERE ET FORMALISE UN RDV
 //		Utilisateur utilisateur = (Utilisateur)request.getSession().getAttribute(ATT_SESSION_USER);
 //
