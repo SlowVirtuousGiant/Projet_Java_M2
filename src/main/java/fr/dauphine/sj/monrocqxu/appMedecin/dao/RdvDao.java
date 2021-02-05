@@ -29,8 +29,8 @@ public class RdvDao {
 	
 	public List<Rdv> getRdvActifMedecin(int medecin_id){
 		Session session = HibernateUtil.getSessionFactory().openSession();
-		List<Rdv> rdvs = (List<Rdv>) session.createSQLQuery("SELECT * FROM rdv where medecin_id = :id and actif = :actif")
-				.setParameter("medecin_id", medecin_id)
+		List<Rdv> rdvs = (List<Rdv>) session.createSQLQuery("SELECT * FROM rdv where medecin_id = :id and actif = 1")
+				.setParameter("id", medecin_id)
 				.addEntity(Rdv.class).list();
 		return rdvs;
 	}
@@ -38,7 +38,7 @@ public class RdvDao {
 	public List<Rdv> getRdvMedecin(int medecin_id){
 		Session session = HibernateUtil.getSessionFactory().openSession();
 		List<Rdv> rdvs = (List<Rdv>) session.createQuery("from rdv where medecin_id = :id")
-				.setParameter("medecin_id", medecin_id)
+				.setParameter("id", medecin_id)
 				.uniqueResult();
 		return rdvs;
 	}

@@ -82,24 +82,27 @@
 								<tbody>
 
 									<%
-										for (Affectation as : affectations) {
+										//for (Affectation as : affectations) {
 									%>
 									<%
 										Utilisateur medecin = utilisateurDao.getUtilisateurByID(as.getMedecin_id());
-									Centre centre = centreDao.getCentreByID(as.getCentre_id());
-									Specialite specialite = specialiteDao.getSpecialiteByID(as.getSpecialite_id());
+									Centre centre = CentreDao.getCentreByID(as.getCentre_id());
+									Specialite specialite = SpecialiteDao.getSpecialiteByID(as.getSpecialite_id());
 									%>
-
+									<%if(medecin.isActif()
+											){%>
 									<tr>
 										<td class="text-nowrap">Dr. <%=medecin.getNom() + " " + medecin.getPrenom()%>
-										</td>
-										<td><%=specialite.getSpecialite()%></td>
-										<td><%=centre.getNom()%></td>
-										<td><%=centre.getAdresse() + " " + centre.getVille() + " " + centre.getCode_postal()%></td>
-										<td><%=centre.getTelephone()%></td>
-										<td><a href="<c:url value='<%= "/reservationdetails?a=" + as.getId() %>' />" class="btn btn-success">Consulter</a></td>
+									</td>
+									<td><%=specialite.getSpecialite()%></td>
+									<td><%=centre.getNom()%></td>
+									<td><%=centre.getAdresse() + " " + centre.getVille() + " " + centre.getCode_postal()%></td>
+									<td><%=centre.getTelephone()%></td>
+									<td><a
+										href="<c:url value='<%= "/reservationdetails?a=" + as.getId() %>' />"
+										class="btn btn-success">Consulter</a></td>
 									</tr>
-									<%
+									<%//}
 										}
 									}
 									}

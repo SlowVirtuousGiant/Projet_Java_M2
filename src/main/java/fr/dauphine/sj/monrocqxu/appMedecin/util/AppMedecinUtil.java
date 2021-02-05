@@ -55,6 +55,15 @@ public class AppMedecinUtil {
 		}
 		return true;
 	}
+	public static boolean validationAnneeNaiss( int naissance ) {
+		if ( naissance <=1920 ) {
+				return false;
+			}
+		
+		return true;
+	}
+	
+	
 	public static String ConvertISOtoUTF8(String iso) {
 	String item = iso; 
 
