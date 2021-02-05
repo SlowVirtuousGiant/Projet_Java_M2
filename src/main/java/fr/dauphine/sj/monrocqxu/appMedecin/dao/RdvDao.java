@@ -77,9 +77,24 @@ public class RdvDao {
 
 		List<Integer> list = (List<Integer>) session.createSQLQuery("SELECT creneau FROM rdv WHERE medecin_id = :id AND date = :date")
 				.setParameter("id", medecin.getId())
-				.setParameter("date", date)
-				.addEntity(Rdv.class).list();
+				.setParameter("date", date).list();
 		return list;
+	}
+	
+	public boolean update (Rdv rdv) {
+		Session session = null; 
+		try {
+			session = HibernateUtil.getSessionFactory().openSession();
+			session.beginTransaction();
+			session.update(rdv);
+			session.getTransaction().commit();
+			return true;
+		} catch (Exception e) {
+			e.printStackTrace();
+		}finally {
+			session.close();
+		}
+		return false; 
 	}
 	
 }
