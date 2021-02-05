@@ -32,9 +32,8 @@ public class AnnulationRdv extends HttpServlet{
 			if (utilisateur != null && utilisateur.getRole().equals("PATIENT")) {
 				this.getServletContext().getRequestDispatcher("/annulationrdv.jsp").forward(request, response);
 				String[] idrdv = request.getQueryString().split("=");
-				Rdv rdv = new Rdv();
 				RdvDao rdvDao = new RdvDao();
-				rdv = rdvDao.getRdvByID(Integer.parseInt(idrdv[1]));
+				Rdv rdv = rdvDao.getRdvByID(Integer.parseInt(idrdv[1]));
 
 			} else {
 				response.sendRedirect(CHEMIN_ESPACE);

@@ -24,7 +24,7 @@ public class TimeMedecinUtil {
 		return res;
 	}
 	
-	public String getFirstRdvDay() {
+	public static String getFirstRdvDay() {
 		return LocalDate.now().plusDays(1).format(DateTimeFormatter.ofPattern("dd/MM/yyyy"));
 	}
 	

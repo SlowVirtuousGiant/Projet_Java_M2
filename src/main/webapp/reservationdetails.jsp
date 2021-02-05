@@ -4,6 +4,7 @@
 <%@ page import="fr.dauphine.sj.monrocqxu.appMedecin.dao.*"%>
 <%@ page import="fr.dauphine.sj.monrocqxu.appMedecin.util.TimeMedecinUtil"%>
 <%@ page import="java.util.ArrayList"%>
+<%@ page import="java.util.List"%>
 
 <!DOCTYPE html>
 <html>
@@ -34,6 +35,17 @@
 						%>
 							<option <%=(date.equals(sDate) ? "selected":"")%> value="<%=date%>"> <%=date%></option>
 						<%}
+						String aff = (String) session.getAttribute("affectation");
+						
+						Affectation affectation = AffectationDao.getAffectationByID(Integer.parseInt(aff));
+
+						UtilisateurDao utilisateurDao = new UtilisateurDao();
+						Utilisateur medecin = utilisateurDao.getUtilisateurByID(affectation.getMedecin_id());
+						
+						Centre centre = CentreDao.getCentreByID(affectation.getCentre_id());
+						
+						List<Integer> rdvreserves = RdvDao.getNonPossibleRdvByDate(sDate, medecin);
+						System.out.println(rdvreserves);
 						%>
 					</select>
 					</form>
@@ -46,16 +58,16 @@
 				<div class="col-5 mt-3">
 							
 					<h5>
-						Médecin : <strong class="text-value">Dr.${medecin.nom} ${medecin.prenom}, ${specialite.specialite}</strong>
+						Médecin : <strong class="text-value">Dr.<%=medecin.getPrenom() %> <%=medecin.getNom() %>, ${specialite.specialite}</strong>
 					</h5>
 					<h5>
-						Centre : <strong class="text-value"> ${centre.nom} </strong>
+						Centre : <strong class="text-value"> <%=centre.getNom() %> </strong>
 					</h5>
 					<h5>
-						Adresse : <strong class="text-value">${centre.adresse} </strong>
+						Adresse : <strong class="text-value"><%=centre.getAdresse() %> </strong>
 					</h5>
 					<h5>
-						Téléphone : <strong class="text-value">${centre.telephone} </strong>
+						Téléphone : <strong class="text-value"><%=centre.getTelephone() %> </strong>
 					</h5>
 					<div class="tab-content mt-4">
 						<div class="tab-pane fade show active" id="red">
@@ -64,7 +76,7 @@
 								<div class="card-body">
 									<h5 class="card-title">Le Date à h</h5>
 									<p class="card-text">Après votre validation, le rendez-vous
-										avec le Dr.${medecin.nom} sera pris en compte.</p>
+										avec le Dr.<%=medecin.getNom() %> sera pris en compte.</p>
 									<p class="card-text">Vous allez reçevoir un mail de
 										confirmation et un mail de rappel un jour avant le
 										rendez-vous.</p>

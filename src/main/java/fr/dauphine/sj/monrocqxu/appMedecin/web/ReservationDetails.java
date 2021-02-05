@@ -1,46 +1,25 @@
 package fr.dauphine.sj.monrocqxu.appMedecin.web;
 
 import static fr.dauphine.sj.monrocqxu.appMedecin.util.AppMedecinUtil.ATT_SESSION_USER;
-import static fr.dauphine.sj.monrocqxu.appMedecin.util.AppMedecinUtil.CHEMIN_AJOUT;
 import static fr.dauphine.sj.monrocqxu.appMedecin.util.AppMedecinUtil.CHEMIN_CONNEXION;
 import static fr.dauphine.sj.monrocqxu.appMedecin.util.AppMedecinUtil.CHEMIN_ESPACE;
 import static fr.dauphine.sj.monrocqxu.appMedecin.util.AppMedecinUtil.isAuthenticated;
 
 import java.io.IOException;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Date;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import org.hibernate.internal.build.AllowSysOut;
-
 import fr.dauphine.sj.monrocqxu.appMedecin.dao.AffectationDao;
-import fr.dauphine.sj.monrocqxu.appMedecin.dao.CentreDao;
-import fr.dauphine.sj.monrocqxu.appMedecin.dao.RdvDao;
-import fr.dauphine.sj.monrocqxu.appMedecin.dao.SpecialiteDao;
-import fr.dauphine.sj.monrocqxu.appMedecin.dao.UtilisateurDao;
 import fr.dauphine.sj.monrocqxu.appMedecin.model.Affectation;
-import fr.dauphine.sj.monrocqxu.appMedecin.model.Centre;
-import fr.dauphine.sj.monrocqxu.appMedecin.model.Rdv;
-import fr.dauphine.sj.monrocqxu.appMedecin.model.Specialite;
 import fr.dauphine.sj.monrocqxu.appMedecin.model.Utilisateur;
 import fr.dauphine.sj.monrocqxu.appMedecin.util.TimeMedecinUtil;
-import static fr.dauphine.sj.monrocqxu.appMedecin.util.AppMedecinUtil.CHEMIN_RESERVATIONDE;
 
 public class ReservationDetails extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-
-	ArrayList<Affectation> resAffectation = new ArrayList<Affectation>();
-	
-	private UtilisateurDao utilisateurDao;
-	private AffectationDao affectationDao;
-	private CentreDao centreDao;
-	private SpecialiteDao specialiteDao;
 
 	@Override
 	public void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
@@ -49,20 +28,14 @@ public class ReservationDetails extends HttpServlet {
 			Utilisateur utilisateur = (Utilisateur) request.getSession().getAttribute(ATT_SESSION_USER);
 			if (utilisateur != null && utilisateur.getRole().equals("PATIENT")) {
 				String[] idaffectation = request.getQueryString().split("=");
-				
-				affectationDao = new AffectationDao();
-				utilisateurDao = new UtilisateurDao();
-				centreDao = new CentreDao();
-				specialiteDao = new SpecialiteDao();
-				
-				Affectation affectation = affectationDao.getAffectationByID(Integer.parseInt(idaffectation[1]));
-
-				request.setAttribute("medecin", utilisateurDao.getUtilisateurByID(affectation.getMedecin_id()));
-				request.setAttribute("centre",centreDao.getCentreByID(affectation.getCentre_id()));
-				request.setAttribute("specialite", specialiteDao.getSpecialiteByID(affectation.getSpecialite_id()));
-				
-				this.getServletContext().getRequestDispatcher("/reservationdetails.jsp").forward(request, response);
-
+				if(idaffectation.length >= 1 && idaffectation[0].equals("a")) {
+					Affectation affectation = AffectationDao.getAffectationByID(Integer.parseInt(idaffectation[1]));
+					if(affectation != null) {
+						request.setAttribute("selectedDate", TimeMedecinUtil.getFirstRdvDay());
+						request.getSession().setAttribute("affectation", idaffectation[1]);//save dans la session
+						this.getServletContext().getRequestDispatcher("/reservationdetails.jsp").forward(request, response);
+					}
+				}
 			} else {
 				response.sendRedirect(CHEMIN_ESPACE);
 			}

@@ -1,14 +1,11 @@
 package fr.dauphine.sj.monrocqxu.appMedecin.dao;
 
-import java.sql.Date;
+import java.util.ArrayList;
 import java.util.List;
 
 import org.hibernate.Session;
 import org.hibernate.Transaction;
 
-import fr.dauphine.sj.monrocqxu.appMedecin.model.Affectation;
-import fr.dauphine.sj.monrocqxu.appMedecin.model.Centre;
-import fr.dauphine.sj.monrocqxu.appMedecin.model.Creneau;
 import fr.dauphine.sj.monrocqxu.appMedecin.model.Rdv;
 import fr.dauphine.sj.monrocqxu.appMedecin.model.Utilisateur;
 import fr.dauphine.sj.monrocqxu.appMedecin.util.HibernateUtil;
@@ -69,37 +66,20 @@ public class RdvDao {
 		return false;
 	}
 	
-	public boolean isPresent(Rdv rdv) {
-		Transaction transaction = null;
-		Utilisateur utilisateur = null;
-		Session session = null;
-		try {
-			session = HibernateUtil.getSessionFactory().openSession();
-			transaction = session.beginTransaction();
-			utilisateur = (Utilisateur) session.createQuery("FROM Rdv R WHERE R.date = :date and R.creneau:creneau ")
-					.setParameter("date",rdv.getDate())
-					.setParameter("creneau", rdv.getCreneau())
-					.uniqueResult();
-			if (utilisateur != null) {
-				System.out.println("Un utilisateur a bien été trouvé");
-				return true;
-			}
-			transaction.commit();
-		} catch (Exception e) {
-			if (transaction != null) {
-				transaction.rollback();
-			}
-			e.printStackTrace();
-		} finally {
-			session.close();
-		}
-		return false;
-	}
-	
 	public Rdv getRdvByID(int rdv_id){
 		Session session = HibernateUtil.getSessionFactory().openSession();
 		Rdv rdv = (Rdv) session.get(Rdv.class, rdv_id);
 		return rdv;
+	}
+	
+	public static List<Integer> getNonPossibleRdvByDate(String date, Utilisateur medecin){
+		Session session = HibernateUtil.getSessionFactory().openSession();
+
+		List<Integer> list = (List<Integer>) session.createSQLQuery("SELECT creneau FROM rdv WHERE medecin_id = :id AND date = :date")
+				.setParameter("id", medecin.getId())
+				.setParameter("date", date)
+				.addEntity(Rdv.class).list();
+		return list;
 	}
 	
 }
