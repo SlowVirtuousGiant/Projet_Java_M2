@@ -21,103 +21,122 @@
 		<%@include file="header.jsp"%>
 
 		<div class="container">
-			<div class="col-md-12 col-10">
-
-				<h2 class="mt-5 text-center heading">Votre agenda</h2>
-				<div class="row justify-content-center">
-					<div class="col-md-8">
-
-						<c:choose>
-							<c:when test="${fn:length(centres) gt 50}">
-								<label class="form-control-label text-muted mt-3">Vos
-									centres : </label>
-								<select name="centre_id" class="form-select">
-									<c:forEach items="${centres}" var="centre">
-										<option value="${centre.id}"
-											${centre.id == 1 ? 'selected' : ''}>${centre.nom}</option>
-									</c:forEach>
-								</select>
-							</c:when>
-							<c:otherwise>
-								<c:if test="${empty sessionScope.selectedCentre}">
-									<c:set var="selectedCentre" value="${centres[0]}"
-										scope="session" />
-									<%
-										session.setAttribute("selectedWeek", TimeMedecinUtil.getCurrentWeek());
-									%>
-								</c:if>
-							</c:otherwise>
-						</c:choose>
-					</div>
-					<c:if test="${!empty sessionScope.selectedCentre}">
-						<h4 class="text-center">${selectedCentre.nom}
-							<br> pour la semaine ${selectedWeek}
-						</h4>
-						<%
-							HashMap<String, ArrayList<String>> weeks = TimeMedecinUtil.getDatesByWeekNumber(4);
-
-						ArrayList<String> jours = weeks.get(session.getAttribute("selectedWeek"));
-						%>
-
-						<div class="col-md-8 mt-3 pb-5">
-							<table class="table table-bordered border-success table-hover">
-								<thead>
-									<tr>
-										<th>Horaires</th>
-										<%
-											for (String j : jours) {
-										%>
-										<th scope="col"><%=j%></th>
-										<%
-											}
-										%>
-									</tr>
-								</thead>
-								<tbody>
-									<%
-										for (int i = 1; i < 24; i++) {
-									%>
-									<tr>
-										<%
-											for (int j = 0; j < 8; j++) {
-											if (j == 0) {
-										%>
-										<td class=<%=i % 2 == 0 ? "horaire" : "horaire-alt"%>>
-											<%
-												Creneau c = Creneau.valeurIdCreneau(i);
-											out.println(c.name);
-											%>
-										</td>
-										<%
-											} else {
-										%>
-										<td></td>
-										<%
-											}
-										}
-										%>
-									</tr>
-									<%
-										}
-									%>
-								</tbody>
-							</table>
-						</div>
-						<div class="col-md-8 mt-5">
-							<input
-								type="checkbox" id="reveal"> Agenda actif
-							<select name="centre_id" class="form-select mt-5">
-
-							</select> <a href="#" type="submit" class="btn btn-lg btn-warning mt-5">Editer votre agenda</a>
-						</div>
-
-					</c:if>
-
+			<h2 class="mt-5 text-center heading">Votre agenda</h2>
+			<div class="row">
+				<div class="col-md-8">
+					<c:choose>
+						<c:when test="${fn:length(centres) gt 50}">
+							<label class="form-control-label text-muted mt-3">Vos
+								centres : </label>
+							<select name="centre_id" class="form-select">
+								<c:forEach items="${centres}" var="centre">
+									<option value="${centre.id}"
+										${centre.id == 1 ? 'selected' : ''}>${centre.nom}</option>
+								</c:forEach>
+							</select>
+						</c:when>
+						<c:otherwise>
+							<c:if test="${empty sessionScope.selectedCentre}">
+								<c:set var="selectedCentre" value="${centres[0]}"
+									scope="session" />
+								<%
+									session.setAttribute("selectedWeek", TimeMedecinUtil.getCurrentWeek());
+								%>
+							</c:if>
+						</c:otherwise>
+					</c:choose>
 
 				</div>
+				<c:if test="${!empty sessionScope.selectedCentre}">
+					<h4 class="text-center mt-3">${selectedCentre.nom} pour la
+						semaine ${selectedWeek}</h4>
+
+					<%
+						HashMap<String, ArrayList<String>> weeks = TimeMedecinUtil.getDatesByWeekNumber(4);
+
+					ArrayList<String> jours = weeks.get(session.getAttribute("selectedWeek"));
+					%>
+					<div class="container">
+						<div class="col-md-12 mt-3">
+							<div class="bg-light p-1 rounded mt-3 justify-content-center">
+								<h4>Horaire</h4>
+								<p>Patient</p>
+								<p>Age</p>
+								<p>Adresse</p>
+								<p>Téléphone</p>
+							</div>
+							<div class="table-responsive mt-2">
+								<table class="table table-bordered border-success table-fixed">
+									<thead>
+										<tr>
+											<th>Horaires</th>
+											<%
+												for (String j : jours) {
+											%>
+											<th class="th-sm"><%=j%></th>
+											<%
+												}
+											%>
+										</tr>
+									</thead>
+									<tbody>
+										<%
+											for (int i = 1; i < 24; i++) {
+										%>
+										<tr>
+											<%
+												for (int j = 0; j < 8; j++) {
+												if (j == 0) {
+											%>
+											<td class=<%=i % 2 == 0 ? "horaire" : "horaire-alt"%>>
+												<%
+													Creneau c = Creneau.valeurIdCreneau(i);
+												out.println(c.name);
+												%>
+											</td>
+											<%
+												} else {
+											%>
+											<td></td>
+											<%
+												}
+											}
+											%>
+										</tr>
+										<%
+											}
+										%>
+									</tbody>
+								</table>
+							</div>
+							<div class="row">
+
+								<div class="col">
+									<select class="form-select" aria-label="Default select example">
+										<option selected>Open this select menu</option>
+										<option value="1">One</option>
+										<option value="2">Two</option>
+										<option value="3">Three</option>
+									</select>
+								</div>
+								<div class="col">
+									<button type="button" class="w-100 btn btn-secondary">Editer
+										l'agenda</button>
+								</div>
+								<div class="col">
+									<input class="form-check-input" type="checkbox"
+										id="checkboxNoLabel" value=""> Agenda Actif
+								</div>
+							</div>
+						</div>
+
+
+					</div>
+				</c:if>
+
+
 			</div>
 		</div>
-
 	</div>
 </body>
 <script src="js/jquery-3.5.1.min.js"></script>
