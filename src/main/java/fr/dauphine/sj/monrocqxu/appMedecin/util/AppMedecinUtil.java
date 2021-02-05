@@ -1,5 +1,7 @@
 package fr.dauphine.sj.monrocqxu.appMedecin.util;
 
+import java.nio.charset.StandardCharsets;
+
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
@@ -19,6 +21,7 @@ public class AppMedecinUtil {
 	public static final String CHEMIN_PROFIL = "/appMedecin/profil";
 	public static final String CHEMIN_MODIFICATION = "/appMedecin/modification";
 	public static final String CHEMIN_RESERVATIONDE = "/appMedecin/reservationdetails";
+	public static final String CHEMIN_VISU_RDV = "/appMedecin/visualisationrdv";
 	
 	//Mail
 	public static final String MAIL_HOST = "localhost";//Utilisation FAKESMTP
@@ -51,5 +54,11 @@ public class AppMedecinUtil {
 			}
 		}
 		return true;
+	}
+	public static String ConvertISOtoUTF8(String iso) {
+	String item = iso; 
+
+	byte[] bytes = item.getBytes(StandardCharsets.ISO_8859_1);
+	return item = new String(bytes, StandardCharsets.UTF_8);
 	}
 }

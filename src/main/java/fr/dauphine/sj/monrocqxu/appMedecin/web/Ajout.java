@@ -19,6 +19,7 @@ import fr.dauphine.sj.monrocqxu.appMedecin.dao.UtilisateurDao;
 import fr.dauphine.sj.monrocqxu.appMedecin.model.Affectation;
 import fr.dauphine.sj.monrocqxu.appMedecin.model.Centre;
 import fr.dauphine.sj.monrocqxu.appMedecin.model.Utilisateur;
+import fr.dauphine.sj.monrocqxu.appMedecin.util.AppMedecinUtil;
 
 public class Ajout extends HttpServlet {
 	private static final long serialVersionUID = 1L;
@@ -49,16 +50,16 @@ public class Ajout extends HttpServlet {
 	public void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		Utilisateur utilisateur = new Utilisateur();
 		UtilisateurDao utilisateurDao = new UtilisateurDao();
-		utilisateur.setNom(request.getParameter("nom"));
-		utilisateur.setPrenom(request.getParameter("prenom"));
+		utilisateur.setNom(AppMedecinUtil.ConvertISOtoUTF8(request.getParameter("nom")));
+		utilisateur.setPrenom(AppMedecinUtil.ConvertISOtoUTF8(request.getParameter("prenom")));
 		utilisateur.setTelephone(request.getParameter("telephone"));
-		utilisateur.setAdresse(request.getParameter("adresse"));
-		utilisateur.setMail(request.getParameter("mail"));
+		utilisateur.setAdresse(AppMedecinUtil.ConvertISOtoUTF8(request.getParameter("adresse")));
+		utilisateur.setMail(AppMedecinUtil.ConvertISOtoUTF8(request.getParameter("mail")));
 		utilisateur.setNaissance(Integer.parseInt(request.getParameter("naissance")));
 		utilisateur.setCode_postal(Integer.parseInt(request.getParameter("code_postal")));
-		utilisateur.setVille(request.getParameter("ville"));
+		utilisateur.setVille(AppMedecinUtil.ConvertISOtoUTF8(request.getParameter("ville")));
 		utilisateur.setRole("MEDECIN");
-		utilisateur.setMotdepasse(BCrypt.hashpw(request.getParameter("motdepasse"), BCrypt.gensalt(12)));
+		utilisateur.setMotdepasse(BCrypt.hashpw(AppMedecinUtil.ConvertISOtoUTF8(request.getParameter("motdepasse")), BCrypt.gensalt(12)));
 		utilisateur.setSexe(request.getParameter("sexe"));
 		utilisateur.setActif(true);
 

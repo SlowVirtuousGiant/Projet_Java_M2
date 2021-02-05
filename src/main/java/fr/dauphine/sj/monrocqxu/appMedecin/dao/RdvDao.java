@@ -1,10 +1,8 @@
 package fr.dauphine.sj.monrocqxu.appMedecin.dao;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import org.hibernate.Session;
-import org.hibernate.Transaction;
 
 import fr.dauphine.sj.monrocqxu.appMedecin.model.Rdv;
 import fr.dauphine.sj.monrocqxu.appMedecin.model.Utilisateur;
@@ -69,7 +67,6 @@ public class RdvDao {
 	
 	public static List<Integer> getNonPossibleRdvByDate(String date, Utilisateur medecin){
 		Session session = HibernateUtil.getSessionFactory().openSession();
-
 		List<Integer> list = (List<Integer>) session.createSQLQuery("SELECT creneau FROM rdv WHERE date = :date AND medecin_id = :id")
 				.setParameter("date", date)
 				.setParameter("id", medecin.getId()).list();
@@ -92,6 +89,22 @@ public class RdvDao {
 		List<Integer> creneauTrouve = (List<Integer>) session.createSQLQuery("SELECT creneau FROM rdv C WHERE C.date = :date AND C.patient_id = :patient_id")
 				.setParameter("date", date).setParameter("patient_id", patient.getId()).list();
 		return creneauTrouve;
+	}
+
+	public boolean update (Rdv rdv) {
+		Session session = null; 
+		try {
+			session = HibernateUtil.getSessionFactory().openSession();
+			session.beginTransaction();
+			session.update(rdv);
+			session.getTransaction().commit();
+			return true;
+		} catch (Exception e) {
+			e.printStackTrace();
+		}finally {
+			session.close();
+		}
+		return false; 
 	}
 	
 }

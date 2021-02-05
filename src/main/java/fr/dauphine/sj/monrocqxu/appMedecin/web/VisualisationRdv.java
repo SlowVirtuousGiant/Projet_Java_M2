@@ -52,6 +52,7 @@ public class VisualisationRdv extends HttpServlet{
 				utilisateurDao = new UtilisateurDao();
 				specialiteDao = new SpecialiteDao();
 				rdvDao  = new RdvDao();
+	
 
 				request.setAttribute("rdvs", rdvDao.getRdvActifPatient(utilisateur.getId()));
 

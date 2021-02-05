@@ -33,8 +33,8 @@ public class Connexion extends HttpServlet {
 	public void doPost( HttpServletRequest request, HttpServletResponse response ) throws ServletException, IOException {
 
 		HttpSession session = request.getSession();
-		String email = request.getParameter("email");
-		String password = request.getParameter("motdepasse");
+		String email = AppMedecinUtil.ConvertISOtoUTF8(request.getParameter("email"));
+		String password = AppMedecinUtil.ConvertISOtoUTF8(request.getParameter("motdepasse"));
 
 		if(!validationEmail(email)) {
 			erreurs.add("Email non valide.");

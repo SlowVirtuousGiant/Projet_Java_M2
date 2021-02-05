@@ -18,6 +18,7 @@ import org.mindrot.jbcrypt.BCrypt;
 
 import fr.dauphine.sj.monrocqxu.appMedecin.dao.UtilisateurDao;
 import fr.dauphine.sj.monrocqxu.appMedecin.model.Utilisateur;
+import fr.dauphine.sj.monrocqxu.appMedecin.util.AppMedecinUtil;
 
 
 public class Inscription extends HttpServlet {
@@ -39,17 +40,17 @@ public class Inscription extends HttpServlet {
 		Utilisateur utilisateur = new Utilisateur();
 		UtilisateurDao utilisateurDao = new UtilisateurDao();
 		if(!utilisateurDao.isPresent(request.getParameter("mail"))) {
-			utilisateur.setNom(request.getParameter("nom"));
-			utilisateur.setPrenom(request.getParameter("prenom"));
+			utilisateur.setNom(AppMedecinUtil.ConvertISOtoUTF8(request.getParameter("nom")));
+			utilisateur.setPrenom(AppMedecinUtil.ConvertISOtoUTF8(request.getParameter("prenom")));
 			utilisateur.setTelephone(request.getParameter("telephone"));
-			utilisateur.setAdresse(request.getParameter("adresse"));
-			utilisateur.setMail(request.getParameter("mail"));
+			utilisateur.setAdresse(AppMedecinUtil.ConvertISOtoUTF8(request.getParameter("adresse")));
+			utilisateur.setMail(AppMedecinUtil.ConvertISOtoUTF8(request.getParameter("mail")));
 			utilisateur.setNaissance(Integer.parseInt(request.getParameter("naissance")));
 			utilisateur.setSexe(request.getParameter("sexe"));
 			utilisateur.setCode_postal(Integer.parseInt(request.getParameter("code_postal")));
-			utilisateur.setVille(request.getParameter("ville"));
+			utilisateur.setVille(AppMedecinUtil.ConvertISOtoUTF8(request.getParameter("ville")));
 			utilisateur.setRole("PATIENT");
-			utilisateur.setMotdepasse(BCrypt.hashpw(request.getParameter("motdepasse"),BCrypt.gensalt(12)));
+			utilisateur.setMotdepasse(BCrypt.hashpw(AppMedecinUtil.ConvertISOtoUTF8(request.getParameter("motdepasse")),BCrypt.gensalt(12)));
 			utilisateur.setActif(true);
 
 			if(utilisateurDao.ajouter(utilisateur)) {

@@ -15,6 +15,7 @@ import org.mindrot.jbcrypt.BCrypt;
 
 import fr.dauphine.sj.monrocqxu.appMedecin.dao.UtilisateurDao;
 import fr.dauphine.sj.monrocqxu.appMedecin.model.Utilisateur;
+import fr.dauphine.sj.monrocqxu.appMedecin.util.AppMedecinUtil;
 
 public class Modification extends HttpServlet {
 	private static final long serialVersionUID = 1L;
@@ -39,19 +40,19 @@ public class Modification extends HttpServlet {
 		HttpSession session = request.getSession();
 		Utilisateur utilisateur = (Utilisateur)request.getSession().getAttribute(ATT_SESSION_USER);
 
-		boolean auth = BCrypt.checkpw(request.getParameter("motdepasse"), utilisateur.getMotdepasse());
+		boolean auth = BCrypt.checkpw(AppMedecinUtil.ConvertISOtoUTF8(request.getParameter("motdepasse")), utilisateur.getMotdepasse());
 
-		if(!request.getParameter("newmotdepasse").equals(null) && validationMotDePasse(request.getParameter("newmotdepasse"))) {
-			utilisateur.setMotdepasse(BCrypt.hashpw(request.getParameter("newmotdepasse"),BCrypt.gensalt(12)));
-		}if(!request.getParameter("newmotdepasse").equals(null) && validationMotDePasse(request.getParameter("newmotdepasse"))) {
+		if(!AppMedecinUtil.ConvertISOtoUTF8(request.getParameter("newmotdepasse")).equals(null) && validationMotDePasse(AppMedecinUtil.ConvertISOtoUTF8(request.getParameter("newmotdepasse")))) {
+			utilisateur.setMotdepasse(BCrypt.hashpw(AppMedecinUtil.ConvertISOtoUTF8(request.getParameter("newmotdepasse")),BCrypt.gensalt(12)));
+		}if(!AppMedecinUtil.ConvertISOtoUTF8(request.getParameter("newmotdepasse")).equals(null) && validationMotDePasse(AppMedecinUtil.ConvertISOtoUTF8(request.getParameter("newmotdepasse")))) {
 			System.out.println("mdp trop court");
 			erreurs.add("Mot de passe trop court.");
 		}
 
 		utilisateur.setTelephone(request.getParameter("telephone"));
-		utilisateur.setAdresse(request.getParameter("adresse"));
+		utilisateur.setAdresse(AppMedecinUtil.ConvertISOtoUTF8(request.getParameter("adresse")));
 		utilisateur.setCode_postal(Integer.parseInt(request.getParameter("code_postal")));
-		utilisateur.setVille(request.getParameter("ville"));
+		utilisateur.setVille(AppMedecinUtil.ConvertISOtoUTF8(request.getParameter("ville")));
 
 		UtilisateurDao utilisateurDao = new UtilisateurDao();
 
