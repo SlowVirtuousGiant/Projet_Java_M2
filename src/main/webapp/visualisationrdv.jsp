@@ -43,7 +43,7 @@
 					%>
 
 					<div class="row justify-content-center mb-5">
-						<div class="col-md-10">
+						<div class="col-md-12 mt-3">
 							<table class="table table-striped table-hover">
 								<thead>
 									<tr>
@@ -54,7 +54,7 @@
 										<th scope="col">Téléphone</th>
 										<th scope="col">Date</th>
 										<th scope="col">Créneau</th>
-										<th scope="col">Visualiser</th>
+										<th scope="col"></th>
 									</tr>
 								</thead>
 								<tbody>
@@ -78,7 +78,7 @@
 										<td><%=centre.getTelephone()%></td>
 										<td class="text-nowrap"><%=rdv.getDate()%></td>
 										<td><%=c.getName()%></td>
-										<td><a class="btn btn-success" href="<c:url value='<%= "/annulationrdv?idrdv=" + rdv.getId() %>' />">Annuler</a></td>
+										<td><a class="btn btn-danger" href="<c:url value='<%= "/annulationrdv?idrdv=" + rdv.getId() %>' />">Annuler</a></td>
 										</div>
 									</tr>
 									<%

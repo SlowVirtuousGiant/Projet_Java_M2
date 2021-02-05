@@ -76,7 +76,7 @@
 										<th scope="col">Centre</th>
 										<th scope="col">Adresse</th>
 										<th scope="col">Téléphone</th>
-										<th scope="col">Action</th>
+										<th scope="col"></th>
 									</tr>
 								</thead>
 								<tbody>

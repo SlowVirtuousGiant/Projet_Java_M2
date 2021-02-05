@@ -10,13 +10,13 @@ import fr.dauphine.sj.monrocqxu.appMedecin.util.HibernateUtil;
 
 public class SpecialiteDao {
 	
-	public Specialite getSpecialiteByID(int specialite_id){
+	public static Specialite getSpecialiteByID(int specialite_id){
 		Session session = HibernateUtil.getSessionFactory().openSession();
 		Specialite specialite = (Specialite) session.get(Specialite.class, specialite_id);
 		return specialite;
 	}
 	
-	public List<Specialite> getAllSpecialite(){
+	public static List<Specialite> getAllSpecialite(){
 		Session session = HibernateUtil.getSessionFactory().openSession();
 		List<Specialite> list = (List<Specialite>) session.createSQLQuery("SELECT * FROM specialite").addEntity(Specialite.class).list();
 		return list;

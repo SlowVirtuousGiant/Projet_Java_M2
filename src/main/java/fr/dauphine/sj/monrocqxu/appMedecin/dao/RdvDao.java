@@ -12,11 +12,6 @@ import fr.dauphine.sj.monrocqxu.appMedecin.util.HibernateUtil;
 
 public class RdvDao {
 	
-//	private Session session;
-//	
-//	public RdvDao() {
-//		this.session = HibernateUtil.getSessionFactory().openSession();
-//	}
 
 	public List<Rdv> getRdvActifPatient(int patient_id){
 		Session session = HibernateUtil.getSessionFactory().openSession();
@@ -50,7 +45,7 @@ public class RdvDao {
 		return rdvs;
 	}
 	
-	public boolean ajouter(Rdv rdv) {
+	public static boolean ajouter(Rdv rdv) {
 		Session session = null;
 		try {
 			session = HibernateUtil.getSessionFactory().openSession();
@@ -75,11 +70,28 @@ public class RdvDao {
 	public static List<Integer> getNonPossibleRdvByDate(String date, Utilisateur medecin){
 		Session session = HibernateUtil.getSessionFactory().openSession();
 
-		List<Integer> list = (List<Integer>) session.createSQLQuery("SELECT creneau FROM rdv WHERE medecin_id = :id AND date = :date")
-				.setParameter("id", medecin.getId())
+		List<Integer> list = (List<Integer>) session.createSQLQuery("SELECT creneau FROM rdv WHERE date = :date AND medecin_id = :id")
 				.setParameter("date", date)
-				.addEntity(Rdv.class).list();
+				.setParameter("id", medecin.getId()).list();
+				
 		return list;
+	}
+	
+	public static List<Integer> getRdv(String date, Utilisateur medecin){
+		Session session = HibernateUtil.getSessionFactory().openSession();
+
+		List<Integer> list = (List<Integer>) session.createSQLQuery("SELECT creneau FROM rdv WHERE date = :date AND medecin_id = :id")
+				.setParameter("date", date)
+				.setParameter("id", medecin.getId()).list();
+				
+		return list;
+	}
+	
+	public static List<Integer> getCreneauxRdvPatient(Utilisateur patient, String date) {
+		Session session = HibernateUtil.getSessionFactory().openSession();
+		List<Integer> creneauTrouve = (List<Integer>) session.createSQLQuery("SELECT creneau FROM rdv C WHERE C.date = :date AND C.patient_id = :patient_id")
+				.setParameter("date", date).setParameter("patient_id", patient.getId()).list();
+		return creneauTrouve;
 	}
 	
 }
