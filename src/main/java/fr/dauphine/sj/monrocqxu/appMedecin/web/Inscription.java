@@ -5,7 +5,7 @@ import static fr.dauphine.sj.monrocqxu.appMedecin.util.AppMedecinUtil.ERREUR;
 import static fr.dauphine.sj.monrocqxu.appMedecin.util.AppMedecinUtil.CHEMIN_CONNEXION;
 import static fr.dauphine.sj.monrocqxu.appMedecin.util.AppMedecinUtil.CHEMIN_INSCRIPTION;
 import static fr.dauphine.sj.monrocqxu.appMedecin.util.AppMedecinUtil.isAuthenticated;
-import static fr.dauphine.sj.monrocqxu.appMedecin.util.AppMedecinUtil.validationAlphaNum;;
+import static fr.dauphine.sj.monrocqxu.appMedecin.util.AppMedecinUtil.validationAlphaNum;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -40,8 +40,7 @@ public class Inscription extends HttpServlet {
 	public void doPost( HttpServletRequest request, HttpServletResponse response ) throws ServletException, IOException {
 
 		Utilisateur utilisateur = new Utilisateur();
-		UtilisateurDao utilisateurDao = new UtilisateurDao();
-		if(!utilisateurDao.isPresent(request.getParameter("mail"))) {
+		if(!UtilisateurDao.isPresent(request.getParameter("mail"))) {
 			utilisateur.setNom(AppMedecinUtil.ConvertISOtoUTF8(request.getParameter("nom")));
 			utilisateur.setPrenom(AppMedecinUtil.ConvertISOtoUTF8(request.getParameter("prenom")));
 			utilisateur.setTelephone(request.getParameter("telephone"));
@@ -56,7 +55,7 @@ public class Inscription extends HttpServlet {
 			utilisateur.setMotdepasse(BCrypt.hashpw(AppMedecinUtil.ConvertISOtoUTF8(request.getParameter("motdepasse")),BCrypt.gensalt(12)));
 			utilisateur.setActif(true);
 			if(validationAlphaNum(utilisateur.getNom())&& validationAlphaNum(utilisateur.getPrenom())) {
-				if(utilisateurDao.ajouter(utilisateur)) {
+				if(UtilisateurDao.ajouter(utilisateur)) {
 					MailManager.envoiInscriptionMail(utilisateur,mdp);
 					response.sendRedirect( CHEMIN_CONNEXION );
 				}

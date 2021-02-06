@@ -15,7 +15,7 @@ import fr.dauphine.sj.monrocqxu.appMedecin.util.HibernateUtil;
 
 public class UtilisateurDao {
 
-	public List<Utilisateur> getAllMedecin() {
+	public static List<Utilisateur> getAllMedecin() {
 		Session session = HibernateUtil.getSessionFactory().openSession();
 		List<Utilisateur> list = (List<Utilisateur>) session
 				.createSQLQuery("SELECT * FROM utilisateur where role = 'MEDECIN' ").addEntity(Utilisateur.class)
@@ -23,11 +23,12 @@ public class UtilisateurDao {
 		return list;
 
 	}
-	
+
 	@SuppressWarnings({ "unchecked", "deprecation" })
-	public HashMap<Integer, String> getAllMedecinName() {
+	public static HashMap<Integer, String> getAllMedecinName() {
 		Session session = HibernateUtil.getSessionFactory().openSession();
-		List<List<Object>> permission = session.createSQLQuery("SELECT utilisateur_id, nom FROM utilisateur WHERE role = 'MEDECIN'")
+		List<List<Object>> permission = session
+				.createSQLQuery("SELECT utilisateur_id, nom FROM utilisateur WHERE role = 'MEDECIN'")
 				.setResultTransformer(Transformers.TO_LIST).list();
 		HashMap<Integer, String> map = new HashMap<Integer, String>();
 		for (List<Object> x : permission) {
@@ -35,14 +36,14 @@ public class UtilisateurDao {
 		}
 		return map;
 	}
-	
-	public Utilisateur getUtilisateurByID(int utilisateur_id){
+
+	public static Utilisateur getUtilisateurByID(int utilisateur_id) {
 		Session session = HibernateUtil.getSessionFactory().openSession();
 		Utilisateur utilisateur = (Utilisateur) session.get(Utilisateur.class, utilisateur_id);
 		return utilisateur;
 	}
 
-	public Utilisateur validate(String userName, String password) {
+	public static Utilisateur validate(String userName, String password) {
 		Transaction transaction = null;
 		Utilisateur utilisateur = null;
 		Session session = null;
@@ -66,7 +67,7 @@ public class UtilisateurDao {
 		return null;
 	}
 
-	public boolean isPresent(String mail) {
+	public static boolean isPresent(String mail) {
 		Transaction transaction = null;
 		Utilisateur utilisateur = null;
 		Session session = null;
@@ -91,7 +92,7 @@ public class UtilisateurDao {
 		return false;
 	}
 
-	public boolean ajouter(Utilisateur utilisateur) {
+	public static boolean ajouter(Utilisateur utilisateur) {
 		Session session = null;
 		try {
 			session = HibernateUtil.getSessionFactory().openSession();
@@ -107,8 +108,8 @@ public class UtilisateurDao {
 		return false;
 	}
 
-	public boolean update (Utilisateur utilisateur) {
-		Session session = null; 
+	public static boolean update(Utilisateur utilisateur) {
+		Session session = null;
 		try {
 			session = HibernateUtil.getSessionFactory().openSession();
 			session.beginTransaction();
@@ -117,14 +118,10 @@ public class UtilisateurDao {
 			return true;
 		} catch (Exception e) {
 			e.printStackTrace();
-		}finally {
+		} finally {
 			session.close();
 		}
-		return false; 
+		return false;
 	}
-
-
-
-	
 
 }

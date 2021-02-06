@@ -22,42 +22,53 @@
 				<div class="row register-form justify-content-center">
 					<div class="col-md-5">
 						<div class="form-group">
-
 							<label class="form-control-label text-muted">Nom : </label> <input
 								id="inputTelephone" name="rechercheNom" type="text" size="20"
 								maxlength="60" class="form-control "
-								placeholder="Nom du médecin" autofocus />
+								placeholder="Nom du médecin" value="${rechercherValue}"
+								autofocus />
 						</div>
 
 						<label class="form-control-label text-muted mt-3">Spécialité
 							du médecin : </label> <select name="sp_id" class="form-select">
-							<c:forEach items="${specialites}" var="specia">
-								<option value="${specia.id}" ${specia.id == 1 ? 'selected' : ''}>${specia.specialite}</option>
+							<option value="0">Selectionnez une specialite</option>
+							<c:forEach items="${sessionScope.specialites}" var="specia">
+								<option value="${specia.id}"
+									${selectedSpecia eq specia.id ? 'selected' : ''}>${specia.specialite}</option>
 							</c:forEach>
 
-						</select><label class="form-control-label text-muted mt-3">Nom du
-							centre : </label> <select name="ct_id" class="form-select">
-							<c:forEach items="${centres}" var="centre">
-								<option value="${centre.id}" ${centre.id == 1 ? 'selected' : ''}>${centre.nom}</option>
-							</c:forEach>
-						</select>
+						</select> <label class="form-control-label text-muted mt-3">Centres
+							disponibles : </label>
+						<%
+							List<Centre> centres = (List<Centre>) session.getAttribute("centres");
+						for (Centre c : centres) {
+						%>
+						<div class="form-check">
+							<input class="form-check-input" type="checkbox"
+								value=<%=c.getId()%> name="selectedCentre"
+								<%String[] sel = (String[]) request.getAttribute("selectedCentre");
+									if (sel != null) {
+										for (String s : sel) {
+											if (s.equals(String.valueOf(c.getId()))) {
+												out.print("checked");
+												break;
+											}
+										}
+									}%>>
+							<label class="form-check-label" for="flexCheckDefault"> <%=c.getNom()%></label>
+						</div>
+						<%
+							}
+						%>
 						<div class="row justify-content-center my-3 px-3 mt-5">
 							<button type="submit" name="rechercher" value="submit"
 								class="w-100 btn btn-lg btn-outline-success">Rechercher</button>
 						</div>
 					</div>
 					<%
-						UtilisateurDao utilisateurDao = new UtilisateurDao();
-					%>
-					<%
-						CentreDao centreDao = new CentreDao();
-					%>
-					<%
-						SpecialiteDao specialiteDao = new SpecialiteDao();
-
-								List<Affectation> affectations = (List<Affectation>) request.getAttribute("affectations");
-								if (affectations != null) {
-									if (affectations.size() == 0) {
+						List<Affectation> affectations = (List<Affectation>) request.getAttribute("affectations");
+					if (affectations != null) {
+						if (affectations.size() == 0) {
 					%>
 					<h4 class="mb-5 mt-4 text-center heading">Désolé nous n'avons
 						trouvé aucun résultat pour votre recherche.</h4>
@@ -68,7 +79,7 @@
 						recherche</h2>
 					<div class="row justify-content-center mb-5">
 						<div class="col-md-10">
-							<table class="table table-striped table-hover">
+							<table class="table table-striped table-hover results">
 								<thead>
 									<tr>
 										<th scope="col">Medecin</th>
@@ -83,28 +94,27 @@
 
 									<%
 										for (Affectation as : affectations) {
-									%>
-									<%
-										Utilisateur medecin = utilisateurDao.getUtilisateurByID(as.getMedecin_id());
-									Centre centre = CentreDao.getCentreByID(as.getCentre_id());
-									Specialite specialite = SpecialiteDao.getSpecialiteByID(as.getSpecialite_id());
+										Utilisateur medecin = UtilisateurDao.getUtilisateurByID(as.getMedecin_id());
+										Centre centre = CentreDao.getCentreByID(as.getCentre_id());
+										Specialite specialite = SpecialiteDao.getSpecialiteByID(as.getSpecialite_id());
 									%>
 
 									<tr>
 										<td class="text-nowrap">Dr. <%=medecin.getNom() + " " + medecin.getPrenom()%>
-									</td>
-									<td><%=specialite.getSpecialite()%></td>
-									<td><%=centre.getNom()%></td>
-									<td><%=centre.getAdresse() + " " + centre.getVille() + " " + centre.getCode_postal()%></td>
-									<td><%=centre.getTelephone()%></td>
-									<td><a
-										href="<c:url value='<%= "/reservationdetails?a=" + as.getId() %>' />"
-										class="btn btn-success">Consulter</a></td>
+										</td>
+										<td><%=specialite.getSpecialite()%></td>
+										<td><%=centre.getNom()%></td>
+										<td><%=centre.getAdresse() + " " + centre.getVille() + " " + centre.getCode_postal()%></td>
+										<td><%=centre.getTelephone()%></td>
+										<td><a
+											href="<c:url value='<%="/reservationdetails?a=" + as.getId()%>' />"
+											class="btn btn-success">Consulter</a></td>
 									</tr>
-									<%}
-										}
+									<%
 									}
-									
+									}
+									}
+
 									%>
 
 								</tbody>

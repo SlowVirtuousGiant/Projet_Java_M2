@@ -51,22 +51,24 @@ public class Profil extends HttpServlet {
 	public void doPost(HttpServletRequest request, HttpServletResponse response ) throws ServletException, IOException {
 		HttpSession session = request.getSession();
 
-		UtilisateurDao utilisateurDao = new UtilisateurDao();
 		Utilisateur utilisateur = (Utilisateur)request.getSession().getAttribute(ATT_SESSION_USER);
-		RdvDao rdvDao = new RdvDao();
-		AffectationDao affectationDao = new AffectationDao();
 		System.out.println("dans le post dopost");
 
 		if(BCrypt.checkpw(request.getParameter("motdepasse"), utilisateur.getMotdepasse())) {
 			if(utilisateur.getRole().equals("PATIENT")) {
 				utilisateur.setActif(false);
+<<<<<<< HEAD
 				if(utilisateurDao.update(utilisateur)) {
 					List<Rdv> listRdv = rdvDao.getRdvActifPatient(utilisateur.getId());
 					MailManager.envoiMailDesactivationCompte(utilisateur,listRdv);
+=======
+				if(UtilisateurDao.update(utilisateur)) {
+					List<Rdv> listRdv = RdvDao.getRdvActifPatient(utilisateur.getId());
+>>>>>>> a3e65bdd9846b85feff50190644acb54c9c45c79
 					for(Rdv rdv:listRdv) {
 						System.out.println(rdv.getId());
 						rdv.setActif(false);
-						rdvDao.update(rdv);
+						RdvDao.update(rdv);
 					}
 					response.sendRedirect( CHEMIN_DECONNEXION );
 				}else {
@@ -76,17 +78,22 @@ public class Profil extends HttpServlet {
 				}
 
 			}else {
-				List<Rdv> listRdv = rdvDao.getRdvActifMedecin(utilisateur.getId());
+				List<Rdv> listRdv = RdvDao.getRdvActifMedecin(utilisateur.getId());
 				if(listRdv!=null && listRdv.isEmpty()) {
 					System.out.println("passage en role inactif pour docteur");
 
 					utilisateur.setActif(false);
+<<<<<<< HEAD
 					if(utilisateurDao.update(utilisateur)) {
 						MailManager.envoiMailDesactivationCompte(utilisateur,null);
 						List<Affectation> listAff = affectationDao.getAffectation(utilisateur.getId());
+=======
+					if(UtilisateurDao.update(utilisateur)) {
+						List<Affectation> listAff = AffectationDao.getAffectation(utilisateur.getId());
+>>>>>>> a3e65bdd9846b85feff50190644acb54c9c45c79
 						for(Affectation aff:listAff) {
 							aff.setDisponible(false);
-							affectationDao.update(aff);
+							AffectationDao.update(aff);
 						}
 						System.out.println("actif bien MAJ dans la bdd");
 						response.sendRedirect( CHEMIN_DECONNEXION );
