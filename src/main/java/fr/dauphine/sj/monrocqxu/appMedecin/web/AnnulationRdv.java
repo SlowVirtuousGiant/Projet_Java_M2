@@ -70,7 +70,7 @@ public class AnnulationRdv extends HttpServlet{
 		rdv.setCommentaire(AppMedecinUtil.ConvertISOtoUTF8(request.getParameter("raison")));
 		
 		System.out.println(rdv.getCommentaire() + " Print avant le update");
-		if(rdvDao.update(rdv)) {
+		if(RdvDao.update(rdv)) {
 			System.out.println(rdv.getCommentaire() + " Print après le update");
 			response.sendRedirect(CHEMIN_VISU_RDV);
 		}else {

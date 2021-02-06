@@ -63,9 +63,9 @@
 										for (Rdv rdv : rdvs) {
 									%>
 									<%
-										Utilisateur medecin = utilisateurDao.getUtilisateurByID(rdv.getMedecin_id());
-									Centre centre = centreDao.getCentreByID(rdv.getCentre_id());
-									Specialite specialite = specialiteDao.getSpecialiteByID(rdv.getSpecialite_id());
+										Utilisateur medecin = UtilisateurDao.getUtilisateurByID(rdv.getMedecin_id());
+									Centre centre = CentreDao.getCentreByID(rdv.getCentre_id());
+									Specialite specialite = SpecialiteDao.getSpecialiteByID(rdv.getSpecialite_id());
 									Creneau c = Creneau.valeurIdCreneau(rdv.getCreneau());
 									%>
 

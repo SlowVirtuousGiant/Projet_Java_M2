@@ -12,7 +12,7 @@ import fr.dauphine.sj.monrocqxu.appMedecin.util.HibernateUtil;
 
 public class AffectationDao {
 	
-	public boolean ajouter (Affectation affectation) {
+	public static boolean ajouter (Affectation affectation) {
 		Session session = null; 
 		try {
 			session = HibernateUtil.getSessionFactory().openSession();
@@ -43,39 +43,39 @@ public class AffectationDao {
 	
 	public static List<Affectation> getAffectationMedecinActif(int medecin_id){
 		Session session = HibernateUtil.getSessionFactory().openSession();
-		List<Affectation> list = (List<Affectation>) session.createSQLQuery("SELECT * FROM affectation WHERE medecin_id = :id and disponible = 1").setParameter("id", medecin_id).addEntity(Affectation.class).list();
+		List<Affectation> list =  session.createSQLQuery("SELECT * FROM affectation WHERE medecin_id = :id and disponible = 1").setParameter("id", medecin_id).addEntity(Affectation.class).list();
 		return list;
 	}
 	
 	public static List<Affectation> getAffectationMedecin(int medecin_id){
 		Session session = HibernateUtil.getSessionFactory().openSession();
-		List<Affectation> list = (List<Affectation>) session.createSQLQuery("SELECT * FROM affectation WHERE medecin_id = :id").setParameter("id", medecin_id).addEntity(Affectation.class).list();
+		List<Affectation> list = session.createSQLQuery("SELECT * FROM affectation WHERE medecin_id = :id").setParameter("id", medecin_id).addEntity(Affectation.class).list();
 		return list;
 	}
 	
 	
 	public static List<Affectation> getAffectationBySpecialite(int specialite_id){
 		Session session = HibernateUtil.getSessionFactory().openSession();
-		List<Affectation> list = (List<Affectation>) session.createSQLQuery("SELECT * FROM affectation WHERE specialite_id = :id").setParameter("id", specialite_id).addEntity(Affectation.class).list();
+		List<Affectation> list = session.createSQLQuery("SELECT * FROM affectation WHERE specialite_id = :id").setParameter("id", specialite_id).addEntity(Affectation.class).list();
 		return list;
 	}
 	
 	public static List<Affectation> getAffectationByCentre(int centre_id){
 		Session session = HibernateUtil.getSessionFactory().openSession();
-		List<Affectation> list = (List<Affectation>) session.createSQLQuery("SELECT * FROM affectation WHERE centre_id = :id").setParameter("id", centre_id).addEntity(Affectation.class).list();
+		List<Affectation> list = session.createSQLQuery("SELECT * FROM affectation WHERE centre_id = :id").setParameter("id", centre_id).addEntity(Affectation.class).list();
 		return list;
 	}
 	
 	
 	public static List<Affectation> getAllAffectation(){
 		Session session = HibernateUtil.getSessionFactory().openSession();
-		List<Affectation> list = (List<Affectation>) session.createSQLQuery("SELECT * FROM affectation").addEntity(Affectation.class).list();
+		List<Affectation> list = session.createSQLQuery("SELECT * FROM affectation").addEntity(Affectation.class).list();
 		return list;
 	}
 	
 	public static Affectation getAffectationByID(int affectation_id){
 		Session session = HibernateUtil.getSessionFactory().openSession();
-		Affectation affectation = (Affectation) session.get(Affectation.class, affectation_id);
+		Affectation affectation = session.get(Affectation.class, affectation_id);
 		return affectation;
 	}
 	

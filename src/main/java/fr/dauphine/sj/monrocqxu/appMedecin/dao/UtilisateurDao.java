@@ -17,7 +17,7 @@ public class UtilisateurDao {
 
 	public static List<Utilisateur> getAllMedecin() {
 		Session session = HibernateUtil.getSessionFactory().openSession();
-		List<Utilisateur> list = (List<Utilisateur>) session
+		List<Utilisateur> list =  session
 				.createSQLQuery("SELECT * FROM utilisateur where role = 'MEDECIN' ").addEntity(Utilisateur.class)
 				.list();
 		return list;
@@ -39,7 +39,7 @@ public class UtilisateurDao {
 
 	public static Utilisateur getUtilisateurByID(int utilisateur_id) {
 		Session session = HibernateUtil.getSessionFactory().openSession();
-		Utilisateur utilisateur = (Utilisateur) session.get(Utilisateur.class, utilisateur_id);
+		Utilisateur utilisateur = session.get(Utilisateur.class, utilisateur_id);
 		return utilisateur;
 	}
 

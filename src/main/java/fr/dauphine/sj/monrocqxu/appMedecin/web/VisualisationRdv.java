@@ -34,11 +34,7 @@ import fr.dauphine.sj.monrocqxu.appMedecin.model.Utilisateur;
 public class VisualisationRdv extends HttpServlet{
 	private static final long serialVersionUID = 1L;
 
-	private CentreDao centreDao;
-	private UtilisateurDao utilisateurDao;
-	private AffectationDao affectationDao;
-	private SpecialiteDao specialiteDao;
-	private RdvDao rdvDao;
+
 	ArrayList<Affectation> resaffectation = new ArrayList<Affectation>();
 	private ArrayList<String> erreurs = new ArrayList<String>();
 
@@ -48,16 +44,13 @@ public class VisualisationRdv extends HttpServlet{
 			Utilisateur utilisateur = (Utilisateur) request.getSession().getAttribute(ATT_SESSION_USER);
 			if (utilisateur != null && utilisateur.getRole().equals("PATIENT")) {
 
-				centreDao = new CentreDao();
-				utilisateurDao = new UtilisateurDao();
-				specialiteDao = new SpecialiteDao();
-				rdvDao  = new RdvDao();
+
 	
 
-				request.setAttribute("rdvs", rdvDao.getRdvActifPatient(utilisateur.getId()));
+				request.setAttribute("rdvs", RdvDao.getRdvActifPatient(utilisateur.getId()));
 
-				request.setAttribute("specialites", specialiteDao.getAllSpecialite());
-				request.setAttribute("centres", centreDao.getAllCentre());
+				request.setAttribute("specialites", SpecialiteDao.getAllSpecialite());
+				request.setAttribute("centres", CentreDao.getAllCentre());
 				this.getServletContext().getRequestDispatcher("/visualisationrdv.jsp").forward(request, response);
 
 			} else {

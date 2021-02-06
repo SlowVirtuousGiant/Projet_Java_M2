@@ -12,13 +12,13 @@ public class SpecialiteDao {
 	
 	public static Specialite getSpecialiteByID(int specialite_id){
 		Session session = HibernateUtil.getSessionFactory().openSession();
-		Specialite specialite = (Specialite) session.get(Specialite.class, specialite_id);
+		Specialite specialite =  session.get(Specialite.class, specialite_id);
 		return specialite;
 	}
 	
 	public static List<Specialite> getAllSpecialite(){
 		Session session = HibernateUtil.getSessionFactory().openSession();
-		List<Specialite> list = (List<Specialite>) session.createSQLQuery("SELECT * FROM specialite").addEntity(Specialite.class).list();
+		List<Specialite> list = session.createSQLQuery("SELECT * FROM specialite").addEntity(Specialite.class).list();
 		return list;
 
 	}

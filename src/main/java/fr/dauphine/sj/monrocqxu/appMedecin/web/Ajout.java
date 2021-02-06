@@ -25,7 +25,7 @@ import fr.dauphine.sj.monrocqxu.appMedecin.util.AppMedecinUtil;
 public class Ajout extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
-	private CentreDao centreDao;
+
 
 	@Override
 	public void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
@@ -35,10 +35,8 @@ public class Ajout extends HttpServlet {
 				response.sendRedirect(CHEMIN_ESPACE);
 			} else {
 
-				centreDao = new CentreDao();
-				SpecialiteDao specialiteDao = new SpecialiteDao();
-				request.setAttribute("specialites", specialiteDao.getAllSpecialite());
-				request.setAttribute("centres", centreDao.getAllCentre());
+				request.setAttribute("specialites", SpecialiteDao.getAllSpecialite());
+				request.setAttribute("centres", CentreDao.getAllCentre());
 				this.getServletContext().getRequestDispatcher("/ajout.jsp").forward(request, response);
 			}
 		} else {
@@ -50,7 +48,6 @@ public class Ajout extends HttpServlet {
 	@Override
 	public void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		Utilisateur utilisateur = new Utilisateur();
-		UtilisateurDao utilisateurDao = new UtilisateurDao();
 		utilisateur.setNom(AppMedecinUtil.ConvertISOtoUTF8(request.getParameter("nom")));
 		utilisateur.setPrenom(AppMedecinUtil.ConvertISOtoUTF8(request.getParameter("prenom")));
 		utilisateur.setTelephone(request.getParameter("telephone"));
@@ -65,13 +62,12 @@ public class Ajout extends HttpServlet {
 		utilisateur.setSexe(request.getParameter("sexe"));
 		utilisateur.setActif(true);
 
-		boolean result = utilisateurDao.ajouter(utilisateur);
-		
-		AffectationDao affectationDao = new AffectationDao();
+		boolean result = UtilisateurDao.ajouter(utilisateur);
+
 		Affectation affectation = new Affectation();
 
 		if (result) {
-			List<Centre> moncentre = centreDao.getAllCentre();
+			List<Centre> moncentre = CentreDao.getAllCentre();
 			for (Centre centre : moncentre) {
 
 				String id = String.valueOf(centre.getId());
@@ -81,7 +77,7 @@ public class Ajout extends HttpServlet {
 					affectation.setMedecin_id(utilisateur.getId());
 					affectation.setSpecialite_id(Integer.valueOf(request.getParameter("sp_"+id)));
 					affectation.setDisponible(false);
-					affectationDao.ajouter(affectation);
+					AffectationDao.ajouter(affectation);
 					MailManager.envoiInscriptionMail(utilisateur,mdp);
 				}
 			}

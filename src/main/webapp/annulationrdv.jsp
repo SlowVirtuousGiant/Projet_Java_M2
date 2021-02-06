@@ -20,15 +20,15 @@
 	Rdv rdv = rdvDao.getRdvByID(Integer.parseInt(idrdv[1]));
 
 	Utilisateur medecin = new Utilisateur();
-	UtilisateurDao utilisateurDao = new UtilisateurDao();
-	medecin = utilisateurDao.getUtilisateurByID(rdv.getMedecin_id());
+
+	medecin = UtilisateurDao.getUtilisateurByID(rdv.getMedecin_id());
 	Creneau c = Creneau.valeurIdCreneau(rdv.getCreneau());
 	Centre centre = new Centre();
-	CentreDao centreDao = new CentreDao();
-	centre = centreDao.getCentreByID(rdv.getCentre_id());
+
+	centre = CentreDao.getCentreByID(rdv.getCentre_id());
 	Specialite specialite = new Specialite();
-	SpecialiteDao specialiteDao = new SpecialiteDao();
-	specialite = specialiteDao.getSpecialiteByID(rdv.getSpecialite_id());
+
+	specialite = SpecialiteDao.getSpecialiteByID(rdv.getSpecialite_id());
 
 	System.out.println(medecin.getNom());
 	System.out.println(medecin.getPrenom());

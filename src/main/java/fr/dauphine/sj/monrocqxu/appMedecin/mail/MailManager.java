@@ -124,17 +124,15 @@ public class MailManager {
 				sexe = "Mme. ";
 			}
 			String msg = null;
-			String msgRDVcanceled = null;
+			String msgRDVcanceled = "";
 
 			if(utilisateur.getRole().equals("PATIENT")) {
 				for(Rdv rdv:listRdv) {
-					UtilisateurDao utilisateurDao = new UtilisateurDao();
-					CentreDao centreDao = new CentreDao();
-					SpecialiteDao specialiteDao = new SpecialiteDao();
 
-					Utilisateur medecin = utilisateurDao .getUtilisateurByID(rdv.getMedecin_id());
-					Centre centre = centreDao.getCentreByID(rdv.getCentre_id());
-					Specialite specialite = specialiteDao.getSpecialiteByID(rdv.getSpecialite_id());
+
+					Utilisateur medecin = UtilisateurDao .getUtilisateurByID(rdv.getMedecin_id());
+					Centre centre = CentreDao.getCentreByID(rdv.getCentre_id());
+					Specialite specialite = SpecialiteDao.getSpecialiteByID(rdv.getSpecialite_id());
 					Creneau c = Creneau.valeurIdCreneau(rdv.getCreneau());
 					msgRDVcanceled = msgRDVcanceled + "Date : " + rdv.getDate()+"<br>"
 					+ "Heure : " + c.getName()+"<br>"

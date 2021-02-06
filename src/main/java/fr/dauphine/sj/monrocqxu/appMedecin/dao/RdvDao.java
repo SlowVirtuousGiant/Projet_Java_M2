@@ -13,7 +13,7 @@ public class RdvDao {
 
 	public static List<Rdv> getRdvActifPatient(int patient_id){
 		Session session = HibernateUtil.getSessionFactory().openSession();
-		List<Rdv> rdvs = (List<Rdv>) session.createSQLQuery("SELECT * FROM rdv where patient_id = :patient_id and actif = 1")
+		List<Rdv> rdvs = session.createSQLQuery("SELECT * FROM rdv where patient_id = :patient_id and actif = 1")
 				.setParameter("patient_id", patient_id)
 				.addEntity(Rdv.class).list();
 		return rdvs;
@@ -21,7 +21,7 @@ public class RdvDao {
 	
 	public static List<Rdv> getRdvPatient(int patient_id){
 		Session session = HibernateUtil.getSessionFactory().openSession();
-		List<Rdv> list = (List<Rdv>) session.createSQLQuery("SELECT * FROM rdv WHERE patient_id = :id")
+		List<Rdv> list = session.createSQLQuery("SELECT * FROM rdv WHERE patient_id = :id")
 				.setParameter("id", patient_id)
 				.addEntity(Rdv.class).list();
 		return list;
@@ -29,7 +29,7 @@ public class RdvDao {
 	
 	public static List<Rdv> getRdvActifMedecin(int medecin_id){
 		Session session = HibernateUtil.getSessionFactory().openSession();
-		List<Rdv> rdvs = (List<Rdv>) session.createSQLQuery("SELECT * FROM rdv where medecin_id = :id and actif = 1")
+		List<Rdv> rdvs =session.createSQLQuery("SELECT * FROM rdv where medecin_id = :id and actif = 1")
 				.setParameter("id", medecin_id)
 				.addEntity(Rdv.class).list();
 		return rdvs;
@@ -37,7 +37,7 @@ public class RdvDao {
 	
 	public static List<Rdv> getRdvActifMedecinByWeek(int medecin_id, int week){
 		Session session = HibernateUtil.getSessionFactory().openSession();
-		List<Rdv> rdvs = (List<Rdv>) session.createSQLQuery("SELECT * FROM rdv where medecin_id = :id and actif = 1 and semaine = :semaine")
+		List<Rdv> rdvs = session.createSQLQuery("SELECT * FROM rdv where medecin_id = :id and actif = 1 and semaine = :semaine")
 				.setParameter("id", medecin_id)
 				.setParameter("semaine", week)
 				.addEntity(Rdv.class).list();
@@ -70,13 +70,13 @@ public class RdvDao {
 	
 	public Rdv getRdvByID(int rdv_id){
 		Session session = HibernateUtil.getSessionFactory().openSession();
-		Rdv rdv = (Rdv) session.get(Rdv.class, rdv_id);
+		Rdv rdv = session.get(Rdv.class, rdv_id);
 		return rdv;
 	}
 	
 	public static List<Integer> getNonPossibleRdvByDate(String date, Utilisateur medecin){
 		Session session = HibernateUtil.getSessionFactory().openSession();
-		List<Integer> list = (List<Integer>) session.createSQLQuery("SELECT creneau FROM rdv WHERE date = :date AND medecin_id = :id")
+		List<Integer> list = session.createSQLQuery("SELECT creneau FROM rdv WHERE date = :date AND medecin_id = :id")
 				.setParameter("date", date)
 				.setParameter("id", medecin.getId()).list();
 				
@@ -86,7 +86,7 @@ public class RdvDao {
 	public static List<Integer> getRdv(String date, Utilisateur medecin){
 		Session session = HibernateUtil.getSessionFactory().openSession();
 
-		List<Integer> list = (List<Integer>) session.createSQLQuery("SELECT creneau FROM rdv WHERE date = :date AND medecin_id = :id")
+		List<Integer> list = session.createSQLQuery("SELECT creneau FROM rdv WHERE date = :date AND medecin_id = :id")
 				.setParameter("date", date)
 				.setParameter("id", medecin.getId()).list();
 				
@@ -95,7 +95,7 @@ public class RdvDao {
 	
 	public static List<Integer> getCreneauxRdvPatient(Utilisateur patient, String date) {
 		Session session = HibernateUtil.getSessionFactory().openSession();
-		List<Integer> creneauTrouve = (List<Integer>) session.createSQLQuery("SELECT creneau FROM rdv C WHERE C.date = :date AND C.patient_id = :patient_id")
+		List<Integer> creneauTrouve =  session.createSQLQuery("SELECT creneau FROM rdv C WHERE C.date = :date AND C.patient_id = :patient_id")
 				.setParameter("date", date).setParameter("patient_id", patient.getId()).list();
 		return creneauTrouve;
 	}

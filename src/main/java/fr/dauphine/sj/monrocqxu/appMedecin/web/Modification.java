@@ -54,10 +54,10 @@ public class Modification extends HttpServlet {
 		utilisateur.setCode_postal(Integer.parseInt(request.getParameter("code_postal")));
 		utilisateur.setVille(AppMedecinUtil.ConvertISOtoUTF8(request.getParameter("ville")));
 
-		UtilisateurDao utilisateurDao = new UtilisateurDao();
+
 
 		if(auth) {
-			if(utilisateurDao.update(utilisateur)) {
+			if(UtilisateurDao.update(utilisateur)) {
 				response.sendRedirect( CHEMIN_PROFIL );
 				System.out.println("mise à jour du profil effectuée");
 				session.setAttribute(ATT_SESSION_USER,utilisateur);

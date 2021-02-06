@@ -31,6 +31,14 @@ public class Rdv implements Serializable {
 	private String commentaire;
 	private int creneau;
 	private int specialite_id;
+	public String auteur;
+	
+	public String getAuteur() {
+		return auteur;
+	}
+	public void setAuteur(String auteur) {
+		this.auteur = auteur;
+	}
 	public int getId() {
 		return id;
 	}

@@ -41,8 +41,8 @@ public class ReservationDetails extends HttpServlet {
 						request.setAttribute("selectedDate", TimeMedecinUtil.getFirstRdvDay());
 						request.getSession().setAttribute("affectation", idaffectation[1]);//save dans la session
 						
-						UtilisateurDao utilisateurDao = new UtilisateurDao();
-						medecin =  utilisateurDao.getUtilisateurByID(affectation.getMedecin_id());
+
+						medecin =  UtilisateurDao.getUtilisateurByID(affectation.getMedecin_id());
 						centre = CentreDao.getCentreByID(affectation.getCentre_id());
 						
 						this.getServletContext().getRequestDispatcher("/reservationdetails.jsp").forward(request, response);
@@ -75,6 +75,8 @@ public class ReservationDetails extends HttpServlet {
 			rdv.setDate(rdvDate);
 			rdv.setSemaine(TimeMedecinUtil.getWeekFromDate(rdvDate));
 			rdv.setActif(true);
+			rdv.setAuteur(null);
+			rdv.setCommentaire(null);
 			
 			RdvDao.ajouter(rdv);
 			response.sendRedirect(CHEMIN_ESPACE);

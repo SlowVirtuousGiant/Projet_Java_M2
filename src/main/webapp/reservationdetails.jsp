@@ -44,8 +44,7 @@
 
 							Affectation affectation = AffectationDao.getAffectationByID(Integer.parseInt(aff));
 
-							UtilisateurDao utilisateurDao = new UtilisateurDao();
-							Utilisateur medecin = utilisateurDao.getUtilisateurByID(affectation.getMedecin_id());
+							Utilisateur medecin = UtilisateurDao.getUtilisateurByID(affectation.getMedecin_id());
 
 							Centre centre = CentreDao.getCentreByID(affectation.getCentre_id());
 

@@ -52,8 +52,7 @@ public class Connexion extends HttpServlet {
 		System.out.println(erreurs);
 
 		if ( erreurs.isEmpty() ) {
-			UtilisateurDao utilisateurDao = new UtilisateurDao();
-			Utilisateur utilisateur = utilisateurDao.validate(email, password);
+			Utilisateur utilisateur = UtilisateurDao.validate(email, password);
 			if(utilisateur != null) {
 				if(utilisateur.isActif()==true) {
 					System.out.println("login succes");

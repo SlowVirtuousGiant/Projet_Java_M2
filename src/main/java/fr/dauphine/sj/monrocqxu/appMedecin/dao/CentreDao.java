@@ -12,13 +12,13 @@ public class CentreDao {
 	
 	public static Centre getCentreByID(int centre_id){
 		Session session = HibernateUtil.getSessionFactory().openSession();
-		Centre centre = (Centre) session.get(Centre.class, centre_id);
+		Centre centre = session.get(Centre.class, centre_id);
 		return centre;
 	}
 	
 	public static List<Centre> getAllCentre(){
 		Session session = HibernateUtil.getSessionFactory().openSession();
-		List<Centre> list = (List<Centre>) session.createSQLQuery("SELECT * FROM centre").addEntity(Centre.class).list();
+		List<Centre> list = session.createSQLQuery("SELECT * FROM centre").addEntity(Centre.class).list();
 		return list;
 	}
 }
