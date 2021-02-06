@@ -47,6 +47,19 @@ public class AffectationDao {
 		return list;
 	}
 	
+	public static List<Affectation> getAffectationBySpecialite(int specialite_id){
+		Session session = HibernateUtil.getSessionFactory().openSession();
+		List<Affectation> list = (List<Affectation>) session.createSQLQuery("SELECT * FROM affectation WHERE specialite_id = :id").setParameter("id", specialite_id).addEntity(Affectation.class).list();
+		return list;
+	}
+	
+	public static List<Affectation> getAffectationByCentre(int centre_id){
+		Session session = HibernateUtil.getSessionFactory().openSession();
+		List<Affectation> list = (List<Affectation>) session.createSQLQuery("SELECT * FROM affectation WHERE centre_id = :id").setParameter("id", centre_id).addEntity(Affectation.class).list();
+		return list;
+	}
+	
+	
 	public static List<Affectation> getAllAffectation(){
 		Session session = HibernateUtil.getSessionFactory().openSession();
 		List<Affectation> list = (List<Affectation>) session.createSQLQuery("SELECT * FROM affectation").addEntity(Affectation.class).list();

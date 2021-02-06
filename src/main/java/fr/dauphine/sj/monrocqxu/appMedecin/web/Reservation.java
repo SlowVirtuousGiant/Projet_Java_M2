@@ -21,15 +21,12 @@ import fr.dauphine.sj.monrocqxu.appMedecin.dao.CentreDao;
 import fr.dauphine.sj.monrocqxu.appMedecin.dao.SpecialiteDao;
 import fr.dauphine.sj.monrocqxu.appMedecin.dao.UtilisateurDao;
 import fr.dauphine.sj.monrocqxu.appMedecin.model.Affectation;
+import fr.dauphine.sj.monrocqxu.appMedecin.model.Specialite;
 import fr.dauphine.sj.monrocqxu.appMedecin.model.Utilisateur;
 
 public class Reservation extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-	
-	private CentreDao centreDao;
-	private UtilisateurDao utilisateurDao;
-	private AffectationDao affectationDao;
-	private SpecialiteDao specialiteDao;
+
 	ArrayList<Affectation> resaffectation = new ArrayList<Affectation>();
 
 	@Override
@@ -37,14 +34,10 @@ public class Reservation extends HttpServlet {
 		if (isAuthenticated(request)) {
 			Utilisateur utilisateur = (Utilisateur) request.getSession().getAttribute(ATT_SESSION_USER);
 			if (utilisateur != null && utilisateur.getRole().equals("PATIENT")) {
-
-				centreDao = new CentreDao();
-				utilisateurDao = new UtilisateurDao();
-				specialiteDao = new SpecialiteDao();
-
-				request.setAttribute("specialites", specialiteDao.getAllSpecialite());
-				request.setAttribute("centres", centreDao.getAllCentre());
 				this.getServletContext().getRequestDispatcher("/reservation.jsp").forward(request, response);
+				request.setAttribute("selectedSpecia", "0");// Selection d'une specialite par defaut
+				request.setAttribute("rechercherValue", "");
+				request.setAttribute("selectedCentres", null);
 			} else {
 				response.sendRedirect(CHEMIN_ESPACE);
 			}
@@ -55,23 +48,79 @@ public class Reservation extends HttpServlet {
 
 	@Override
 	public void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		affectationDao = new AffectationDao();
-		// request.getParameter("sp_id").equals(affectation.getSpecialite_id())&&
-		// request.getParameter("ct_id").equals(affectation.getCentre_id()))
-		List<Affectation> affectations = findWithNom(request.getParameter("rechercheNom"));
-		request.setAttribute( "affectations", affectations);
+
+		List<Affectation> resultTmp = new ArrayList<Affectation>();
+		List<Affectation> results = new ArrayList<Affectation>();
 		
-		this.getServletContext().getRequestDispatcher("/reservation.jsp").forward( request, response );
-		//response.sendRedirect(CHEMIN_RESERVATION);
+		boolean champNom = false;
+		boolean champSpecia = false;
+
+		String recherche = request.getParameter("rechercheNom");
+		if (!recherche.equals("")) {//recherche du nom
+			champNom = true;
+			request.setAttribute("rechercherValue", recherche);
+			results = findWithNom(recherche);
+		}
+		
+		
+		if (!request.getParameter("sp_id").equals("0")) {//si utilisation specialite
+			int specialite = Integer.parseInt(request.getParameter("sp_id"));
+			if (champNom) {
+				if (!results.isEmpty()) {// si il a des resultat dans la recherche de nom
+					resultTmp = new ArrayList<Affectation>(results);
+					results.clear();
+					for (Affectation affectation : resultTmp) {
+						if (affectation.getSpecialite_id() == specialite) {
+							results.add(affectation);
+						}
+					}
+				}
+			} else {//Si uniquement la specialite est utilisee
+				champSpecia = true;
+				results = AffectationDao.getAffectationBySpecialite(specialite);
+			}
+			request.setAttribute("selectedSpecia", request.getParameter("sp_id"));
+		}
+
+		String[] centreSelect = request.getParameterValues("selectedCentre");
+		
+		if (centreSelect != null && centreSelect.length > 0) {//Si un ou plusieurs centre est selectionne
+			if (champNom || champSpecia) {
+				if (!results.isEmpty()) {
+					resultTmp = new ArrayList<Affectation>(results);
+					results.clear();
+					for(Affectation affectation : resultTmp) {
+						for(String centre : centreSelect) {
+							int centre_id = Integer.parseInt(centre);
+							if(affectation.getCentre_id() == centre_id) {
+								results.add(affectation);
+							}
+						}
+					}
+					request.setAttribute("affectations", results);
+				}
+			} else {// query sur toutes les affectations des centres cochés
+				for(String centre : centreSelect) {
+					System.out.println("ca rentre select unique");
+					int centre_id = Integer.parseInt(centre);
+					results.addAll(AffectationDao.getAffectationByCentre(centre_id));
+				}
+			}
+			request.setAttribute("selectedCentre", centreSelect);
+		}
+		request.setAttribute("affectations", results);
+		
+
+		this.getServletContext().getRequestDispatcher("/reservation.jsp").forward(request, response);
 	}
 
-	public List<Affectation> findWithNom(String search) {
-		HashMap<Integer, String> medecins = utilisateurDao.getAllMedecinName();
+	private List<Affectation> findWithNom(String search) {
+		HashMap<Integer, String> medecins = UtilisateurDao.getAllMedecinName();
 		List<Affectation> res = new ArrayList<Affectation>();
-		for(Entry<Integer, String> entry : medecins.entrySet()) {
-		    if(entry.getValue().contains(search)) {
-		    	res.addAll(affectationDao.getAffectation(entry.getKey()));
-		    }
+		for (Entry<Integer, String> entry : medecins.entrySet()) {
+			if (!search.equals("") && entry.getValue().contains(search)) {
+				res.addAll(AffectationDao.getAffectation(entry.getKey()));
+			}
 		}
 		return res;
 	}

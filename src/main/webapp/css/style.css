@@ -179,3 +179,7 @@ button:focus {
 	color: #fff;
 	font-weight: bold;
 }
+
+.results{
+	max-height: 50px;
+}

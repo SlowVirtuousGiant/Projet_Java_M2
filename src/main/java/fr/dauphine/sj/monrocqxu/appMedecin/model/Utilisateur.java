@@ -13,17 +13,17 @@ import javax.persistence.Table;
 @Table(name = "utilisateur")
 public class Utilisateur implements Serializable{
 	private static final long serialVersionUID = 1L;
-    
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "utilisateur_id", unique = true, nullable = false)
-    private Integer id;
-     
-     
-    @Column(name = "mail", unique = true, nullable = false, length = 100)
-    private String mail;
 
-    @Column(name = "nom")
+	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@Column(name = "utilisateur_id", unique = true, nullable = false)
+	private Integer id;
+
+
+	@Column(name = "mail", unique = true, nullable = false, length = 100)
+	private String mail;
+
+	@Column(name = "nom")
 	private String nom;
 	private String prenom;
 	private String telephone;
@@ -48,16 +48,18 @@ public class Utilisateur implements Serializable{
 		this.mail = mail;
 	}
 	public String getNom() {
-		return nom;
+		return nom.toUpperCase();
 	}
 	public void setNom(String nom) {
-		this.nom = nom;
+		this.nom = nom.toUpperCase();
 	}
 	public String getPrenom() {
 		return prenom;
 	}
 	public void setPrenom(String prenom) {
-		this.prenom = prenom;
+		String p = prenom;
+		String pCorreccted = p.substring(0,1).toUpperCase() + p.substring(1).toLowerCase();
+		this.prenom = pCorreccted;
 	}
 	public String getTelephone() {
 		return telephone;
@@ -113,6 +115,6 @@ public class Utilisateur implements Serializable{
 	public void setSexe(String sexe) {
 		this.sexe = sexe;
 	}
-	
-	
+
+
 }

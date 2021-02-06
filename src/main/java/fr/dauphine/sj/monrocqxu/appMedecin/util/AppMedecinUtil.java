@@ -9,6 +9,8 @@ import javax.servlet.http.HttpSession;
 public class AppMedecinUtil {
 	//Variable globale
 	public static final String ATT_SESSION_USER = "utilisateur";
+	public static final String ATT_SESSION_SPECIALITES = "specialites";
+	public static final String ATT_SESSION_CENTRES = "centres";
 	public static final String SESSION_ROLE = "utilisateur_role";
 	public static final String ERREUR = "erreur";
 	public static final String CHEMIN_ESPACE ="/appMedecin/espace";
@@ -55,6 +57,15 @@ public class AppMedecinUtil {
 		}
 		return true;
 	}
+	public static boolean validationAnneeNaiss( int naissance ) {
+		if ( naissance <=1920 ) {
+				return false;
+			}
+		
+		return true;
+	}
+	
+	
 	public static String ConvertISOtoUTF8(String iso) {
 	String item = iso; 
 

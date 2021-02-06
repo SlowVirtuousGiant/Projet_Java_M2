@@ -12,6 +12,7 @@ import static fr.dauphine.sj.monrocqxu.appMedecin.util.AppMedecinUtil.isAuthenti
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.List;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
@@ -21,7 +22,9 @@ import javax.servlet.http.HttpSession;
 
 import org.mindrot.jbcrypt.BCrypt;
 
+import fr.dauphine.sj.monrocqxu.appMedecin.dao.RdvDao;
 import fr.dauphine.sj.monrocqxu.appMedecin.dao.UtilisateurDao;
+import fr.dauphine.sj.monrocqxu.appMedecin.model.Rdv;
 import fr.dauphine.sj.monrocqxu.appMedecin.model.Utilisateur;
 
 public class Profil extends HttpServlet {
@@ -47,12 +50,19 @@ public class Profil extends HttpServlet {
 
 		UtilisateurDao utilisateurDao = new UtilisateurDao();
 		Utilisateur utilisateur = (Utilisateur)request.getSession().getAttribute(ATT_SESSION_USER);
+		RdvDao rdvDao = new RdvDao();
 		System.out.println("dans le post dopost");
-		
+
 		if(BCrypt.checkpw(request.getParameter("motdepasse"), utilisateur.getMotdepasse())) {
-			if(utilisateur.getRole()=="PATIENT") {
+			if(utilisateur.getRole().equals("PATIENT")) {
 				utilisateur.setActif(false);
 				if(utilisateurDao.update(utilisateur)) {
+					List<Rdv> listRdv = rdvDao.getRdvActifPatient(utilisateur.getId());
+					for(Rdv rdv:listRdv) {
+						System.out.println(rdv.getId());
+						rdv.setActif(false);
+						rdvDao.update(rdv);
+					}
 					response.sendRedirect( CHEMIN_DECONNEXION );
 				}else {
 					System.out.println("erreurs");
@@ -61,16 +71,26 @@ public class Profil extends HttpServlet {
 				}
 
 			}else {
-				System.out.println("passage en role inactif pour docteur");
-				utilisateur.setActif(false);
-				if(utilisateurDao.update(utilisateur)) {
-					System.out.println("actif bien MAJ dans la bdd");
-					response.sendRedirect( CHEMIN_DECONNEXION );
+				List<Rdv> listRdv = rdvDao.getRdvActifMedecin(utilisateur.getId());
+				if(listRdv!=null && listRdv.isEmpty()) {
+					System.out.println("passage en role inactif pour docteur");
+
+					utilisateur.setActif(false);
+					if(utilisateurDao.update(utilisateur)) {
+						System.out.println("actif bien MAJ dans la bdd");
+						response.sendRedirect( CHEMIN_DECONNEXION );
+					}else {
+						System.out.println("erreurs");
+						response.sendRedirect(CHEMIN_PROFIL);
+						request.setAttribute( ERREUR, erreurs );
+					}
 				}else {
-					System.out.println("erreurs");
+					System.out.println("Le docteur a des rdv");
 					response.sendRedirect(CHEMIN_PROFIL);
+					erreurs.add("Le docteur a des rdv");
 					request.setAttribute( ERREUR, erreurs );
 				}
+
 				//IS MEDECIN CHECK ALL RDV CANCELED
 			}
 		}else {
@@ -79,7 +99,7 @@ public class Profil extends HttpServlet {
 			erreurs.add("Mot de passe incorrect");
 			request.setAttribute(ERREUR, erreurs);
 		}
-		
-		
+
+
 	}
 }
