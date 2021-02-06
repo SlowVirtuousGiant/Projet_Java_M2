@@ -116,7 +116,7 @@ public class Reservation extends HttpServlet {
 		List<Affectation> res = new ArrayList<Affectation>();
 		for (Entry<Integer, String> entry : medecins.entrySet()) {
 			if (!search.equals("") && entry.getValue().contains(search)) {
-				res.addAll(AffectationDao.getAffectation(entry.getKey()));
+				res.addAll(AffectationDao.getAffectationMedecinActif(entry.getKey()));
 			}
 		}
 		return res;

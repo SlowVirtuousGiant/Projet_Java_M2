@@ -71,7 +71,9 @@ public class ReservationDetails extends HttpServlet {
 			rdv.setCentre_id(centre.getId());
 			rdv.setCreneau(Integer.valueOf(request.getParameter("rdvCreneau")));
 			rdv.setSpecialite_id(Integer.valueOf(request.getParameter("rdvSpecialite")));
-			rdv.setDate(request.getParameter("rdvDate"));
+			String rdvDate = request.getParameter("rdvDate");
+			rdv.setDate(rdvDate);
+			rdv.setSemaine(TimeMedecinUtil.getWeekFromDate(rdvDate));
 			rdv.setActif(true);
 			
 			RdvDao.ajouter(rdv);

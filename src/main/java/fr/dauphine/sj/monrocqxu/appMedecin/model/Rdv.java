@@ -26,6 +26,7 @@ public class Rdv implements Serializable {
 	private int medecin_id;
 	private int centre_id;
 	private String date;
+	private int semaine;
 	private boolean actif;
 	private String commentaire;
 	private int creneau;
@@ -83,6 +84,12 @@ public class Rdv implements Serializable {
 	}
 	public void setSpecialite_id(int specialite_id) {
 		this.specialite_id = specialite_id;
+	}
+	public int getSemaine() {
+		return semaine;
+	}
+	public void setSemaine(int semaine) {
+		this.semaine = semaine;
 	}
 	
 }

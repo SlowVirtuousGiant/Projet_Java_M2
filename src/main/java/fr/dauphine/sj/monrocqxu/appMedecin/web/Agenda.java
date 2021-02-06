@@ -33,10 +33,8 @@ public class Agenda extends HttpServlet {
 			Utilisateur utilisateur = (Utilisateur) request.getSession().getAttribute(ATT_SESSION_USER);
 			if (utilisateur != null && utilisateur.getRole().equals("MEDECIN")) {
 				
-				CentreDao centreDao = new CentreDao();
-				AffectationDao affectationDao = new AffectationDao();
-				for(Affectation aff : affectationDao.getAffectation(utilisateur.getId())){
-					centres.add(centreDao.getCentreByID(aff.getCentre_id()));
+				for(Affectation aff : AffectationDao.getAffectationMedecin(utilisateur.getId())){
+					centres.add(CentreDao.getCentreByID(aff.getCentre_id()));
 				}
 				
 				request.setAttribute("centres", centres);

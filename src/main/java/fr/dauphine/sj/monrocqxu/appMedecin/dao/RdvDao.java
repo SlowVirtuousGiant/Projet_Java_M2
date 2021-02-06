@@ -35,6 +35,15 @@ public class RdvDao {
 		return rdvs;
 	}
 	
+	public static List<Rdv> getRdvActifMedecinByWeek(int medecin_id, int week){
+		Session session = HibernateUtil.getSessionFactory().openSession();
+		List<Rdv> rdvs = (List<Rdv>) session.createSQLQuery("SELECT * FROM rdv where medecin_id = :id and actif = 1 and semaine = :semaine")
+				.setParameter("id", medecin_id)
+				.setParameter("semaine", week)
+				.addEntity(Rdv.class).list();
+		return rdvs;
+	}
+	
 	public static List<Rdv> getRdvMedecin(int medecin_id){
 		Session session = HibernateUtil.getSessionFactory().openSession();
 		List<Rdv> rdvs = (List<Rdv>) session.createQuery("from rdv where medecin_id = :id")

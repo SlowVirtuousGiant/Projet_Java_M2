@@ -33,7 +33,13 @@ public class TimeMedecinUtil {
 		WeekFields weekFields = WeekFields.of(Locale.getDefault()); 
 		int weekNumber = currentDate.get(weekFields.weekOfWeekBasedYear());
 		return String.valueOf(weekNumber);
-		
+	}
+	
+	public static int getWeekFromDate(String string) {
+		LocalDate date = LocalDate.parse(string, DateTimeFormatter.ofPattern("dd/MM/yyyy"));
+		WeekFields weekFields = WeekFields.of(Locale.getDefault()); 
+		int weekNumber = date.get(weekFields.weekOfWeekBasedYear());
+		return weekNumber;
 	}
 	
 	public static HashMap<String, ArrayList<String>> getDatesByWeekNumber(int nb_weeks){

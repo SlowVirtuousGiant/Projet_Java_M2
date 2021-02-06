@@ -2,10 +2,12 @@
 <%@ page pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
-<%@ page
-	import="fr.dauphine.sj.monrocqxu.appMedecin.util.TimeMedecinUtil"%>
+<%@ page import="fr.dauphine.sj.monrocqxu.appMedecin.util.TimeMedecinUtil"%>
+<%@ page import="fr.dauphine.sj.monrocqxu.appMedecin.model.*"%>
+<%@ page import="fr.dauphine.sj.monrocqxu.appMedecin.dao.*"%>
 <%@ page import="java.util.ArrayList"%>
 <%@ page import="java.util.HashMap"%>
+<%@ page import="java.util.List"%>
 
 <!DOCTYPE html>
 <html>
@@ -53,10 +55,22 @@
 
 					<%
 						HashMap<String, ArrayList<String>> weeks = TimeMedecinUtil.getDatesByWeekNumber(4);
-
-					ArrayList<String> jours = weeks.get(session.getAttribute("selectedWeek"));
+					
+						String currentWeek = (String) session.getAttribute("selectedWeek");
+						
+						ArrayList<String> jours = weeks.get(currentWeek);
+						
+						
+						List<Rdv> rdvSemaine = new ArrayList<Rdv>();
+						
+						List<Rdv> affectes = new ArrayList<Rdv>();
+						int init = 1;
+						if(init ==1){
+							rdvSemaine = RdvDao.getRdvActifMedecinByWeek(utilisateur.getId(), Integer.valueOf(currentWeek));
+							System.out.println(rdvSemaine);
+						}
 					%>
-					<div class="container">
+					<div class="container <%= init == 1 ? "" : "no-init" %>">
 						<div class="col-md-12 mt-3">
 							<div class="bg-light p-1 rounded mt-3 justify-content-center">
 								<h4>Horaire</h4>
@@ -65,7 +79,9 @@
 								<p>Adresse</p>
 								<p>Téléphone</p>
 							</div>
-							<div class="table-responsive mt-2">
+							<div class="container-actif">
+							<div class="table-responsive mt-2 mb-3">
+								
 								<table class="table table-bordered border-success table-fixed">
 									<thead>
 										<tr>
@@ -76,6 +92,7 @@
 											<th class="th-sm"><%=j%></th>
 											<%
 												}
+												jours.add(0, "horaire");
 											%>
 										</tr>
 									</thead>
@@ -84,9 +101,11 @@
 											for (int i = 1; i < 24; i++) {
 										%>
 										<tr>
-											<%
-												for (int j = 0; j < 8; j++) {
-												if (j == 0) {
+											<%	
+												int j_id = 0;
+												for(String j : jours) {
+													
+												if (j_id == 0) {
 											%>
 											<td class=<%=i % 2 == 0 ? "horaire" : "horaire-alt"%>>
 												<%
@@ -96,18 +115,42 @@
 											</td>
 											<%
 												} else {
-											%>
-											<td></td>
-											<%
-												}
+													
+													String status = "";
+													for(Rdv rdv : rdvSemaine){
+														if(!affectes.contains(rdv) && rdv.getDate().equals(j) && rdv.getCreneau() == i){//le rdv est pris
+															System.out.println();
+															if(rdv.getPatient_id() == utilisateur.getId()){//le medecin est occupe
+																status = "no-dispo";
+																affectes.add(rdv);
+															}
+															else{ //le rdv est pris par qqun
+																status = "rdv-pris";
+																System.out.println("ca rentre");
+																affectes.add(rdv);
+															}
+													}
+													if(status.equals("")){
+														status = "libre";
+													}
+													
+													}%>
+													<td style="position:relative;"><div class="case <%=status%>"></div></td>
+												<%}
+												j_id++;
 											}
 											%>
 										</tr>
-										<%
+										<%	
+											
 											}
 										%>
 									</tbody>
 								</table>
+							</div>
+							<% if(init != 1){%>
+								 <button class="btn btn-lg btn-primary">Initialiser cette semaine</button>
+							<%} %>
 							</div>
 							<div class="row">
 

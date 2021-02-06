@@ -77,7 +77,7 @@ public class Profil extends HttpServlet {
 
 					utilisateur.setActif(false);
 					if(UtilisateurDao.update(utilisateur)) {
-						List<Affectation> listAff = AffectationDao.getAffectation(utilisateur.getId());
+						List<Affectation> listAff = AffectationDao.getAffectationMedecinActif(utilisateur.getId());
 						for(Affectation aff:listAff) {
 							aff.setDisponible(false);
 							AffectationDao.update(aff);
