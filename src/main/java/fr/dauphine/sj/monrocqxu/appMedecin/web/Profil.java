@@ -24,6 +24,7 @@ import org.mindrot.jbcrypt.BCrypt;
 
 import fr.dauphine.sj.monrocqxu.appMedecin.dao.RdvDao;
 import fr.dauphine.sj.monrocqxu.appMedecin.dao.UtilisateurDao;
+import fr.dauphine.sj.monrocqxu.appMedecin.mail.MailManager;
 import fr.dauphine.sj.monrocqxu.appMedecin.model.Affectation;
 import fr.dauphine.sj.monrocqxu.appMedecin.model.Rdv;
 import fr.dauphine.sj.monrocqxu.appMedecin.model.Utilisateur;
@@ -61,6 +62,7 @@ public class Profil extends HttpServlet {
 				utilisateur.setActif(false);
 				if(utilisateurDao.update(utilisateur)) {
 					List<Rdv> listRdv = rdvDao.getRdvActifPatient(utilisateur.getId());
+					MailManager.envoiMailDesactivationCompte(utilisateur,listRdv);
 					for(Rdv rdv:listRdv) {
 						System.out.println(rdv.getId());
 						rdv.setActif(false);
@@ -80,6 +82,7 @@ public class Profil extends HttpServlet {
 
 					utilisateur.setActif(false);
 					if(utilisateurDao.update(utilisateur)) {
+						MailManager.envoiMailDesactivationCompte(utilisateur,null);
 						List<Affectation> listAff = affectationDao.getAffectation(utilisateur.getId());
 						for(Affectation aff:listAff) {
 							aff.setDisponible(false);
