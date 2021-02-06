@@ -56,11 +56,13 @@ public class AppMedecinUtil {
 		return true;
 	}
 	public static boolean validationAnneeNaiss( int naissance ) {
-		if ( naissance <=1920 ) {
-				return false;
+		if ( naissance >=1920 && naissance <= 2021) {
+				return true;
 			}
-		
-		return true;
+		return false;
+	}
+	public static boolean validationAlphaNum (String txt) {
+		return(txt.matches("[A-Za-z0-9]+"));
 	}
 	
 	
