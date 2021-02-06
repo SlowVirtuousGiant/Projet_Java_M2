@@ -1,5 +1,6 @@
 package fr.dauphine.sj.monrocqxu.appMedecin.mail;
 
+import java.util.List;
 import java.util.Properties;
 
 import javax.mail.Message;
@@ -9,6 +10,13 @@ import javax.mail.Transport;
 import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeMessage;
 
+import fr.dauphine.sj.monrocqxu.appMedecin.dao.CentreDao;
+import fr.dauphine.sj.monrocqxu.appMedecin.dao.UtilisateurDao;
+import fr.dauphine.sj.monrocqxu.appMedecin.dao.SpecialiteDao;
+import fr.dauphine.sj.monrocqxu.appMedecin.model.Centre;
+import fr.dauphine.sj.monrocqxu.appMedecin.model.Creneau;
+import fr.dauphine.sj.monrocqxu.appMedecin.model.Rdv;
+import fr.dauphine.sj.monrocqxu.appMedecin.model.Specialite;
 import fr.dauphine.sj.monrocqxu.appMedecin.model.Utilisateur;
 import fr.dauphine.sj.monrocqxu.appMedecin.util.AppMedecinUtil;
 
@@ -38,7 +46,7 @@ public class MailManager {
 		});
 	}
 	 */
-	
+
 	public void sendTestMessage(String destination) {
 		try {
 			Message message = new MimeMessage(session);
@@ -48,10 +56,10 @@ public class MailManager {
 			message.setRecipients(Message.RecipientType.TO, InternetAddress.parse(destination));
 
 			message.setSubject("Bienvenue sur rdvmedecin.fr");
-			
+
 			message.setContent("<p> Bonjour <strong>vive les citrouilles</strong> "
 					+ "<img src='https://www.fraicheurquebec.com/images/fraicheur-products/main/Citrouille.png' alt='img' /> ",
-		             "text/html");
+					"text/html");
 
 			Transport.send(message);
 
@@ -61,7 +69,7 @@ public class MailManager {
 			throw new RuntimeException(e);
 		}
 	}
-	
+
 	public static void envoiInscriptionMail(Utilisateur utilisateur,String mdp) {
 		try {
 			Message message = new MimeMessage(session);
@@ -70,9 +78,9 @@ public class MailManager {
 			message.setSubject("Bienvenue sur rdvmedecin.fr");
 			String sexe;
 			if(utilisateur.getSexe().equals("homme")) {
-				 sexe = "Mr. ";
+				sexe = "Mr. ";
 			}else {
-				 sexe = "Mme. ";
+				sexe = "Mme. ";
 			}
 			String msg = null;
 			if(utilisateur.getRole().equals("PATIENT")) {
@@ -95,16 +103,67 @@ public class MailManager {
 						+ "À très bientôt sur notre site, de la part de toute l'équipe de RDVmedecin ! ";
 			}
 			message.setContent(AppMedecinUtil.ConvertISOtoUTF8(msg),
-		             "text/html");
-
+					"text/html");
 			Transport.send(message);
-
 			System.out.println("Message envoyé avec succés");
-
 		} catch (MessagingException e) {
 			throw new RuntimeException(e);
 		}
 	}
-	
-	
+
+	public static void envoiMailDesactivationCompte(Utilisateur utilisateur, List<Rdv> listRdv) {
+		try {
+			Message message = new MimeMessage(session);
+			message.setFrom(new InternetAddress(MAIL_WEBSITE_ADRESS));
+			message.setRecipients(Message.RecipientType.TO, InternetAddress.parse(utilisateur.getMail()));
+			message.setSubject("Confirmation de désactivation du compte sur RDVmedecin.fr");
+			String sexe;
+			if(utilisateur.getSexe().equals("homme")) {
+				sexe = "Mr. ";
+			}else {
+				sexe = "Mme. ";
+			}
+			String msg = null;
+			String msgRDVcanceled = null;
+
+			if(utilisateur.getRole().equals("PATIENT")) {
+				for(Rdv rdv:listRdv) {
+					UtilisateurDao utilisateurDao = new UtilisateurDao();
+					CentreDao centreDao = new CentreDao();
+					SpecialiteDao specialiteDao = new SpecialiteDao();
+
+					Utilisateur medecin = utilisateurDao .getUtilisateurByID(rdv.getMedecin_id());
+					Centre centre = centreDao.getCentreByID(rdv.getCentre_id());
+					Specialite specialite = specialiteDao.getSpecialiteByID(rdv.getSpecialite_id());
+					Creneau c = Creneau.valeurIdCreneau(rdv.getCreneau());
+					msgRDVcanceled = msgRDVcanceled + "Date : " + rdv.getDate()+"<br>"
+					+ "Heure : " + c.getName()+"<br>"
+					+ "Dr."+medecin.getNom() + " " + medecin.getPrenom()+"<br>"
+					+ "Spécialité : "+specialite.getSpecialite()+"<br>"
+					+ "Centre médical : "+centre.getNom()+"<br>"
+					+ "Adresse du centre médical : "+centre.getAdresse() + " " + centre.getVille() + " " + centre.getCode_postal()
+					+"<br>"
+					+ "Telephone du centre médical : "+centre.getTelephone()+"<br>"
+					+"___________________________________________________<br>";
+				}
+				msg = "Bonjour "+ sexe + utilisateur.getNom() + " " + utilisateur.getPrenom() + ",<br>"
+						+ "Nous vous souhaitons une bonne continuation et confirmons la désactivation de votre compte ! <br>" 
+						+ "Voici les rendez-vous qui ont été annulés suite à votre désactivation : <br>"
+						+ msgRDVcanceled
+						+ "Merci pour votre visite ! ";
+			}else {
+				msg = "Bonjour "+ sexe + utilisateur.getNom() + " " + utilisateur.getPrenom() + ",<br>"
+						+ "Nous vous souhaitons une bonne continuation et confirmons la désactivation de votre compte ! " 
+						+ "Merci cependant de votre visite.<br>";
+			}
+			message.setContent(AppMedecinUtil.ConvertISOtoUTF8(msg),
+					"text/html");
+			Transport.send(message);
+			System.out.println("Message envoyé avec succés");
+		} catch (MessagingException e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+
 }
