@@ -11,7 +11,7 @@ import fr.dauphine.sj.monrocqxu.appMedecin.util.HibernateUtil;
 public class RdvDao {
 	
 
-	public List<Rdv> getRdvActifPatient(int patient_id){
+	public static List<Rdv> getRdvActifPatient(int patient_id){
 		Session session = HibernateUtil.getSessionFactory().openSession();
 		List<Rdv> rdvs = (List<Rdv>) session.createSQLQuery("SELECT * FROM rdv where patient_id = :patient_id and actif = 1")
 				.setParameter("patient_id", patient_id)
@@ -19,7 +19,7 @@ public class RdvDao {
 		return rdvs;
 	}
 	
-	public List<Rdv> getRdvPatient(int patient_id){
+	public static List<Rdv> getRdvPatient(int patient_id){
 		Session session = HibernateUtil.getSessionFactory().openSession();
 		List<Rdv> list = (List<Rdv>) session.createSQLQuery("SELECT * FROM rdv WHERE patient_id = :id")
 				.setParameter("id", patient_id)
@@ -27,7 +27,7 @@ public class RdvDao {
 		return list;
 	}
 	
-	public List<Rdv> getRdvActifMedecin(int medecin_id){
+	public static List<Rdv> getRdvActifMedecin(int medecin_id){
 		Session session = HibernateUtil.getSessionFactory().openSession();
 		List<Rdv> rdvs = (List<Rdv>) session.createSQLQuery("SELECT * FROM rdv where medecin_id = :id and actif = 1")
 				.setParameter("id", medecin_id)
@@ -35,7 +35,7 @@ public class RdvDao {
 		return rdvs;
 	}
 	
-	public List<Rdv> getRdvMedecin(int medecin_id){
+	public static List<Rdv> getRdvMedecin(int medecin_id){
 		Session session = HibernateUtil.getSessionFactory().openSession();
 		List<Rdv> rdvs = (List<Rdv>) session.createQuery("from rdv where medecin_id = :id")
 				.setParameter("id", medecin_id)
@@ -91,7 +91,7 @@ public class RdvDao {
 		return creneauTrouve;
 	}
 
-	public boolean update (Rdv rdv) {
+	public static boolean update (Rdv rdv) {
 		Session session = null; 
 		try {
 			session = HibernateUtil.getSessionFactory().openSession();

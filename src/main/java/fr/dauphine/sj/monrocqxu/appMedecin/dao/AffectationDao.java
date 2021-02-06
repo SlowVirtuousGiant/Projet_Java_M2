@@ -72,7 +72,7 @@ public class AffectationDao {
 		return affectation;
 	}
 	
-	public boolean update (Affectation aff) {
+	public static boolean update (Affectation aff) {
 		Session session = null; 
 		try {
 			session = HibernateUtil.getSessionFactory().openSession();

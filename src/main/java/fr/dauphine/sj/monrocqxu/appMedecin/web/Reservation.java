@@ -17,11 +17,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import fr.dauphine.sj.monrocqxu.appMedecin.dao.AffectationDao;
-import fr.dauphine.sj.monrocqxu.appMedecin.dao.CentreDao;
-import fr.dauphine.sj.monrocqxu.appMedecin.dao.SpecialiteDao;
 import fr.dauphine.sj.monrocqxu.appMedecin.dao.UtilisateurDao;
 import fr.dauphine.sj.monrocqxu.appMedecin.model.Affectation;
-import fr.dauphine.sj.monrocqxu.appMedecin.model.Specialite;
 import fr.dauphine.sj.monrocqxu.appMedecin.model.Utilisateur;
 
 public class Reservation extends HttpServlet {

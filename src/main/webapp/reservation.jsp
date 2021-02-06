@@ -97,7 +97,6 @@
 										Utilisateur medecin = UtilisateurDao.getUtilisateurByID(as.getMedecin_id());
 										Centre centre = CentreDao.getCentreByID(as.getCentre_id());
 										Specialite specialite = SpecialiteDao.getSpecialiteByID(as.getSpecialite_id());
-										if (medecin.isActif()) {
 									%>
 
 									<tr>
@@ -112,7 +111,6 @@
 											class="btn btn-success">Consulter</a></td>
 									</tr>
 									<%
-										}
 									}
 									}
 									}
