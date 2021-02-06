@@ -45,10 +45,6 @@ public class Reservation extends HttpServlet {
 				request.setAttribute("specialites", specialiteDao.getAllSpecialite());
 				request.setAttribute("centres", centreDao.getAllCentre());
 				this.getServletContext().getRequestDispatcher("/reservation.jsp").forward(request, response);
-//				System.out.println("centre : ");
-//				System.out.println(centreDao.getAllCentre());
-//				System.out.println("medecin : ");
-//				System.out.println(utilisateurDao.getAllMedecin());
 			} else {
 				response.sendRedirect(CHEMIN_ESPACE);
 			}

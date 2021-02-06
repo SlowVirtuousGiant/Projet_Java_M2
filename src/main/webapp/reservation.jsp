@@ -48,11 +48,7 @@
 					</div>
 					<%
 						UtilisateurDao utilisateurDao = new UtilisateurDao();
-					%>
-					<%
 						CentreDao centreDao = new CentreDao();
-					%>
-					<%
 						SpecialiteDao specialiteDao = new SpecialiteDao();
 
 								List<Affectation> affectations = (List<Affectation>) request.getAttribute("affectations");
@@ -83,11 +79,9 @@
 
 									<%
 										for (Affectation as : affectations) {
-									%>
-									<%
 										Utilisateur medecin = utilisateurDao.getUtilisateurByID(as.getMedecin_id());
-									Centre centre = centreDao.getCentreByID(as.getCentre_id());
-									Specialite specialite = specialiteDao.getSpecialiteByID(as.getSpecialite_id());
+										Centre centre = centreDao.getCentreByID(as.getCentre_id());
+										Specialite specialite = specialiteDao.getSpecialiteByID(as.getSpecialite_id());
 									%>
 
 									<tr>
