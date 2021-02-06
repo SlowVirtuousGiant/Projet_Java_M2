@@ -16,6 +16,7 @@ import fr.dauphine.sj.monrocqxu.appMedecin.dao.AffectationDao;
 import fr.dauphine.sj.monrocqxu.appMedecin.dao.CentreDao;
 import fr.dauphine.sj.monrocqxu.appMedecin.dao.SpecialiteDao;
 import fr.dauphine.sj.monrocqxu.appMedecin.dao.UtilisateurDao;
+import fr.dauphine.sj.monrocqxu.appMedecin.mail.MailManager;
 import fr.dauphine.sj.monrocqxu.appMedecin.model.Affectation;
 import fr.dauphine.sj.monrocqxu.appMedecin.model.Centre;
 import fr.dauphine.sj.monrocqxu.appMedecin.model.Utilisateur;
@@ -59,11 +60,13 @@ public class Ajout extends HttpServlet {
 		utilisateur.setCode_postal(Integer.parseInt(request.getParameter("code_postal")));
 		utilisateur.setVille(AppMedecinUtil.ConvertISOtoUTF8(request.getParameter("ville")));
 		utilisateur.setRole("MEDECIN");
+		String mdp = request.getParameter("motdepasse");
 		utilisateur.setMotdepasse(BCrypt.hashpw(AppMedecinUtil.ConvertISOtoUTF8(request.getParameter("motdepasse")), BCrypt.gensalt(12)));
 		utilisateur.setSexe(request.getParameter("sexe"));
 		utilisateur.setActif(true);
 
 		boolean result = utilisateurDao.ajouter(utilisateur);
+		
 		AffectationDao affectationDao = new AffectationDao();
 		Affectation affectation = new Affectation();
 
@@ -79,6 +82,7 @@ public class Ajout extends HttpServlet {
 					affectation.setSpecialite_id(Integer.valueOf(request.getParameter("sp_"+id)));
 					affectation.setDisponible(false);
 					affectationDao.ajouter(affectation);
+					MailManager.envoiInscriptionMail(utilisateur,mdp);
 				}
 			}
 		}

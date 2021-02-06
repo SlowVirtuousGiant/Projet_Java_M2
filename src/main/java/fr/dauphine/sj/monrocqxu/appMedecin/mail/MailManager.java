@@ -9,12 +9,15 @@ import javax.mail.Transport;
 import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeMessage;
 
+import fr.dauphine.sj.monrocqxu.appMedecin.model.Utilisateur;
+import fr.dauphine.sj.monrocqxu.appMedecin.util.AppMedecinUtil;
+
 import static fr.dauphine.sj.monrocqxu.appMedecin.util.AppMedecinUtil.MAIL_HOST;
 import static fr.dauphine.sj.monrocqxu.appMedecin.util.AppMedecinUtil.MAIL_WEBSITE_ADRESS;
 
 public class MailManager {
 
-	private Session session;
+	private static Session session;
 
 	public MailManager() {
 		Properties props = new Properties();
@@ -36,7 +39,7 @@ public class MailManager {
 	}
 	 */
 	
-	public void sendTestMessage(String destination, String sujet) {
+	public void sendTestMessage(String destination) {
 		try {
 			Message message = new MimeMessage(session);
 
@@ -59,17 +62,39 @@ public class MailManager {
 		}
 	}
 	
-	public void sendWelcomeMessage(String destination, String sujet) {
+	public static void envoiInscriptionMail(Utilisateur utilisateur,String mdp) {
 		try {
 			Message message = new MimeMessage(session);
-
 			message.setFrom(new InternetAddress(MAIL_WEBSITE_ADRESS));
-
-			message.setRecipients(Message.RecipientType.TO, InternetAddress.parse(destination));
-
+			message.setRecipients(Message.RecipientType.TO, InternetAddress.parse(utilisateur.getMail()));
 			message.setSubject("Bienvenue sur rdvmedecin.fr");
-			
-			message.setContent("",
+			String sexe;
+			if(utilisateur.getSexe().equals("homme")) {
+				 sexe = "Mr. ";
+			}else {
+				 sexe = "Mme. ";
+			}
+			String msg = null;
+			if(utilisateur.getRole().equals("PATIENT")) {
+				msg = "Bonjour,<br>"
+						+ "Bienvenue sur le site RDVmedecin " 
+						+ sexe
+						+ utilisateur.getNom() + utilisateur.getPrenom() +" ! <br>"
+						+ "Merci de vous êtes inscrit sur notre site, voici vos coordonnées de connexion : <br>"
+						+ "Mail : " + utilisateur.getMail() + "<br>"
+						+ "Mot de passe : " + mdp + "<br>"
+						+ "À très bientôt sur notre site, de la part de toute l'équipe de RDVmedecin ! ";
+			}else {
+				msg = "Bonjour,<br>"
+						+ "Bienvenue sur le site RDVmedecin Dr. "
+						+ utilisateur.getNom() + utilisateur.getPrenom() +" ! <br>"
+						+ "Merci de vous êtes inscrit sur notre site, voici vos coordonnées de connexion : <br>"
+						+ "Mail : " + utilisateur.getMail() + "<br>"
+						+ "Mot de passe : " + mdp + "<br>"
+						+ "Veuillez vous connecter pour  personnaliser votre mot de passe <br>"
+						+ "À très bientôt sur notre site, de la part de toute l'équipe de RDVmedecin ! ";
+			}
+			message.setContent(AppMedecinUtil.ConvertISOtoUTF8(msg),
 		             "text/html");
 
 			Transport.send(message);
@@ -80,4 +105,6 @@ public class MailManager {
 			throw new RuntimeException(e);
 		}
 	}
+	
+	
 }

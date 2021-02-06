@@ -43,7 +43,7 @@ public class AffectationDao {
 	
 	public static List<Affectation> getAffectation(int medecin_id){
 		Session session = HibernateUtil.getSessionFactory().openSession();
-		List<Affectation> list = (List<Affectation>) session.createSQLQuery("SELECT * FROM affectation WHERE medecin_id = :id").setParameter("id", medecin_id).addEntity(Affectation.class).list();
+		List<Affectation> list = (List<Affectation>) session.createSQLQuery("SELECT * FROM affectation WHERE medecin_id = :id and disponible = 1").setParameter("id", medecin_id).addEntity(Affectation.class).list();
 		return list;
 	}
 	
@@ -70,5 +70,21 @@ public class AffectationDao {
 		Session session = HibernateUtil.getSessionFactory().openSession();
 		Affectation affectation = (Affectation) session.get(Affectation.class, affectation_id);
 		return affectation;
+	}
+	
+	public boolean update (Affectation aff) {
+		Session session = null; 
+		try {
+			session = HibernateUtil.getSessionFactory().openSession();
+			session.beginTransaction();
+			session.update(aff);
+			session.getTransaction().commit();
+			return true;
+		} catch (Exception e) {
+			e.printStackTrace();
+		}finally {
+			session.close();
+		}
+		return false; 
 	}
 }

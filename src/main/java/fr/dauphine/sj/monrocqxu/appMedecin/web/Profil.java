@@ -24,8 +24,10 @@ import org.mindrot.jbcrypt.BCrypt;
 
 import fr.dauphine.sj.monrocqxu.appMedecin.dao.RdvDao;
 import fr.dauphine.sj.monrocqxu.appMedecin.dao.UtilisateurDao;
+import fr.dauphine.sj.monrocqxu.appMedecin.model.Affectation;
 import fr.dauphine.sj.monrocqxu.appMedecin.model.Rdv;
 import fr.dauphine.sj.monrocqxu.appMedecin.model.Utilisateur;
+import fr.dauphine.sj.monrocqxu.appMedecin.dao.AffectationDao;
 
 public class Profil extends HttpServlet {
 	private static final long serialVersionUID = 1L;
@@ -51,6 +53,7 @@ public class Profil extends HttpServlet {
 		UtilisateurDao utilisateurDao = new UtilisateurDao();
 		Utilisateur utilisateur = (Utilisateur)request.getSession().getAttribute(ATT_SESSION_USER);
 		RdvDao rdvDao = new RdvDao();
+		AffectationDao affectationDao = new AffectationDao();
 		System.out.println("dans le post dopost");
 
 		if(BCrypt.checkpw(request.getParameter("motdepasse"), utilisateur.getMotdepasse())) {
@@ -77,6 +80,11 @@ public class Profil extends HttpServlet {
 
 					utilisateur.setActif(false);
 					if(utilisateurDao.update(utilisateur)) {
+						List<Affectation> listAff = affectationDao.getAffectation(utilisateur.getId());
+						for(Affectation aff:listAff) {
+							aff.setDisponible(false);
+							affectationDao.update(aff);
+						}
 						System.out.println("actif bien MAJ dans la bdd");
 						response.sendRedirect( CHEMIN_DECONNEXION );
 					}else {

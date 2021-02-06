@@ -99,6 +99,7 @@
 										Specialite specialite = SpecialiteDao.getSpecialiteByID(as.getSpecialite_id());
 										if (medecin.isActif()) {
 									%>
+
 									<tr>
 										<td class="text-nowrap">Dr. <%=medecin.getNom() + " " + medecin.getPrenom()%>
 										</td>
@@ -115,6 +116,7 @@
 									}
 									}
 									}
+
 									%>
 
 								</tbody>
