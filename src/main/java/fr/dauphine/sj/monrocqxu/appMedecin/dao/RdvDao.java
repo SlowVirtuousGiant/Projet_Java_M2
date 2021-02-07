@@ -27,6 +27,18 @@ public class RdvDao {
 		return list;
 	}
 	
+	public static Rdv getRdvWithDateAndCreneau(String date, int creneau, Utilisateur medecin){
+		Session session = HibernateUtil.getSessionFactory().openSession();
+		Rdv rdv = (Rdv) session.createSQLQuery("SELECT * FROM rdv WHERE date = :date AND creneau = :creneau AND medecin_id = :medecin_id")
+				.setParameter("date", date)
+				.setParameter("creneau", creneau)
+				.setParameter("medecin_id", medecin.getId())
+				.addEntity(Rdv.class).uniqueResult();
+		return rdv;
+	}
+	
+	
+	
 	public static List<Rdv> getRdvActifMedecin(int medecin_id){
 		Session session = HibernateUtil.getSessionFactory().openSession();
 		List<Rdv> rdvs =session.createSQLQuery("SELECT * FROM rdv where medecin_id = :id and actif = 1")
@@ -106,6 +118,22 @@ public class RdvDao {
 			session = HibernateUtil.getSessionFactory().openSession();
 			session.beginTransaction();
 			session.update(rdv);
+			session.getTransaction().commit();
+			return true;
+		} catch (Exception e) {
+			e.printStackTrace();
+		}finally {
+			session.close();
+		}
+		return false; 
+	}
+	
+	public static boolean delete (Rdv rdv) {
+		Session session = null; 
+		try {
+			session = HibernateUtil.getSessionFactory().openSession();
+			session.beginTransaction();
+			session.delete(rdv);
 			session.getTransaction().commit();
 			return true;
 		} catch (Exception e) {

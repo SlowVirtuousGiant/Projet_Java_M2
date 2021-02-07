@@ -122,10 +122,11 @@
 									<a class="w-100 btn btn-secondary">Retour</a>
 								</div>
 								<div class="col">
-									<a class="w-100 btn btn-success">Disponible</a>
+									   <button id="dispo" class="w-100 btn btn-success">Disponible</button>
+									
 								</div>
 								<div class="col">
-									<a class="w-100 btn btn-danger">Indisponible</a>
+									   <button id="indispo" class="w-100 btn btn-danger">Indisponible</button>
 								</div>
 							</div>
 						</div>
@@ -140,6 +141,32 @@
 <script src="js/jquery-3.5.1.min.js"></script>
 <script src="js/bootstrap.min.js"></script>
 <script type="text/javascript">
+var idArray = [];
+
+$("#dispo").click(function(e){
+	$.ajax({
+		type: "POST",
+		name: "modificationagenda",
+		dataType:'json',
+		data: {json:JSON.stringify(idArray), dispo:"dispo"},
+		success: function( data, textStatus, jqXHR) {
+			console.log("succes");
+		}
+		});
+});
+
+$("#indispo").click(function(e){
+	$.ajax({
+		type: "POST",
+		name: "modificationagenda",
+		dataType:'json',
+		data: {json:JSON.stringify(idArray), indispo:"indispo"},
+		success: function( data, textStatus, jqXHR) {
+			console.log("succes");
+		}
+		});
+});
+
 //inspiré de https://stackoverflow.com/questions/4930255/multiple-cells-selection-in-table-in-html
 var active = false;
 
@@ -158,11 +185,11 @@ $(".case").mousemove(function(ev) {
 
 $(document).mouseup(function(ev) {
 	active = false;
-	var idArray = [];
+	idArray = [];
+	
 	$('.highlight').each(function () {
 	    idArray.push(this.id);
 	});
-	console.log(idArray);
 });
 
 

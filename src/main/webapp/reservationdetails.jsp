@@ -118,7 +118,6 @@
 										<input type="hidden" name="rdvCreneau" value=<%=c.id%>>
 										<input type="hidden" name="rdvSpecialite"
 											value=<%=specialite.getId()%>>
-
 									</form>
 
 								</div>
