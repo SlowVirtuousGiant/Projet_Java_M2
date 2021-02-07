@@ -155,7 +155,7 @@
 								<form id="dateForm" method="post" action="<c:url value='/agenda'/>">
 									<select class="form-select" name="selectedWeek">
 										<% ArrayList<String> nextweeks = TimeMedecinUtil.getNext4weeks();
-										for(String w : nextweeks){;%>
+										for(String w : nextweeks){%>
 											<option value="<%=w%>" <%= w.equals(currentWeek) ? "selected" : "" %>>Semaine <%=w%></option>
 										<%} %>
 									</select>
@@ -180,6 +180,13 @@
 							
 							Utilisateur patient = UtilisateurDao.getUtilisateurByID(rdv.getPatient_id());
 							Creneau cr = Creneau.valeurIdCreneau(rdv.getCreneau());
+							
+							String sexe = "";
+							if (patient.getSexe().equals("homme")){
+								sexe = "né";
+							} else {
+								sexe = "née";
+							}
 						%>
 						<div class="modal fade" id="modal<%=rdv.getId() %>"
 						tabindex="-1" aria-labelledby="exampleModalLabel"
@@ -187,10 +194,10 @@
 						<div class="modal-dialog modal-dialog-centered">
 								<div class="modal-content">
 									<div class="modal-header">
-										<h5 class="modal-title" id="exampleModalLabel">Rendez vous du <%=rdv.getDate() %> <%=cr.getName() %></h5>
+										<h5 class="modal-title" id="exampleModalLabel">Rendez vous du <%=rdv.getDate() %> à <%=cr.getName() %></h5>
 									</div>
 									<div class="modal-body">
-										<p><strong>Patient : </strong><%= patient.getPrenom() + " "+ patient.getNom() + ", né(e) en " + patient.getNaissance()%></p>
+										<p><strong>Patient : </strong><%= patient.getPrenom() + " "+ patient.getNom() + ", "+sexe+" en " + patient.getNaissance()%></p>
 										<p><strong>Adresse : </strong><%= patient.getAdresse() + " " + patient.getVille() + " " + patient.getCode_postal() %></p>
 										<p><strong>Téléphone : </strong><%=patient.getTelephone()%></p>
 										

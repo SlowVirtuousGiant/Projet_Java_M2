@@ -84,6 +84,5 @@ public class ReservationDetails extends HttpServlet {
 			response.sendRedirect(CHEMIN_ESPACE);
 		}
 		this.getServletContext().getRequestDispatcher("/reservationdetails.jsp").forward( request, response );
-		
 	}
 }

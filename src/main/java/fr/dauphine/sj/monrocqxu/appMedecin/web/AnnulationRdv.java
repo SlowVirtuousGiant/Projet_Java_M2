@@ -66,6 +66,7 @@ public class AnnulationRdv extends HttpServlet{
 
 		rdv.setActif(false);
 		rdv.setCommentaire(AppMedecinUtil.ConvertISOtoUTF8(request.getParameter("raison")));
+		rdv.setAuteur(utilisateur.getRole());
 		
 		System.out.println(rdv.getCommentaire() + " Print avant le update");
 		if(RdvDao.update(rdv)) {

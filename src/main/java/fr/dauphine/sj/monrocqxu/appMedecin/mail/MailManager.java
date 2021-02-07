@@ -193,7 +193,7 @@ public class MailManager {
 			Creneau c = Creneau.valeurIdCreneau(rdv.getCreneau());
 			
 			
-			detailRDV =  "Date : " + rdv.getDate()+"<br>"
+			detailRDV =  "<br>"+"Date : " + rdv.getDate()+"<br>"
 					+ "Heure : " + c.getName()+"<br>"
 					+ "Dr."+medecin.getNom() + " " + medecin.getPrenom()+"<br>"
 					+ "Spécialité : "+specialite.getSpecialite()+"<br>"
@@ -204,7 +204,7 @@ public class MailManager {
 					+"___________________________________________________<br>";
 
 			msg = "Bonjour "+ sexe + utilisateur.getNom() + " " + utilisateur.getPrenom() + ",<br>"
-					+ "Nous vous confirmons +" + keyword + " du rendez-vous suivant : <br>" 
+					+ "Nous vous confirmons +" + keyword + " du rendez-vous suivant : " 
 					+ detailRDV
 					+ "À bientôt ! ";
 			message.setContent((msg),

@@ -64,6 +64,7 @@ public class Profil extends HttpServlet {
 					for(Rdv rdv:listRdv) {
 						System.out.println( "Voici les ID desRDV qui vont être annulés " + rdv.getId());
 						rdv.setActif(false);
+						rdv.setCommentaire("RDV annulé en raison de désactivation de compte patient");
 						RdvDao.update(rdv);
 					}
 					response.sendRedirect( CHEMIN_DECONNEXION );
