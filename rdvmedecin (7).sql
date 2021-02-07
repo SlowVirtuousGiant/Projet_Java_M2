@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Hôte : 127.0.0.1
--- Généré le :  ven. 05 fév. 2021 à 18:27
+-- Généré le :  Dim 07 fév. 2021 à 21:36
 -- Version du serveur :  10.4.8-MariaDB
 -- Version de PHP :  7.1.32
 
@@ -41,12 +41,12 @@ CREATE TABLE `affectation` (
 --
 
 INSERT INTO `affectation` (`affectation_id`, `medecin_id`, `centre_id`, `specialite_id`, `disponible`) VALUES
-(1, 4, 1, 1, b'0'),
-(2, 4, 2, 3, b'0'),
-(3, 4, 3, 8, b'0'),
-(4, 4, 9, 10, b'0'),
-(8, 2, 7, 7, b'0'),
-(9, 2, 6, 15, b'0');
+(1, 4, 1, 1, b'1'),
+(2, 4, 2, 3, b'1'),
+(3, 4, 3, 8, b'1'),
+(4, 4, 9, 10, b'1'),
+(8, 2, 7, 7, b'1'),
+(9, 2, 6, 15, b'1');
 
 -- --------------------------------------------------------
 
@@ -76,7 +76,8 @@ INSERT INTO `centre` (`centre_id`, `nom`, `adresse`, `code_postal`, `ville`, `te
 (6, 'Centre médical Cosem Saint-Lazare', '13 Rue de la Pépinière', 75008, 'Paris', '0158229000'),
 (7, 'Cosem Saint-Michel', '3 Rue Thénard', 75005, 'Paris', '0153730303'),
 (8, 'Centre Dentaire, Médical et Paramédical la Grange-aux-belles', '61 Rue de la Grange aux Belles', 75010, 'Paris', '0148037300'),
-(9, 'Point Vision Paris Centre', '13 Boulevard de la Madeleine', 75001, 'Paris', '0184163944');
+(9, 'Point Vision Paris Centre', '13 Boulevard de la Madeleine', 75001, 'Paris', '0184163944'),
+(10, 'Indisponibilité medecin', 'Indisponibilité medecin', 0, 'Indisponibilité medecin', '0000000000');
 
 -- --------------------------------------------------------
 
@@ -93,15 +94,32 @@ CREATE TABLE `rdv` (
   `date` varchar(15) NOT NULL,
   `creneau` int(11) NOT NULL,
   `actif` tinyint(1) NOT NULL DEFAULT 1,
-  `commentaire` varchar(25) NOT NULL
+  `auteur` varchar(20) DEFAULT NULL,
+  `commentaire` varchar(255) DEFAULT NULL,
+  `envoi_mail` tinyint(1) NOT NULL DEFAULT 0,
+  `semaine` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
 -- Déchargement des données de la table `rdv`
 --
 
-INSERT INTO `rdv` (`rdv_id`, `medecin_id`, `patient_id`, `centre_id`, `specialite_id`, `date`, `creneau`, `actif`, `commentaire`) VALUES
-(1, 2, 1, 6, 15, '06/02/2021', 3, 1, '');
+INSERT INTO `rdv` (`rdv_id`, `medecin_id`, `patient_id`, `centre_id`, `specialite_id`, `date`, `creneau`, `actif`, `auteur`, `commentaire`, `envoi_mail`, `semaine`) VALUES
+(1, 4, 1, 6, 15, '06/02/2021', 3, 1, '', 'Je suis guéri', 0, 5),
+(2, 4, 1, 1, 1, '08/02/2021', 5, 1, '', '', 0, 5),
+(3, 4, 1, 2, 3, '07/02/2021', 4, 1, NULL, NULL, 0, 5),
+(4, 4, 6, 1, 1, '07/02/2021', 5, 0, NULL, NULL, 0, 5),
+(5, 4, 5, 1, 1, '08/02/2021', 3, 1, NULL, NULL, 0, 6),
+(6, 2, 5, 6, 15, '08/02/2021', 4, 0, NULL, 'flemme absolu', 0, 6),
+(7, 2, 5, 6, 15, '08/02/2021', 4, 0, NULL, 'fuck pierre', 1, 6),
+(8, 2, 7, 7, 7, '08/02/2021', 5, 1, NULL, NULL, 1, 6),
+(9, 2, 7, 6, 15, '08/02/2021', 10, 0, 'PATIENT', 'grosse flemme', 1, 6),
+(10, 2, 7, 6, 15, '02/02/2021', 4, 0, NULL, NULL, 1, 5),
+(69, 2, 2, 10, 16, '03/02/2021', 2, 1, NULL, NULL, 0, 5),
+(70, 2, 2, 10, 16, '03/02/2021', 3, 1, NULL, NULL, 0, 5),
+(71, 2, 2, 10, 16, '04/02/2021', 2, 1, NULL, NULL, 0, 5),
+(72, 2, 2, 10, 16, '04/02/2021', 3, 1, NULL, NULL, 0, 5),
+(73, 2, 2, 10, 16, '04/02/2021', 5, 1, NULL, NULL, 0, 5);
 
 -- --------------------------------------------------------
 
@@ -133,7 +151,8 @@ INSERT INTO `specialite` (`specialite_id`, `specialite`) VALUES
 (12, 'Orthopédie'),
 (13, 'Neurologie'),
 (14, 'Psychatrie'),
-(15, 'Odontologie');
+(15, 'Odontologie'),
+(16, 'Indisponibilité medecin');
 
 -- --------------------------------------------------------
 
@@ -162,10 +181,13 @@ CREATE TABLE `utilisateur` (
 --
 
 INSERT INTO `utilisateur` (`utilisateur_id`, `nom`, `prenom`, `telephone`, `mail`, `naissance`, `sexe`, `adresse`, `code_postal`, `ville`, `role`, `actif`, `motdepasse`) VALUES
-(1, 'xu', 'nicolas', '0622723426', 'nicolas.xu@dauphine.eu', 1997, 'homme', '16 rue de la frite', 75016, 'Paris', 'PATIENT', 1, '$2a$12$ruYql14vPXTYTXi1i3lcee36sbPx074b9h3GrobSPJXj0Qff8VZ6m'),
+(1, 'xu', 'nicolas', '0622723426', 'nicolas.xu@dauphine.eu', 1997, 'homme', '16 rue de la hyène', 75016, 'Paris', 'PATIENT', 0, '$2a$12$ruYql14vPXTYTXi1i3lcee36sbPx074b9h3GrobSPJXj0Qff8VZ6m'),
 (2, 'monrocq', 'pierre', '0638487370', 'pierre.monrocq@dauphine.eu', 1998, 'femme', '16, Rue Louis Dain', 93400, 'Saint-Ouen-sur-Seine', 'MEDECIN', 1, '$2a$12$FYiEmzpMXTiTKCGe4Zdys.rCZxV6jRM1pJrsltxEqa1CxBh3l4Ex.'),
 (3, 'admin', 'admin', '0144054405', 'admin@gmail.com', 0000, 'autre', '', 0, '', 'ADMIN', 1, '$2a$12$0M/7lU86joVBnnxk2M75quRLVB90spBmVKZAfdv/WPeWViSwUKEP6'),
-(4, 'joe', 'debile', '0622334455', 'joe@gmail.com', 1980, 'sexe', '4 rue du debil', 75011, 'Paris', 'MEDECIN', 0, '$2a$12$xIqdbPZC1Q.UKaVh5NeVCenx3G5tpXbolAzGyGyFUP3g516pWXJs6');
+(4, 'joe', 'debile', '0622334455', 'joe@gmail.com', 1980, 'sexe', '4 rue du debil', 75011, 'Paris', 'MEDECIN', 1, '$2a$12$xIqdbPZC1Q.UKaVh5NeVCenx3G5tpXbolAzGyGyFUP3g516pWXJs6'),
+(5, 'DIMCEA', 'Dan', '0612345678', 'dan@gmail.com', 1970, 'homme', '16 rue de l\'entreprise', 75016, 'Paris', 'PATIENT', 1, '$2a$12$jG.z6lMyP7DJLLqoH7irCOiqYxXR2jxPH9vV0BJJxDD2UVuOTP6JK'),
+(6, 'LUCKY', 'Luke', '0600000000', 'luke@gmail.com', 1967, 'homme', '8 rue du far west', 55510, 'Goldshire', 'PATIENT', 0, '$2a$12$EhJ3OZ.SkYXaQRCd1OAoIO6J8bM/vU6Or8TkNv0OLsp4o34sA8Ds.'),
+(7, 'LIGHT', 'Malboro', '0622723426', 'malboro@gmail.com', 1980, 'homme', 'nicotine street', 93500, 'Sein ouinnnnn', 'PATIENT', 1, '$2a$12$bKvSgSSDl9CQJWZqLtaCY.3E4oVHMzjc3LasatQ9RZ3Tel1erQU7u');
 
 --
 -- Index pour les tables déchargées
@@ -223,25 +245,25 @@ ALTER TABLE `affectation`
 -- AUTO_INCREMENT pour la table `centre`
 --
 ALTER TABLE `centre`
-  MODIFY `centre_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
+  MODIFY `centre_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
 
 --
 -- AUTO_INCREMENT pour la table `rdv`
 --
 ALTER TABLE `rdv`
-  MODIFY `rdv_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `rdv_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=77;
 
 --
 -- AUTO_INCREMENT pour la table `specialite`
 --
 ALTER TABLE `specialite`
-  MODIFY `specialite_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=16;
+  MODIFY `specialite_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=17;
 
 --
 -- AUTO_INCREMENT pour la table `utilisateur`
 --
 ALTER TABLE `utilisateur`
-  MODIFY `utilisateur_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+  MODIFY `utilisateur_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
 
 --
 -- Contraintes pour les tables déchargées

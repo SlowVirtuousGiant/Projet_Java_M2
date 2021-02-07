@@ -151,6 +151,7 @@ $("#dispo").click(function(e){
 		data: {json:JSON.stringify(idArray), dispo:"dispo"},
 		success: function( data, textStatus, jqXHR) {
 			console.log("succes");
+			location.reload();
 		}
 		});
 });
@@ -163,6 +164,7 @@ $("#indispo").click(function(e){
 		data: {json:JSON.stringify(idArray), indispo:"indispo"},
 		success: function( data, textStatus, jqXHR) {
 			console.log("succes");
+			location.reload();
 		}
 		});
 });

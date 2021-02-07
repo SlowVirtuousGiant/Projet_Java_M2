@@ -44,9 +44,7 @@ public class ModificationAgenda extends HttpServlet{
 		String jsonresp = request.getParameter("json");
 		String dispo = request.getParameter("dispo");
 		String indispo = request.getParameter("indispo");
-		
-		System.out.println(dispo);
-		System.out.println(indispo);
+
 		
 		if(jsonresp != null) {
 			JSONArray arr = new JSONArray(jsonresp);
@@ -66,9 +64,9 @@ public class ModificationAgenda extends HttpServlet{
 						Rdv newRdv = new Rdv();
 						newRdv.setMedecin_id(utilisateur.getId());
 						newRdv.setPatient_id(utilisateur.getId());
-						newRdv.setCentre_id(0);
+						newRdv.setCentre_id(10);
 						newRdv.setCreneau(creneau);
-						newRdv.setSpecialite_id(0);
+						newRdv.setSpecialite_id(16);
 						String rdvDate = date;
 						newRdv.setDate(rdvDate);
 						newRdv.setSemaine(TimeMedecinUtil.getWeekFromDate(rdvDate));
@@ -77,13 +75,15 @@ public class ModificationAgenda extends HttpServlet{
 						newRdv.setCommentaire(null);
 						
 						RdvDao.ajouter(newRdv);
+						
 					}
 					
 				}
 			}
+			System.out.println("REDIRECT BABYYY");
+			this.getServletContext().getRequestDispatcher("/modificationagenda.jsp").forward( request, response );
 		}
-		
-		this.getServletContext().getRequestDispatcher("/modificationagenda.jsp").forward( request, response );
+
 		
 	}
 }

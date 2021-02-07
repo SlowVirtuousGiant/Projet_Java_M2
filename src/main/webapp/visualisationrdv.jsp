@@ -84,8 +84,6 @@
 											//if actif = 0 && rdv.get Date >= current date && auteur = docteur {annulé par docteur}
 										}
 									}
-
-									//https://stackabuse.com/how-to-get-current-date-and-time-in-java/
 									%>
 
 									<tr>

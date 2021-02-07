@@ -18,7 +18,7 @@ public class CentreDao {
 	
 	public static List<Centre> getAllCentre(){
 		Session session = HibernateUtil.getSessionFactory().openSession();
-		List<Centre> list = session.createSQLQuery("SELECT * FROM centre").addEntity(Centre.class).list();
+		List<Centre> list = session.createSQLQuery("SELECT * FROM centre EXCEPT SELECT * FROM centre where centre_id = 10").addEntity(Centre.class).list();
 		return list;
 	}
 }

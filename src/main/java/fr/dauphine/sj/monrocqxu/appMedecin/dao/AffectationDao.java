@@ -69,7 +69,7 @@ public class AffectationDao {
 	
 	public static List<Affectation> getAllAffectation(){
 		Session session = HibernateUtil.getSessionFactory().openSession();
-		List<Affectation> list = session.createSQLQuery("SELECT * FROM affectation").addEntity(Affectation.class).list();
+		List<Affectation> list = session.createSQLQuery("SELECT * FROM affectation EXCEPT SELECT * FROM affectation WHERE affectation_id = 16").addEntity(Affectation.class).list();
 		return list;
 	}
 	
