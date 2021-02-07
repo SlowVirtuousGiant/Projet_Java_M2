@@ -54,6 +54,9 @@ public class Agenda extends HttpServlet {
 		if(session.getAttribute("selectedCentre") == null) {
 			session.setAttribute("selectedCentre", request.getParameter("centre_id"));
 		}
+		session.setAttribute("selectedWeek", request.getParameter("selectedWeek"));
+		
+		this.getServletContext().getRequestDispatcher("/agenda.jsp").forward( request, response );
 	}
 
 	

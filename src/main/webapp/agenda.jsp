@@ -15,7 +15,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>RDVmedecin - Profil</title>
+<title>RDVmedecin - Agenda</title>
 <link rel="stylesheet" href="css/bootstrap.min.css">
 <link rel="stylesheet" href="css/style.css">
 </head>
@@ -26,7 +26,6 @@
 		<div class="container">
 			<h2 class="mt-5 text-center heading">Votre agenda</h2>
 			<div class="row">
-				<div class="col-md-8">
 					<c:choose>
 						<c:when test="${fn:length(centres) gt 50}">
 							<label class="form-control-label text-muted mt-3">Vos
@@ -48,10 +47,8 @@
 							</c:if>
 						</c:otherwise>
 					</c:choose>
-
-				</div>
 				<c:if test="${!empty sessionScope.selectedCentre}">
-					<h4 class="text-center mt-3">${selectedCentre.nom}pour la
+					<h4 class="text-center mt-3">${selectedCentre.nom} pour la
 						semaine ${selectedWeek}</h4>
 
 					<%
@@ -72,13 +69,6 @@
 					%>
 					<div class="container <%=init == 1 ? "" : "no-init"%>">
 						<div class="col-md-12 mt-3">
-							<div class="bg-light p-1 rounded mt-3 justify-content-center">
-								<h4>Horaire</h4>
-								<p>Patient</p>
-								<p>Age</p>
-								<p>Adresse</p>
-								<p>Téléphone</p>
-							</div>
 							<div class="container-actif">
 								<div class="table-responsive mt-2 mb-3">
 
@@ -117,26 +107,28 @@
 													} else {
 
 												String status = "";
+												int idRdv = 0;
 												for (Rdv rdv : rdvSemaine) {
 													if (!affectes.contains(rdv) && rdv.getDate().equals(j) && rdv.getCreneau() == i) {//le rdv est pris
-														System.out.println();
 														if (rdv.getPatient_id() == utilisateur.getId()) {//le medecin est occupe
 													status = "no-dispo";
+													idRdv = rdv.getId();
 													affectes.add(rdv);
 														} else { //le rdv est pris par qqun
-													status = "rdv-pris";
-													System.out.println("ca rentre");
+													status = "rdv-pris clic";
 													affectes.add(rdv);
+													idRdv = rdv.getId();
 														}
 													}
-													if (status.equals("")) {
-														status = "libre";
-													}
-
+												}
+												if (status.equals("")) {
+													status = "libre";
 												}
 												%>
-												<td style="position: relative;"><div
-														class="case <%=status%>"></div></td>
+												<td style="position: relative;">
+													<% String u = "data-bs-toggle='modal' data-bs-target='#modal"+ idRdv +"'"; %>
+													<a <%= idRdv != 0 ? u : "" %> class="case <%=status%>">
+													</a></td>
 												<%
 													}
 												j_id++;
@@ -158,19 +150,20 @@
 									}
 								%>
 							</div>
-							<div class="row">
-
+							<div class="row mt-3 mb-5">
 								<div class="col">
-									<select class="form-select" aria-label="Default select example">
-										<option selected>Open this select menu</option>
-										<option value="1">One</option>
-										<option value="2">Two</option>
-										<option value="3">Three</option>
+								<form id="dateForm" method="post" action="<c:url value='/agenda'/>">
+									<select class="form-select" name="selectedWeek">
+										<% ArrayList<String> nextweeks = TimeMedecinUtil.getNext4weeks();
+										for(String w : nextweeks){;%>
+											<option value="<%=w%>" <%= w.equals(currentWeek) ? "selected" : "" %>>Semaine <%=w%></option>
+										<%} %>
 									</select>
+								</form>
 								</div>
 								<div class="col">
-									<button type="button" class="w-100 btn btn-secondary">Editer
-										l'agenda</button>
+									<a href="<c:url value='/modificationagenda'/>" class="w-100 btn btn-secondary">Editer
+										l'agenda</a>
 								</div>
 								<div class="col">
 									<input class="form-check-input" type="checkbox"
@@ -181,6 +174,39 @@
 
 
 					</div>
+					
+						<%
+						for (Rdv rdv : rdvSemaine) {
+							
+							Utilisateur patient = UtilisateurDao.getUtilisateurByID(rdv.getPatient_id());
+							Creneau cr = Creneau.valeurIdCreneau(rdv.getCreneau());
+						%>
+						<div class="modal fade" id="modal<%=rdv.getId() %>"
+						tabindex="-1" aria-labelledby="exampleModalLabel"
+						aria-hidden="true">
+						<div class="modal-dialog modal-dialog-centered">
+								<div class="modal-content">
+									<div class="modal-header">
+										<h5 class="modal-title" id="exampleModalLabel">Rendez vous du <%=rdv.getDate() %> <%=cr.getName() %></h5>
+									</div>
+									<div class="modal-body">
+										<p><strong>Patient : </strong><%= patient.getPrenom() + " "+ patient.getNom() + ", né(e) en " + patient.getNaissance()%></p>
+										<p><strong>Adresse : </strong><%= patient.getAdresse() + " " + patient.getVille() + " " + patient.getCode_postal() %></p>
+										<p><strong>Téléphone : </strong><%=patient.getTelephone()%></p>
+										
+									</div>
+									<div class="modal-footer">
+									<button type="submit" name="submit" value="submit"
+										class=" btn btn-danger">Annuler ce rendez-vous</button>
+								</div>
+							</div>
+						</div>
+						</div>
+							
+						<%
+							}
+						%>
+					
 				</c:if>
 
 
@@ -190,4 +216,9 @@
 </body>
 <script src="js/jquery-3.5.1.min.js"></script>
 <script src="js/bootstrap.min.js"></script>
+<script>
+$('select').on('change', function() {
+	$('#dateForm').submit();
+});
+</script>
 </html>

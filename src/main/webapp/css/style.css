@@ -199,6 +199,7 @@ button:focus {
 
 .libre{
 	background-color: #a9ce62;
+	
 }
 
 .no-dispo{
@@ -207,7 +208,17 @@ button:focus {
 
 .rdv-pris{
 	background-color: #9bd5ff !important;
+	
 }
+
+.clic{
+	cursor: pointer;
+}
+
+.highlight {
+	border: 3px solid #FFF;
+}
+
 
 .case{
 	width: 100%; 

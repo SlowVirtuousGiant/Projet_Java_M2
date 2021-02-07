@@ -24,12 +24,25 @@ public class TimeMedecinUtil {
 		return res;
 	}
 	
-	public static String getFirstRdvDay() {
-		return LocalDate.now().plusDays(1).format(DateTimeFormatter.ofPattern("dd/MM/yyyy"));
+	public static ArrayList<String> getNext4weeks(){
+		ArrayList<String> res = new ArrayList<String>();
+		LocalDate currentDate = LocalDate.now();
+		WeekFields weekFields = WeekFields.of(Locale.getDefault()); 
+		for(int i=0; i < 4; i++) {
+			int weekNumber = currentDate.get(weekFields.weekOfWeekBasedYear());
+			res.add(String.valueOf(weekNumber));
+			currentDate = currentDate.plusWeeks(1);
+		}
+		return res;
+		
+	}
+	
+	public static String getRdvDay(int offset) {
+		return LocalDate.now().plusDays(offset).format(DateTimeFormatter.ofPattern("dd/MM/yyyy"));
 	}
 	
 	public static String getCurrentWeek() {
-		LocalDate currentDate = LocalDate.now().plusDays(1);
+		LocalDate currentDate = LocalDate.now();
 		WeekFields weekFields = WeekFields.of(Locale.getDefault()); 
 		int weekNumber = currentDate.get(weekFields.weekOfWeekBasedYear());
 		return String.valueOf(weekNumber);

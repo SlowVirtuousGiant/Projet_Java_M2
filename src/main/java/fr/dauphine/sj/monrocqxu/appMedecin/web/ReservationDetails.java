@@ -39,7 +39,7 @@ public class ReservationDetails extends HttpServlet {
 				if(idaffectation != null && idaffectation.length >= 1 && idaffectation[0].equals("a")) {
 					Affectation affectation = AffectationDao.getAffectationByID(Integer.parseInt(idaffectation[1]));
 					if(affectation != null) {
-						request.setAttribute("selectedDate", TimeMedecinUtil.getFirstRdvDay());
+						request.setAttribute("selectedDate", TimeMedecinUtil.getRdvDay(1));
 						request.getSession().setAttribute("affectation", idaffectation[1]);//save dans la session
 						
 
