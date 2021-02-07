@@ -1,9 +1,13 @@
+<%@page import="org.hibernate.internal.build.AllowSysOut"%>
 <%@ page pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ page import="fr.dauphine.sj.monrocqxu.appMedecin.model.*"%>
 <%@ page import="fr.dauphine.sj.monrocqxu.appMedecin.dao.*"%>
 <%@ page import="java.time.format.DateTimeFormatter"%>
 <%@ page import="java.util.List"%>
+<%@ page import="java.time.LocalDate"%>
+<%@ page import="java.time.format.DateTimeFormatter"%>
+
 
 <!DOCTYPE html>
 <html>
@@ -54,18 +58,34 @@
 
 									<%
 										for (Rdv rdv : rdvs) {
+										Utilisateur medecin = UtilisateurDao.getUtilisateurByID(rdv.getMedecin_id());
+										Centre centre = CentreDao.getCentreByID(rdv.getCentre_id());
+										Specialite specialite = SpecialiteDao.getSpecialiteByID(rdv.getSpecialite_id());
+										Creneau c = Creneau.valeurIdCreneau(rdv.getCreneau());
 									%>
 									<%
-										Utilisateur medecin = UtilisateurDao.getUtilisateurByID(rdv.getMedecin_id());
-									Centre centre = CentreDao.getCentreByID(rdv.getCentre_id());
-									Specialite specialite = SpecialiteDao.getSpecialiteByID(rdv.getSpecialite_id());
-									Creneau c = Creneau.valeurIdCreneau(rdv.getCreneau());
-									%>
-									<%String statutmsg ="";
-									//if actif = 1 && rdv.get Date >= current date {A venir}
-									//if actif = 0 && rdv.get Date >= current date && auteur = patient {annulé par patient}
-									//if actif = 0 && rdv.get Date >= current date && auteur = docteur {annulé par docteur}
-									//if actif = 0 && rdv.get Date <= current date && auteur = null {passée}
+										String statutmsg = "";
+									LocalDate currentDate = LocalDate.now();
+									LocalDate rdvDate = LocalDate.parse(rdv.getDate(), DateTimeFormatter.ofPattern("dd/MM/yyyy"));
+									System.out.println("le rdv num " + rdv.getId() + " est " + rdv.isActif());
+
+									if (rdv.isActif() && rdvDate.isAfter(currentDate)) {
+										statutmsg = "RDV à venir";
+										//if actif = 1 && rdv.get Date >= current date {A venir}
+									} else if (!rdv.isActif() && !rdvDate.isAfter(currentDate)) {
+										statutmsg = "RDV passé";
+										//if actif = 0 && rdv.get Date <= current date && auteur = null {passée}	
+									} else if (!rdv.isActif()) {
+										if (rdv.getAuteur().equals("PATIENT")) {
+											statutmsg = "RDV annulé par PATIENT : " + rdv.getCommentaire();
+											//if actif = 0 && rdv.get Date >= current date && auteur = patient {annulé par patient}
+										} else {
+											statutmsg = "RDV annulé par DOCTEUR : " + rdv.getCommentaire();
+											//if actif = 0 && rdv.get Date >= current date && auteur = docteur {annulé par docteur}
+										}
+									}
+
+									//https://stackabuse.com/how-to-get-current-date-and-time-in-java/
 									%>
 
 									<tr>
@@ -78,9 +98,17 @@
 										<td class="text-nowrap"><%=rdv.getDate()%></td>
 										<td><%=c.getName()%></td>
 										<td><%=statutmsg%></td>
-										<td><a class="btn btn-danger"
-											href="<c:url value='<%="/annulationrdv?idrdv=" + rdv.getId()%>' />">Annuler</a></td>
-										</div>
+
+										<td>
+											<%
+												if (rdv.isActif()) {
+											%><a class="btn btn-danger"
+											href="<c:url value='<%="/annulationrdv?idrdv=" + rdv.getId()%>' />">Annuler</a>
+											<%
+												}
+											%>
+										</td>
+
 									</tr>
 									<%
 										}

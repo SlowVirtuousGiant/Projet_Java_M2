@@ -48,7 +48,7 @@ public class Reservation extends HttpServlet {
 
 		List<Affectation> resultTmp = new ArrayList<Affectation>();
 		List<Affectation> results = new ArrayList<Affectation>();
-		
+
 		boolean champNom = false;
 		boolean champSpecia = false;
 
@@ -58,8 +58,8 @@ public class Reservation extends HttpServlet {
 			request.setAttribute("rechercherValue", recherche);
 			results = findWithNom(recherche);
 		}
-		
-		
+
+
 		if (!request.getParameter("sp_id").equals("0")) {//si utilisation specialite
 			int specialite = Integer.parseInt(request.getParameter("sp_id"));
 			if (champNom) {
@@ -80,7 +80,7 @@ public class Reservation extends HttpServlet {
 		}
 
 		String[] centreSelect = request.getParameterValues("selectedCentre");
-		
+
 		if (centreSelect != null && centreSelect.length > 0) {//Si un ou plusieurs centre est selectionne
 			if (champNom || champSpecia) {
 				if (!results.isEmpty()) {
@@ -106,16 +106,16 @@ public class Reservation extends HttpServlet {
 			request.setAttribute("selectedCentre", centreSelect);
 		}
 		request.setAttribute("affectations", results);
-		
+
 
 		this.getServletContext().getRequestDispatcher("/reservation.jsp").forward(request, response);
 	}
 
-	private List<Affectation> findWithNom(String search) {
+	private List<Affectation> findWithNom(String search) { 
 		HashMap<Integer, String> medecins = UtilisateurDao.getAllMedecinName();
 		List<Affectation> res = new ArrayList<Affectation>();
 		for (Entry<Integer, String> entry : medecins.entrySet()) {
-			if (!search.equals("") && entry.getValue().contains(search)) {
+			if (!search.equals("") && entry.getValue().toLowerCase().contains(search.toLowerCase())) {
 				res.addAll(AffectationDao.getAffectationMedecinActif(entry.getKey()));
 			}
 		}
