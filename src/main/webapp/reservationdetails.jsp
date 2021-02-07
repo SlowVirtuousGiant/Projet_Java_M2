@@ -49,9 +49,9 @@
 							Centre centre = CentreDao.getCentreByID(affectation.getCentre_id());
 
 							Specialite specialite = SpecialiteDao.getSpecialiteByID(affectation.getSpecialite_id());
-							
+
 							List<Integer> rdvreserves = RdvDao.getNonPossibleRdvByDate(sDate, medecin);
-							
+
 							Utilisateur patient = (Utilisateur) session.getAttribute("utilisateur");
 							List<Integer> rdvpatient = RdvDao.getCreneauxRdvPatient(patient, sDate);
 							%>
@@ -62,8 +62,8 @@
 							for (Creneau c : Creneau.values()) {
 							if (!rdvreserves.contains(c.id) && !rdvpatient.contains(c.id)) {
 						%>
-						<a class="list-group-item list-group-item-action"
-							href=<%=c.id%> data-toggle="tab"><%=c.name%></a>
+						<a class="list-group-item list-group-item-action" href=<%=c.id%>
+							data-toggle="tab"><%=c.name%></a>
 						<%
 							}
 						}
@@ -74,7 +74,7 @@
 
 					<h5>
 						Médecin : <strong class="text-value">Dr.<%=medecin.getPrenom()%>
-							<%=medecin.getNom()%>, <%= specialite.getSpecialite()%>
+							<%=medecin.getNom()%>, <%=specialite.getSpecialite()%>
 						</strong>
 					</h5>
 					<h5>
@@ -89,35 +89,45 @@
 						Téléphone : <strong class="text-value"><%=centre.getTelephone()%>
 						</strong>
 					</h5>
-					<% for (Creneau c : Creneau.values()) {
-						%>
-					
+					<%
+						for (Creneau c : Creneau.values()) {
+					%>
+
 					<div class="tab-content mt-4">
 						<div class="tab-pane fade show" id=<%=c.id%>>
 							<div class="card">
 								<h5 class="card-header">Résumé de votre rendez-vous</h5>
 								<div class="card-body">
-									<h5 class="card-title">Le <%= sDate %> entre <%=c.name %></h5>
+									<h5 class="card-title">
+										Le
+										<%=sDate%>
+										entre
+										<%=c.name%></h5>
 									<p class="card-text">
-										Après votre validation, le rendez-vous avec le Dr. <%=medecin.getNom()%>
+										Après votre validation, le rendez-vous avec le Dr.
+										<%=medecin.getNom()%>
 										sera pris en compte.
 									</p>
 									<p class="card-text">Vous allez reçevoir un mail de
 										confirmation et un mail de rappel un jour avant le
 										rendez-vous.</p>
-									<form method="post" action="<c:url value='/reservationdetails'/>">
-									<button type="submit" class="btn btn-primary">Valider</button>
-									<input type="hidden" name="rdvDate" value=<%=sDate%>>
-									<input type="hidden" name="rdvCreneau" value=<%=c.id%>>
-									<input type="hidden" name="rdvSpecialite" value=<%=specialite.getId()%>>
-									
+									<form method="post"
+										action="<c:url value='/reservationdetails'/>">
+										<button type="submit" class="btn btn-primary">Valider</button>
+										<input type="hidden" name="rdvDate" value=<%=sDate%>>
+										<input type="hidden" name="rdvCreneau" value=<%=c.id%>>
+										<input type="hidden" name="rdvSpecialite"
+											value=<%=specialite.getId()%>>
+
 									</form>
-									
+
 								</div>
 							</div>
 						</div>
 					</div>
-					<%} %>
+					<%
+						}
+					%>
 				</div>
 			</div>
 		</div>

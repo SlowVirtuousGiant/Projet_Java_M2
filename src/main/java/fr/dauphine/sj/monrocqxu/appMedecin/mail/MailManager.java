@@ -102,8 +102,8 @@ public class MailManager {
 						+ "Veuillez vous connecter pour  personnaliser votre mot de passe <br>"
 						+ "À très bientôt sur notre site, de la part de toute l'équipe de RDVmedecin ! ";
 			}
-			message.setContent(AppMedecinUtil.ConvertISOtoUTF8(msg),
-					"text/html");
+			message.setContent((msg),
+					"text/html; charset=UTF-8");
 			Transport.send(message);
 			System.out.println("Message envoyé avec succés");
 		} catch (MessagingException e) {
@@ -116,6 +116,7 @@ public class MailManager {
 			Message message = new MimeMessage(session);
 			message.setFrom(new InternetAddress(MAIL_WEBSITE_ADRESS));
 			message.setRecipients(Message.RecipientType.TO, InternetAddress.parse(utilisateur.getMail()));
+			message.setHeader("toto", "UTF-8");
 			message.setSubject("Confirmation de désactivation du compte sur RDVmedecin.fr");
 			String sexe;
 			if(utilisateur.getSexe().equals("homme")) {
@@ -135,14 +136,14 @@ public class MailManager {
 					Specialite specialite = SpecialiteDao.getSpecialiteByID(rdv.getSpecialite_id());
 					Creneau c = Creneau.valeurIdCreneau(rdv.getCreneau());
 					msgRDVcanceled = msgRDVcanceled + "Date : " + rdv.getDate()+"<br>"
-					+ "Heure : " + c.getName()+"<br>"
-					+ "Dr."+medecin.getNom() + " " + medecin.getPrenom()+"<br>"
-					+ "Spécialité : "+specialite.getSpecialite()+"<br>"
-					+ "Centre médical : "+centre.getNom()+"<br>"
-					+ "Adresse du centre médical : "+centre.getAdresse() + " " + centre.getVille() + " " + centre.getCode_postal()
-					+"<br>"
-					+ "Telephone du centre médical : "+centre.getTelephone()+"<br>"
-					+"___________________________________________________<br>";
+							+ "Heure : " + c.getName()+"<br>"
+							+ "Dr."+medecin.getNom() + " " + medecin.getPrenom()+"<br>"
+							+ "Spécialité : "+specialite.getSpecialite()+"<br>"
+							+ "Centre médical : "+centre.getNom()+"<br>"
+							+ "Adresse du centre médical : "+centre.getAdresse() + " " + centre.getVille() + " " + centre.getCode_postal()
+							+"<br>"
+							+ "Telephone du centre médical : "+centre.getTelephone()+"<br>"
+							+"___________________________________________________<br>";
 				}
 				msg = "Bonjour "+ sexe + utilisateur.getNom() + " " + utilisateur.getPrenom() + ",<br>"
 						+ "Nous vous souhaitons une bonne continuation et confirmons la désactivation de votre compte ! <br>" 
@@ -154,8 +155,60 @@ public class MailManager {
 						+ "Nous vous souhaitons une bonne continuation et confirmons la désactivation de votre compte ! " 
 						+ "Merci cependant de votre visite.<br>";
 			}
-			message.setContent(AppMedecinUtil.ConvertISOtoUTF8(msg),
-					"text/html");
+			message.setContent((msg),
+					"text/html; charset=UTF-8");
+			Transport.send(message);
+			System.out.println("Message envoyé avec succés");
+		} catch (MessagingException e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	public static void envoiRDVDetail(Utilisateur utilisateur, Rdv rdv) {
+		try {
+			Message message = new MimeMessage(session);
+			message.setFrom(new InternetAddress(MAIL_WEBSITE_ADRESS));
+			message.setRecipients(Message.RecipientType.TO, InternetAddress.parse(utilisateur.getMail()));
+			message.setHeader("toto", "UTF-8");
+			Boolean statut = rdv.isActif();
+			String keyword ="";
+			if(statut) {
+				keyword = "la prise";
+			}else {
+				keyword = "l'annulation";
+			}
+			message.setSubject("Confirmation de "+keyword+" de RDV sur RDVmedecin.fr");
+			String sexe;
+			if(utilisateur.getSexe().equals("homme")) {
+				sexe = "Mr. ";
+			}else {
+				sexe = "Mme. ";
+			}
+			String msg = null;
+			String detailRDV = "";
+
+			Utilisateur medecin = UtilisateurDao .getUtilisateurByID(rdv.getMedecin_id());
+			Centre centre = CentreDao.getCentreByID(rdv.getCentre_id());
+			Specialite specialite = SpecialiteDao.getSpecialiteByID(rdv.getSpecialite_id());
+			Creneau c = Creneau.valeurIdCreneau(rdv.getCreneau());
+			
+			
+			detailRDV =  "Date : " + rdv.getDate()+"<br>"
+					+ "Heure : " + c.getName()+"<br>"
+					+ "Dr."+medecin.getNom() + " " + medecin.getPrenom()+"<br>"
+					+ "Spécialité : "+specialite.getSpecialite()+"<br>"
+					+ "Centre médical : "+centre.getNom()+"<br>"
+					+ "Adresse du centre médical : "+centre.getAdresse() + " " + centre.getVille() + " " + centre.getCode_postal()
+					+"<br>"
+					+ "Telephone du centre médical : "+centre.getTelephone()+"<br>"
+					+"___________________________________________________<br>";
+
+			msg = "Bonjour "+ sexe + utilisateur.getNom() + " " + utilisateur.getPrenom() + ",<br>"
+					+ "Nous vous confirmons +" + keyword + " du rendez-vous suivant : <br>" 
+					+ detailRDV
+					+ "À bientôt ! ";
+			message.setContent((msg),
+					"text/html; charset=UTF-8");
 			Transport.send(message);
 			System.out.println("Message envoyé avec succés");
 		} catch (MessagingException e) {

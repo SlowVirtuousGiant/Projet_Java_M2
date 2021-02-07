@@ -44,10 +44,7 @@ public class VisualisationRdv extends HttpServlet{
 			Utilisateur utilisateur = (Utilisateur) request.getSession().getAttribute(ATT_SESSION_USER);
 			if (utilisateur != null && utilisateur.getRole().equals("PATIENT")) {
 
-
-	
-
-				request.setAttribute("rdvs", RdvDao.getRdvActifPatient(utilisateur.getId()));
+				request.setAttribute("rdvs", RdvDao.getRdvPatient(utilisateur.getId()));
 
 				request.setAttribute("specialites", SpecialiteDao.getAllSpecialite());
 				request.setAttribute("centres", CentreDao.getAllCentre());

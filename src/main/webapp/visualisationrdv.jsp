@@ -24,15 +24,7 @@
 				<div class="row register-form justify-content-center">
 
 					<%
-						UtilisateurDao utilisateurDao = new UtilisateurDao();
-					%>
-					<%
-						CentreDao centreDao = new CentreDao();
-					%>
-					<%
-						SpecialiteDao specialiteDao = new SpecialiteDao();
-
-					List<Rdv> rdvs = (List<Rdv>) request.getAttribute("rdvs");
+						List<Rdv> rdvs = (List<Rdv>) request.getAttribute("rdvs");
 					if (rdvs != null) {
 						if (rdvs.size() == 0) {
 					%>
@@ -54,6 +46,7 @@
 										<th scope="col">Téléphone</th>
 										<th scope="col">Date</th>
 										<th scope="col">Créneau</th>
+										<th scope="col">Statut</th>
 										<th scope="col"></th>
 									</tr>
 								</thead>
@@ -68,6 +61,12 @@
 									Specialite specialite = SpecialiteDao.getSpecialiteByID(rdv.getSpecialite_id());
 									Creneau c = Creneau.valeurIdCreneau(rdv.getCreneau());
 									%>
+									<%String statutmsg ="";
+									//if actif = 1 && rdv.get Date >= current date {A venir}
+									//if actif = 0 && rdv.get Date >= current date && auteur = patient {annulé par patient}
+									//if actif = 0 && rdv.get Date >= current date && auteur = docteur {annulé par docteur}
+									//if actif = 0 && rdv.get Date <= current date && auteur = null {passée}
+									%>
 
 									<tr>
 										<td class="text-nowrap">Dr. <%=medecin.getNom() + " " + medecin.getPrenom()%>
@@ -78,7 +77,9 @@
 										<td><%=centre.getTelephone()%></td>
 										<td class="text-nowrap"><%=rdv.getDate()%></td>
 										<td><%=c.getName()%></td>
-										<td><a class="btn btn-danger" href="<c:url value='<%= "/annulationrdv?idrdv=" + rdv.getId() %>' />">Annuler</a></td>
+										<td><%=statutmsg%></td>
+										<td><a class="btn btn-danger"
+											href="<c:url value='<%="/annulationrdv?idrdv=" + rdv.getId()%>' />">Annuler</a></td>
 										</div>
 									</tr>
 									<%

@@ -47,14 +47,14 @@
 							<input class="form-check-input" type="checkbox"
 								value=<%=c.getId()%> name="selectedCentre"
 								<%String[] sel = (String[]) request.getAttribute("selectedCentre");
-									if (sel != null) {
-										for (String s : sel) {
-											if (s.equals(String.valueOf(c.getId()))) {
-												out.print("checked");
-												break;
-											}
-										}
-									}%>>
+if (sel != null) {
+	for (String s : sel) {
+		if (s.equals(String.valueOf(c.getId()))) {
+			out.print("checked");
+			break;
+		}
+	}
+}%>>
 							<label class="form-check-label" for="flexCheckDefault"> <%=c.getNom()%></label>
 						</div>
 						<%
@@ -111,10 +111,9 @@
 											class="btn btn-success">Consulter</a></td>
 									</tr>
 									<%
+										}
 									}
 									}
-									}
-
 									%>
 
 								</tbody>

@@ -16,6 +16,7 @@ import fr.dauphine.sj.monrocqxu.appMedecin.dao.AffectationDao;
 import fr.dauphine.sj.monrocqxu.appMedecin.dao.CentreDao;
 import fr.dauphine.sj.monrocqxu.appMedecin.dao.RdvDao;
 import fr.dauphine.sj.monrocqxu.appMedecin.dao.UtilisateurDao;
+import fr.dauphine.sj.monrocqxu.appMedecin.mail.MailManager;
 import fr.dauphine.sj.monrocqxu.appMedecin.model.Affectation;
 import fr.dauphine.sj.monrocqxu.appMedecin.model.Centre;
 import fr.dauphine.sj.monrocqxu.appMedecin.model.Rdv;
@@ -79,6 +80,7 @@ public class ReservationDetails extends HttpServlet {
 			rdv.setCommentaire(null);
 			
 			RdvDao.ajouter(rdv);
+			MailManager.envoiRDVDetail(utilisateur, rdv);
 			response.sendRedirect(CHEMIN_ESPACE);
 		}
 		this.getServletContext().getRequestDispatcher("/reservationdetails.jsp").forward( request, response );

@@ -2,7 +2,8 @@
 <%@ page pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
-<%@ page import="fr.dauphine.sj.monrocqxu.appMedecin.util.TimeMedecinUtil"%>
+<%@ page
+	import="fr.dauphine.sj.monrocqxu.appMedecin.util.TimeMedecinUtil"%>
 <%@ page import="fr.dauphine.sj.monrocqxu.appMedecin.model.*"%>
 <%@ page import="fr.dauphine.sj.monrocqxu.appMedecin.dao.*"%>
 <%@ page import="java.util.ArrayList"%>
@@ -50,27 +51,26 @@
 
 				</div>
 				<c:if test="${!empty sessionScope.selectedCentre}">
-					<h4 class="text-center mt-3">${selectedCentre.nom} pour la
+					<h4 class="text-center mt-3">${selectedCentre.nom}pour la
 						semaine ${selectedWeek}</h4>
 
 					<%
 						HashMap<String, ArrayList<String>> weeks = TimeMedecinUtil.getDatesByWeekNumber(4);
-					
-						String currentWeek = (String) session.getAttribute("selectedWeek");
-						
-						ArrayList<String> jours = weeks.get(currentWeek);
-						
-						
-						List<Rdv> rdvSemaine = new ArrayList<Rdv>();
-						
-						List<Rdv> affectes = new ArrayList<Rdv>();
-						int init = 1;
-						if(init ==1){
-							rdvSemaine = RdvDao.getRdvActifMedecinByWeek(utilisateur.getId(), Integer.valueOf(currentWeek));
-							System.out.println(rdvSemaine);
-						}
+
+					String currentWeek = (String) session.getAttribute("selectedWeek");
+
+					ArrayList<String> jours = weeks.get(currentWeek);
+
+					List<Rdv> rdvSemaine = new ArrayList<Rdv>();
+
+					List<Rdv> affectes = new ArrayList<Rdv>();
+					int init = 1;
+					if (init == 1) {
+						rdvSemaine = RdvDao.getRdvActifMedecinByWeek(utilisateur.getId(), Integer.valueOf(currentWeek));
+						System.out.println(rdvSemaine);
+					}
 					%>
-					<div class="container <%= init == 1 ? "" : "no-init" %>">
+					<div class="container <%=init == 1 ? "" : "no-init"%>">
 						<div class="col-md-12 mt-3">
 							<div class="bg-light p-1 rounded mt-3 justify-content-center">
 								<h4>Horaire</h4>
@@ -80,77 +80,83 @@
 								<p>Téléphone</p>
 							</div>
 							<div class="container-actif">
-							<div class="table-responsive mt-2 mb-3">
-								
-								<table class="table table-bordered border-success table-fixed">
-									<thead>
-										<tr>
-											<th>Horaires</th>
-											<%
-												for (String j : jours) {
-											%>
-											<th class="th-sm"><%=j%></th>
-											<%
-												}
-												jours.add(0, "horaire");
-											%>
-										</tr>
-									</thead>
-									<tbody>
-										<%
-											for (int i = 1; i < 24; i++) {
-										%>
-										<tr>
-											<%	
-												int j_id = 0;
-												for(String j : jours) {
-													
-												if (j_id == 0) {
-											%>
-											<td class=<%=i % 2 == 0 ? "horaire" : "horaire-alt"%>>
+								<div class="table-responsive mt-2 mb-3">
+
+									<table class="table table-bordered border-success table-fixed">
+										<thead>
+											<tr>
+												<th>Horaires</th>
 												<%
-													Creneau c = Creneau.valeurIdCreneau(i);
-												out.println(c.name);
+													for (String j : jours) {
 												%>
-											</td>
-											<%
-												} else {
-													
-													String status = "";
-													for(Rdv rdv : rdvSemaine){
-														if(!affectes.contains(rdv) && rdv.getDate().equals(j) && rdv.getCreneau() == i){//le rdv est pris
-															System.out.println();
-															if(rdv.getPatient_id() == utilisateur.getId()){//le medecin est occupe
-																status = "no-dispo";
-																affectes.add(rdv);
-															}
-															else{ //le rdv est pris par qqun
-																status = "rdv-pris";
-																System.out.println("ca rentre");
-																affectes.add(rdv);
-															}
+												<th class="th-sm"><%=j%></th>
+												<%
 													}
-													if(status.equals("")){
+												jours.add(0, "horaire");
+												%>
+											</tr>
+										</thead>
+										<tbody>
+											<%
+												for (int i = 1; i < 24; i++) {
+											%>
+											<tr>
+												<%
+													int j_id = 0;
+												for (String j : jours) {
+
+													if (j_id == 0) {
+												%>
+												<td class=<%=i % 2 == 0 ? "horaire" : "horaire-alt"%>>
+													<%
+														Creneau c = Creneau.valeurIdCreneau(i);
+													out.println(c.name);
+													%>
+												</td>
+												<%
+													} else {
+
+												String status = "";
+												for (Rdv rdv : rdvSemaine) {
+													if (!affectes.contains(rdv) && rdv.getDate().equals(j) && rdv.getCreneau() == i) {//le rdv est pris
+														System.out.println();
+														if (rdv.getPatient_id() == utilisateur.getId()) {//le medecin est occupe
+													status = "no-dispo";
+													affectes.add(rdv);
+														} else { //le rdv est pris par qqun
+													status = "rdv-pris";
+													System.out.println("ca rentre");
+													affectes.add(rdv);
+														}
+													}
+													if (status.equals("")) {
 														status = "libre";
 													}
-													
-													}%>
-													<td style="position:relative;"><div class="case <%=status%>"></div></td>
-												<%}
+
+												}
+												%>
+												<td style="position: relative;"><div
+														class="case <%=status%>"></div></td>
+												<%
+													}
 												j_id++;
-											}
+												}
+												%>
+											</tr>
+											<%
+												}
 											%>
-										</tr>
-										<%	
-											
-											}
-										%>
-									</tbody>
-								</table>
-							</div>
-							<% if(init != 1){%>
-								 <button class="btn btn-lg btn-primary">Initialiser cette semaine</button>
-							<%} %>
+										</tbody>
+									</table>
+								</div>
+								<%
+									if (init != 1) {
+								%>
+								<button class="btn btn-lg btn-primary">Initialiser
+									cette semaine</button>
+								<%
+									}
+								%>
 							</div>
 							<div class="row">
 

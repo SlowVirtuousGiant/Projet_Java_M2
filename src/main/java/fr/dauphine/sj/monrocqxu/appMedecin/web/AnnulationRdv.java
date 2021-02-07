@@ -24,6 +24,7 @@ import fr.dauphine.sj.monrocqxu.appMedecin.dao.CentreDao;
 import fr.dauphine.sj.monrocqxu.appMedecin.dao.RdvDao;
 import fr.dauphine.sj.monrocqxu.appMedecin.dao.SpecialiteDao;
 import fr.dauphine.sj.monrocqxu.appMedecin.dao.UtilisateurDao;
+import fr.dauphine.sj.monrocqxu.appMedecin.mail.MailManager;
 import fr.dauphine.sj.monrocqxu.appMedecin.model.Affectation;
 import fr.dauphine.sj.monrocqxu.appMedecin.model.Centre;
 import fr.dauphine.sj.monrocqxu.appMedecin.model.Rdv;
@@ -41,8 +42,7 @@ public class AnnulationRdv extends HttpServlet{
 			Utilisateur utilisateur = (Utilisateur) request.getSession().getAttribute(ATT_SESSION_USER);
 			if (utilisateur != null && utilisateur.getRole().equals("PATIENT")) {
 				String[] idrdv = request.getQueryString().split("=");
-				RdvDao rdvDao = new RdvDao();
-				Rdv rdv = rdvDao.getRdvByID(Integer.parseInt(idrdv[1]));
+				Rdv rdv = RdvDao.getRdvByID(Integer.parseInt(idrdv[1]));
 				if(rdv.getPatient_id()==(utilisateur.getId())) {
 					request.getSession().setAttribute("rdv", rdv);//save dans la session
 					this.getServletContext().getRequestDispatcher("/annulationrdv.jsp").forward(request, response);
@@ -60,10 +60,8 @@ public class AnnulationRdv extends HttpServlet{
 	@Override
 	public void doPost( HttpServletRequest request, HttpServletResponse response ) throws ServletException, IOException {
 		System.out.println("dans le post dopost");
-		HttpSession session = request.getSession();
-		RdvDao rdvDao = new RdvDao();
 		Rdv rdv = (Rdv)request.getSession().getAttribute("rdv");
-
+		Utilisateur utilisateur = (Utilisateur) request.getSession().getAttribute(ATT_SESSION_USER);
 
 
 		rdv.setActif(false);
@@ -71,6 +69,7 @@ public class AnnulationRdv extends HttpServlet{
 		
 		System.out.println(rdv.getCommentaire() + " Print avant le update");
 		if(RdvDao.update(rdv)) {
+			MailManager.envoiRDVDetail(utilisateur, rdv);
 			System.out.println(rdv.getCommentaire() + " Print après le update");
 			response.sendRedirect(CHEMIN_VISU_RDV);
 		}else {

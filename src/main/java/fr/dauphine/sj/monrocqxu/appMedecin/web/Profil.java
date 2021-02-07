@@ -62,7 +62,7 @@ public class Profil extends HttpServlet {
 					MailManager.envoiMailDesactivationCompte(utilisateur,listRdv);
 
 					for(Rdv rdv:listRdv) {
-						System.out.println( "Voici les RDV qui vont être annulés " + rdv.getId());
+						System.out.println( "Voici les ID desRDV qui vont être annulés " + rdv.getId());
 						rdv.setActif(false);
 						RdvDao.update(rdv);
 					}

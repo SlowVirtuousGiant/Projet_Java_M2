@@ -68,7 +68,7 @@ public class RdvDao {
 		return false;
 	}
 	
-	public Rdv getRdvByID(int rdv_id){
+	public static Rdv getRdvByID(int rdv_id){
 		Session session = HibernateUtil.getSessionFactory().openSession();
 		Rdv rdv = session.get(Rdv.class, rdv_id);
 		return rdv;

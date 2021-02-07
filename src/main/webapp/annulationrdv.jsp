@@ -16,8 +16,7 @@
 	<%@include file="header.jsp"%>
 	<%
 		String[] idrdv = request.getQueryString().split("=");
-	RdvDao rdvDao = new RdvDao();
-	Rdv rdv = rdvDao.getRdvByID(Integer.parseInt(idrdv[1]));
+	Rdv rdv = RdvDao.getRdvByID(Integer.parseInt(idrdv[1]));
 
 	Utilisateur medecin = new Utilisateur();
 
