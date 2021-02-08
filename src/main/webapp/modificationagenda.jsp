@@ -31,7 +31,9 @@
 						semaine ${selectedWeek}</h4>
 
 					<%
-						HashMap<String, ArrayList<String>> weeks = TimeMedecinUtil.getDatesByWeekNumber(4);
+					Centre selectedCentre = (Centre) session.getAttribute("selectedCentre");
+					
+					HashMap<String, ArrayList<String>> weeks = TimeMedecinUtil.getDatesByWeekNumber(4);
 
 					String currentWeek = (String) session.getAttribute("selectedWeek");
 
@@ -91,9 +93,15 @@
 													idRdv = rdv.getId();
 													affectes.add(rdv);
 														} else { //le rdv est pris par qqun
-													status = "rdv-pris";
-													affectes.add(rdv);
-													idRdv = rdv.getId();
+															if(rdv.getCentre_id() == selectedCentre.getId()){
+																status = "rdv-pris";
+																affectes.add(rdv);
+																idRdv = rdv.getId();
+															}else{
+																status = "rdv-pris-centre";
+																affectes.add(rdv);
+																idRdv = rdv.getId();
+															}
 														}
 													}
 												}

@@ -9,10 +9,12 @@ import org.hibernate.cfg.Configuration;
 import org.hibernate.service.ServiceRegistry;
 
 import fr.dauphine.sj.monrocqxu.appMedecin.model.Affectation;
+import fr.dauphine.sj.monrocqxu.appMedecin.model.AgendaModel;
 import fr.dauphine.sj.monrocqxu.appMedecin.model.Centre;
 import fr.dauphine.sj.monrocqxu.appMedecin.model.Rdv;
 import fr.dauphine.sj.monrocqxu.appMedecin.model.Specialite;
 import fr.dauphine.sj.monrocqxu.appMedecin.model.Utilisateur;
+import fr.dauphine.sj.monrocqxu.appMedecin.web.Agenda;
 
 /**
  * Java based configuration
@@ -47,6 +49,7 @@ public class HibernateUtil {
                 configuration.addAnnotatedClass(Rdv.class);
                 configuration.addAnnotatedClass(Affectation.class);
                 configuration.addAnnotatedClass(Specialite.class);
+                configuration.addAnnotatedClass(AgendaModel.class);
                 
                 ServiceRegistry serviceRegistry = new StandardServiceRegistryBuilder()
                     .applySettings(configuration.getProperties()).build();
