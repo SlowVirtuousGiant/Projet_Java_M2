@@ -37,6 +37,12 @@ public class AffectationDao {
 		}
 	}
 	
+	public static boolean agendaActif(int centre_id, int medecin_id) {
+		Session session = HibernateUtil.getSessionFactory().openSession();
+		boolean actif =  (boolean) session.createSQLQuery("SELECT disponible FROM affectation WHERE medecin_id = :medecin_id and centre_id = :centre_id").setParameter("medecin_id", medecin_id).setParameter("centre_id",centre_id).uniqueResult();
+		return actif;
+	}
+	
 	public static List<Affectation> getAffectationMedecinActif(Utilisateur medecin){
 		return getAffectationMedecinActif(medecin.getId());
 	}

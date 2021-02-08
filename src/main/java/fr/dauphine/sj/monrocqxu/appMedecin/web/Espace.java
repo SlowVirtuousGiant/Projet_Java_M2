@@ -37,6 +37,7 @@ public class Espace extends HttpServlet {
 			this.getServletContext().getRequestDispatcher("/espace.jsp").forward( request, response );
 		}
 		
+		
 	}
 
 }

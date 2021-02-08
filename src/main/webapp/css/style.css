@@ -138,7 +138,7 @@ button:focus {
 	margin-left: 15px
 }
 
-.table{
+.table {
 	margin-bottom: 0;
 }
 
@@ -146,6 +146,7 @@ button:focus {
 	background: #2e8b57;
 	color: white;
 }
+
 .list-group {
 	max-height: 500px;
 	overflow-y: scroll;
@@ -184,34 +185,32 @@ button:focus {
 	font-weight: bold;
 }
 
-.results{
+.results {
 	max-height: 50px;
 }
-.container-actif{
+
+.container-actif {
 	position: relative;
-  	width: 100%;
-  	
+	width: 100%;
 }
 
-.no-init{
-	background-color: #c0c0c0  !important;
+.no-init {
+	background-color: #c0c0c0 !important;
 }
 
-.libre{
+.libre {
 	background-color: #a9ce62;
-	
 }
 
-.no-dispo{
+.no-dispo {
 	background-color: #ffacac;
 }
 
-.rdv-pris{
+.rdv-pris {
 	background-color: #9bd5ff !important;
-	
 }
 
-.clic{
+.clic {
 	cursor: pointer;
 }
 
@@ -219,20 +218,43 @@ button:focus {
 	border: 3px solid #FFF;
 }
 
-
-.case{
-	width: 100%; 
-	height: 100%; 
+.case {
+	width: 100%;
+	height: 100%;
 	z-index: 0;
-	position:absolute; 
-	top: 0; 
+	position: absolute;
+	top: 0;
 	left: 0;
 }
 
 .container-actif .btn {
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  -ms-transform: translate(-50%, -50%);
+	position: absolute;
+	top: 50%;
+	left: 50%;
+	transform: translate(-50%, -50%);
+	-ms-transform: translate(-50%, -50%);
 }
+
+.rdv-pris-centre {
+	background-color: #ff6464;
+}
+
+.legende {
+	list-style: none;
+	display: inline-block;
+}
+
+.legende span {
+	width: 12px;
+	height: 12px;
+	border: 1px solid #ccc;
+	float: left;
+	margin-top: 7px;
+	margin-right: 2px;
+}
+
+.legende li {
+	float: left;
+	margin-right: 10px;
+}
+

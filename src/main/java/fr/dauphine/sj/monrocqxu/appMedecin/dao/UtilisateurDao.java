@@ -8,8 +8,6 @@ import org.hibernate.Transaction;
 import org.hibernate.transform.Transformers;
 import org.mindrot.jbcrypt.BCrypt;
 
-import fr.dauphine.sj.monrocqxu.appMedecin.model.Centre;
-import fr.dauphine.sj.monrocqxu.appMedecin.model.Rdv;
 import fr.dauphine.sj.monrocqxu.appMedecin.model.Utilisateur;
 import fr.dauphine.sj.monrocqxu.appMedecin.util.HibernateUtil;
 
