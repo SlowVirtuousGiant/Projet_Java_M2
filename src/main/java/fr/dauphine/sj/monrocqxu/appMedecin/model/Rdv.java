@@ -31,7 +31,8 @@ public class Rdv implements Serializable {
 	private String commentaire;
 	private int creneau;
 	private int specialite_id;
-	public String auteur;
+	private String auteur;
+	private boolean envoi_mail;
 	
 	public String getAuteur() {
 		return auteur;
@@ -98,6 +99,12 @@ public class Rdv implements Serializable {
 	}
 	public void setSemaine(int semaine) {
 		this.semaine = semaine;
+	}
+	public boolean isEnvoi_mail() {
+		return envoi_mail;
+	}
+	public void setEnvoi_mail(boolean envoi_mail) {
+		this.envoi_mail = envoi_mail;
 	}
 	
 }

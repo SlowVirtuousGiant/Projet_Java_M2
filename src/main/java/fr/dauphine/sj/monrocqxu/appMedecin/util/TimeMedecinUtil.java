@@ -72,7 +72,8 @@ public class TimeMedecinUtil {
 			currentDate = currentDate.plusWeeks(1);
 		}
 		return res;
-		
 	}
+	
+	
 	
 }

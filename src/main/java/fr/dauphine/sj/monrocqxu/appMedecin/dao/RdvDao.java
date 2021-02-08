@@ -27,6 +27,13 @@ public class RdvDao {
 		return list;
 	}
 	
+	public static List<Rdv> getRdvPatientMail2BSent(){
+		Session session = HibernateUtil.getSessionFactory().openSession();
+		List<Rdv> list = session.createSQLQuery("SELECT * FROM rdv WHERE envoi_mail = 0 AND actif = 1")
+				.addEntity(Rdv.class).list();
+		return list;
+	}
+	
 	public static Rdv getRdvWithDateAndCreneau(String date, int creneau, Utilisateur medecin){
 		Session session = HibernateUtil.getSessionFactory().openSession();
 		Rdv rdv = (Rdv) session.createSQLQuery("SELECT * FROM rdv WHERE date = :date AND creneau = :creneau AND medecin_id = :medecin_id")

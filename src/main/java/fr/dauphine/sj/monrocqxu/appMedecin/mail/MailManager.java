@@ -215,6 +215,52 @@ public class MailManager {
 			throw new RuntimeException(e);
 		}
 	}
+	
+	public static void envoieRDVRappel(Rdv rdv) {
+		try {
+			Utilisateur utilisateur = UtilisateurDao.getUtilisateurByID(rdv.getPatient_id());
+			Message message = new MimeMessage(session);
+			message.setFrom(new InternetAddress(MAIL_WEBSITE_ADRESS));
+			message.setRecipients(Message.RecipientType.TO, InternetAddress.parse(utilisateur.getMail()));
+			message.setHeader("toto", "UTF-8");
+			message.setSubject("Rappel de votre RDV sur RDVmedecin.fr à venir"+rdv.getDate());
+			String sexe;
+			if(utilisateur.getSexe().equals("homme")) {
+				sexe = "Mr. ";
+			}else {
+				sexe = "Mme. ";
+			}
+			String msg = null;
+			String detailRDV = "";
+
+			Utilisateur medecin = UtilisateurDao .getUtilisateurByID(rdv.getMedecin_id());
+			Centre centre = CentreDao.getCentreByID(rdv.getCentre_id());
+			Specialite specialite = SpecialiteDao.getSpecialiteByID(rdv.getSpecialite_id());
+			Creneau c = Creneau.valeurIdCreneau(rdv.getCreneau());
+			
+			
+			detailRDV =  "<br>"+"Date : " + rdv.getDate()+"<br>"
+					+ "Heure : " + c.getName()+"<br>"
+					+ "Dr."+medecin.getNom() + " " + medecin.getPrenom()+"<br>"
+					+ "Spécialité : "+specialite.getSpecialite()+"<br>"
+					+ "Centre médical : "+centre.getNom()+"<br>"
+					+ "Adresse du centre médical : "+centre.getAdresse() + " " + centre.getVille() + " " + centre.getCode_postal()
+					+"<br>"
+					+ "Telephone du centre médical : "+centre.getTelephone()+"<br>"
+					+"___________________________________________________<br>";
+
+			msg = "Bonjour "+ sexe + utilisateur.getNom() + " " + utilisateur.getPrenom() + ",<br>"
+					+ "Nous vous rappelons votre rendez-vous suivant : " 
+					+ detailRDV
+					+ "À bientôt ! ";
+			message.setContent((msg),
+					"text/html; charset=UTF-8");
+			Transport.send(message);
+			System.out.println("Message envoyé avec succés");
+		} catch (MessagingException e) {
+			throw new RuntimeException(e);
+		}
+	}
 
 
 }

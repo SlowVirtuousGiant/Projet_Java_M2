@@ -16,9 +16,12 @@ import javax.servlet.http.HttpServletResponse;
 import com.mysql.jdbc.TimeUtil;
 
 import fr.dauphine.sj.monrocqxu.appMedecin.dao.AffectationDao;
+import fr.dauphine.sj.monrocqxu.appMedecin.dao.RdvDao;
 import fr.dauphine.sj.monrocqxu.appMedecin.dao.UtilisateurDao;
+import fr.dauphine.sj.monrocqxu.appMedecin.mail.MailManager;
 import fr.dauphine.sj.monrocqxu.appMedecin.model.Affectation;
 import fr.dauphine.sj.monrocqxu.appMedecin.model.Creneau;
+import fr.dauphine.sj.monrocqxu.appMedecin.model.Rdv;
 import fr.dauphine.sj.monrocqxu.appMedecin.util.TimeMedecinUtil;
 
 public class Espace extends HttpServlet {
