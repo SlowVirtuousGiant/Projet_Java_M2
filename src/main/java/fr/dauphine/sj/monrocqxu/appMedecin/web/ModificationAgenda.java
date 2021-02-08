@@ -6,6 +6,7 @@ import static fr.dauphine.sj.monrocqxu.appMedecin.util.AppMedecinUtil.CHEMIN_ESP
 import static fr.dauphine.sj.monrocqxu.appMedecin.util.AppMedecinUtil.isAuthenticated;
 
 import java.io.IOException;
+import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -80,9 +81,18 @@ public class ModificationAgenda extends HttpServlet{
 					
 				}
 			}
-			System.out.println("REDIRECT BABYYY");
-			this.getServletContext().getRequestDispatcher("/modificationagenda.jsp").forward( request, response );
+			
 		}
+		response.setContentType("text/html");
+		response.setHeader("Cache-control", "no-cache, no-store");
+        response.setHeader("Pragma", "no-cache");
+        response.setHeader("Expires", "-1");
+ 
+        response.setHeader("Access-Control-Allow-Origin", "*");
+        response.setHeader("Access-Control-Allow-Methods", "POST");
+        response.setHeader("Access-Control-Allow-Headers", "Content-Type");
+        response.setHeader("Access-Control-Max-Age", "86400");
+		response.getWriter().print("ok");
 
 		
 	}

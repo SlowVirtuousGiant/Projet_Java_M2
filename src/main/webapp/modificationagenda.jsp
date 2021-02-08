@@ -119,7 +119,7 @@
 							</div>
 							<div class="row mt-3 mb-5">
 								<div class="col">
-									<a class="w-100 btn btn-secondary">Retour</a>
+									<a href="<c:url value='/agenda' />" class="w-100 btn btn-secondary">Retour</a>
 								</div>
 								<div class="col">
 									   <button id="dispo" class="w-100 btn btn-success">Disponible</button>
@@ -146,26 +146,34 @@ var idArray = [];
 $("#dispo").click(function(e){
 	$.ajax({
 		type: "POST",
-		name: "modificationagenda",
+		url:"/appMedecin/modificationagenda",
 		dataType:'json',
 		data: {json:JSON.stringify(idArray), dispo:"dispo"},
-		success: function( data, textStatus, jqXHR) {
-			console.log("succes");
-			location.reload();
-		}
+		cache: false,
+		success:function(response){
+            location.reload();
+        },
+		 error: function(xhr, status, error) {
+			 location.reload();
+			}
+		
 		});
 });
 
 $("#indispo").click(function(e){
 	$.ajax({
 		type: "POST",
-		name: "modificationagenda",
+		url:"/appMedecin/modificationagenda",
 		dataType:'json',
 		data: {json:JSON.stringify(idArray), indispo:"indispo"},
-		success: function( data, textStatus, jqXHR) {
-			console.log("succes");
-			location.reload();
+		cache: false,
+		success:function(response){
+            location.reload();
+        },
+		 error: function(xhr, status, error) {
+			  location.reload();
 		}
+		
 		});
 });
 

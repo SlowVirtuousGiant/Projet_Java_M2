@@ -37,9 +37,11 @@ public class Agenda extends HttpServlet {
 					centres.add(CentreDao.getCentreByID(aff.getCentre_id()));
 				}
 				
-				request.setAttribute("centres", centres);
+				request.setAttribute("centres_utilisateur", centres);
 				session = request.getSession();
 				this.getServletContext().getRequestDispatcher("/agenda.jsp").forward(request, response);
+				
+				//get agenda actif affectation = disponible
 			} else {
 				response.sendRedirect(CHEMIN_ESPACE);
 			}
@@ -51,27 +53,24 @@ public class Agenda extends HttpServlet {
 	@Override
 	public void doPost (HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		
-		if(session.getAttribute("selectedCentre") == null) {
-			session.setAttribute("selectedCentre", request.getParameter("centre_id"));
+		if(request.getParameter("init") != null){
+			//ajouter a la bdd le nom du medecin + la semaine + id affectation
 		}
-		session.setAttribute("selectedWeek", request.getParameter("selectedWeek"));
+		
+		System.out.println(request.getParameter("checkboxAgenda"));
+		
+		if(request.getParameter("centreSelect") != null){
+			session.setAttribute("selectedCentre", CentreDao.getCentreByID(Integer.valueOf(request.getParameter("centreSelect"))));
+		}
+		
+		if(request.getParameter("selectedWeek") != null){
+			session.setAttribute("selectedWeek", request.getParameter("selectedWeek"));
+		}else {
+			session.setAttribute("selectedWeek", TimeMedecinUtil.getCurrentWeek());
+		}
+		request.setAttribute("centres_utilisateur", centres);
 		
 		this.getServletContext().getRequestDispatcher("/agenda.jsp").forward( request, response );
 	}
 
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
 }

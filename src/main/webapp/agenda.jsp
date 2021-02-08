@@ -25,17 +25,21 @@
 
 		<div class="container">
 			<h2 class="mt-5 text-center heading">Votre agenda</h2>
-			<div class="row">
+			<div class="row justify-content-center">
+				<div class="col-md-4">
 					<c:choose>
-						<c:when test="${fn:length(centres) gt 50}">
+						<c:when test="${fn:length(centres) gt 1}">
 							<label class="form-control-label text-muted mt-3">Vos
 								centres : </label>
-							<select name="centre_id" class="form-select">
-								<c:forEach items="${centres}" var="centre">
+							<form id="selectCentreForm" method="post" action="<c:url value='/agenda'/>">
+							<select id="centreSelect" name="centreSelect" class="form-select">
+									<option value="placeholder">Sélectionnez un centre</option>
+								<c:forEach items="${centres_utilisateur}" var="centre">
 									<option value="${centre.id}"
-										${centre.id == 1 ? 'selected' : ''}>${centre.nom}</option>
+										${centre.id == selectedCentre.id ? 'selected' : ''}>${centre.nom}</option>
 								</c:forEach>
 							</select>
+							</form>
 						</c:when>
 						<c:otherwise>
 							<c:if test="${empty sessionScope.selectedCentre}">
@@ -47,12 +51,11 @@
 							</c:if>
 						</c:otherwise>
 					</c:choose>
-				<c:if test="${!empty sessionScope.selectedCentre}">
-					<h4 class="text-center mt-3">${selectedCentre.nom} pour la
-						semaine ${selectedWeek}</h4>
-
-					<%
-						HashMap<String, ArrayList<String>> weeks = TimeMedecinUtil.getDatesByWeekNumber(4);
+				</div>
+				<% Centre selectedCentre = (Centre) session.getAttribute("selectedCentre");
+				if(selectedCentre != null){
+					
+					HashMap<String, ArrayList<String>> weeks = TimeMedecinUtil.getDatesByWeekNumber(4);
 
 					String currentWeek = (String) session.getAttribute("selectedWeek");
 
@@ -62,11 +65,15 @@
 
 					List<Rdv> affectes = new ArrayList<Rdv>();
 					int init = 1;
+					//regarder dans la bdd
+					
+					boolean agendaDispo = AffectationDao.agendaActif(selectedCentre.getId(), utilisateur.getId());
 					if (init == 1) {
 						rdvSemaine = RdvDao.getRdvActifMedecinByWeek(utilisateur.getId(), Integer.valueOf(currentWeek));
-						System.out.println(rdvSemaine);
 					}
 					%>
+					<h4 class="text-center mt-3">${selectedCentre.nom} pour la
+						semaine ${selectedWeek}</h4>
 					<div class="container <%=init == 1 ? "" : "no-init"%>">
 						<div class="col-md-12 mt-3">
 							<div class="container-actif">
@@ -112,7 +119,6 @@
 													if (!affectes.contains(rdv) && rdv.getDate().equals(j) && rdv.getCreneau() == i) {//le rdv est pris
 														if (rdv.getPatient_id() == utilisateur.getId()) {//le medecin est occupe
 													status = "no-dispo";
-													idRdv = rdv.getId();
 													affectes.add(rdv);
 														} else { //le rdv est pris par qqun
 													status = "rdv-pris clic";
@@ -144,8 +150,11 @@
 								<%
 									if (init != 1) {
 								%>
-								<button class="btn btn-lg btn-primary">Initialiser
+								<form method="post" action="<c:url value='/agenda'/>">
+								<button type="submit" class="btn btn-lg btn-primary">Initialiser
 									cette semaine</button>
+									<input type="hidden" name="init" value="1">
+								</form>
 								<%
 									}
 								%>
@@ -153,7 +162,7 @@
 							<div class="row mt-3 mb-5">
 								<div class="col">
 								<form id="dateForm" method="post" action="<c:url value='/agenda'/>">
-									<select class="form-select" name="selectedWeek">
+									<select id="weekSelect" class="form-select" name="selectedWeek">
 										<% ArrayList<String> nextweeks = TimeMedecinUtil.getNext4weeks();
 										for(String w : nextweeks){%>
 											<option value="<%=w%>" <%= w.equals(currentWeek) ? "selected" : "" %>>Semaine <%=w%></option>
@@ -166,8 +175,11 @@
 										l'agenda</a>
 								</div>
 								<div class="col">
-									<input class="form-check-input" type="checkbox"
-										id="checkboxNoLabel" value=""> Agenda Actif
+									<form id="agendaActifForm" method="post" action="<c:url value='/agenda'/>">
+									<input name="checkboxAgenda" class="form-check-input" type="checkbox"
+										id="checkboxAgenda"> Agenda Actif
+										<input type="hidden" name="majAgenda" value="maj">
+									</form>
 								</div>
 							</div>
 						</div>
@@ -180,13 +192,7 @@
 							
 							Utilisateur patient = UtilisateurDao.getUtilisateurByID(rdv.getPatient_id());
 							Creneau cr = Creneau.valeurIdCreneau(rdv.getCreneau());
-							
-							String sexe = "";
-							if (patient.getSexe().equals("homme")){
-								sexe = "né";
-							} else {
-								sexe = "née";
-							}
+							if(patient.getId() != rdv.getMedecin_id()){
 						%>
 						<div class="modal fade" id="modal<%=rdv.getId() %>"
 						tabindex="-1" aria-labelledby="exampleModalLabel"
@@ -197,7 +203,7 @@
 										<h5 class="modal-title" id="exampleModalLabel">Rendez vous du <%=rdv.getDate() %> à <%=cr.getName() %></h5>
 									</div>
 									<div class="modal-body">
-										<p><strong>Patient : </strong><%= patient.getPrenom() + " "+ patient.getNom() + ", "+sexe+" en " + patient.getNaissance()%></p>
+										<p><strong>Patient : </strong><%= patient.getPrenom() + " "+ patient.getNom() + ", "+ (patient.getSexe().equals("homme") ? "né" : "née") + " en " + patient.getNaissance()%></p>
 										<p><strong>Adresse : </strong><%= patient.getAdresse() + " " + patient.getVille() + " " + patient.getCode_postal() %></p>
 										<p><strong>Téléphone : </strong><%=patient.getTelephone()%></p>
 										
@@ -212,9 +218,9 @@
 							
 						<%
 							}
+							}
+				}
 						%>
-					
-				</c:if>
 
 
 			</div>
@@ -224,8 +230,18 @@
 <script src="js/jquery-3.5.1.min.js"></script>
 <script src="js/bootstrap.min.js"></script>
 <script>
-$('select').on('change', function() {
+$('#weekSelect').on('change', function() {
 	$('#dateForm').submit();
 });
+$('#centreSelect').on('change', function() {
+	$('#selectCentreForm').submit();
+});
+$('#checkboxAgenda').on('change', function() {
+	if($(this).val() != "placeholder"){
+		$('#agendaActifForm').submit();
+	}
+});
+
+
 </script>
 </html>
