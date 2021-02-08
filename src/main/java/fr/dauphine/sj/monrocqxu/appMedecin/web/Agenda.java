@@ -19,9 +19,13 @@ import javax.servlet.http.HttpSession;
 import fr.dauphine.sj.monrocqxu.appMedecin.dao.AffectationDao;
 import fr.dauphine.sj.monrocqxu.appMedecin.dao.AgendaDao;
 import fr.dauphine.sj.monrocqxu.appMedecin.dao.CentreDao;
+import fr.dauphine.sj.monrocqxu.appMedecin.dao.RdvDao;
+import fr.dauphine.sj.monrocqxu.appMedecin.dao.UtilisateurDao;
+import fr.dauphine.sj.monrocqxu.appMedecin.mail.MailManager;
 import fr.dauphine.sj.monrocqxu.appMedecin.model.Affectation;
 import fr.dauphine.sj.monrocqxu.appMedecin.model.AgendaModel;
 import fr.dauphine.sj.monrocqxu.appMedecin.model.Centre;
+import fr.dauphine.sj.monrocqxu.appMedecin.model.Rdv;
 import fr.dauphine.sj.monrocqxu.appMedecin.model.Utilisateur;
 import fr.dauphine.sj.monrocqxu.appMedecin.util.TimeMedecinUtil;
 
@@ -61,6 +65,16 @@ public class Agenda extends HttpServlet {
 
 	@Override
 	public void doPost (HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		
+		if(request.getParameter("raison")!=null) {
+			Rdv rdv = RdvDao.getRdvByID(Integer.valueOf(request.getParameter("rdvIdPourAnnulation")));
+			Utilisateur patient = UtilisateurDao.getUtilisateurByID(Integer.valueOf(request.getParameter("rdvIdPourAnnulation")));
+			rdv.setActif(false);
+			rdv.setAuteur("MEDECIN");
+			rdv.setCommentaire(request.getParameter("raison"));
+			RdvDao.update(rdv);
+			MailManager.envoiRDVDetail(patient, rdv);
+		}
 		
 		if(request.getParameter("init") != null){
 			System.out.println("ca rentre");

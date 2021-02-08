@@ -10,5 +10,9 @@ public class App
 	
     public static void main( String[] args )
     {
+    	Date currDate = new Date();
+    	SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy");
+    	String currDateFormated = formatter.format(currDate);
+    	System.out.println(currDateFormated);
     }
 }

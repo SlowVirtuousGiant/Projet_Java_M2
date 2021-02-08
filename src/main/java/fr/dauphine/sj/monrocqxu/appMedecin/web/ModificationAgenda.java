@@ -74,6 +74,7 @@ public class ModificationAgenda extends HttpServlet{
 						newRdv.setActif(true);
 						newRdv.setAuteur(null);
 						newRdv.setCommentaire(null);
+						newRdv.setEnvoi_mail(true);
 						
 						RdvDao.ajouter(newRdv);
 						
