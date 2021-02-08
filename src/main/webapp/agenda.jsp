@@ -72,6 +72,8 @@
 						rdvSemaine = RdvDao.getRdvActifMedecinByWeek(utilisateur.getId(), Integer.valueOf(currentWeek));
 					}
 					%>
+					
+					<% if(agendaDispo){ %>
 					<h4 class="text-center mt-3">${selectedCentre.nom} pour la
 						semaine ${selectedWeek}</h4>
 					<div class="container <%=init == 1 ? "" : "no-init"%>">
@@ -159,35 +161,7 @@
 									}
 								%>
 							</div>
-							<div class="row mt-3 mb-5">
-								<div class="col">
-								<form id="dateForm" method="post" action="<c:url value='/agenda'/>">
-									<select id="weekSelect" class="form-select" name="selectedWeek">
-										<% ArrayList<String> nextweeks = TimeMedecinUtil.getNext4weeks();
-										for(String w : nextweeks){%>
-											<option value="<%=w%>" <%= w.equals(currentWeek) ? "selected" : "" %>>Semaine <%=w%></option>
-										<%} %>
-									</select>
-								</form>
-								</div>
-								<div class="col">
-									<a href="<c:url value='/modificationagenda'/>" class="w-100 btn btn-secondary">Editer
-										l'agenda</a>
-								</div>
-								<div class="col">
-									<form id="agendaActifForm" method="post" action="<c:url value='/agenda'/>">
-									<input name="checkboxAgenda" class="form-check-input" type="checkbox"
-										id="checkboxAgenda"> Agenda Actif
-										<input type="hidden" name="majAgenda" value="maj">
-									</form>
-								</div>
-							</div>
-						</div>
-
-
-					</div>
-					
-						<%
+							<%
 						for (Rdv rdv : rdvSemaine) {
 							
 							Utilisateur patient = UtilisateurDao.getUtilisateurByID(rdv.getPatient_id());
@@ -219,6 +193,41 @@
 						<%
 							}
 							}
+							}else{%>
+								<h4 class="text-center mt-3">${selectedCentre.nom}</h4>
+							<%}%>
+							<div class="row mt-3 mb-5">
+								<% if(agendaDispo){ %>
+								<div class="col">
+								<form id="dateForm" method="post" action="<c:url value='/agenda'/>">
+									<select id="weekSelect" class="form-select" name="selectedWeek">
+										<% ArrayList<String> nextweeks = TimeMedecinUtil.getNext4weeks();
+										for(String w : nextweeks){%>
+											<option value="<%=w%>" <%= w.equals(currentWeek) ? "selected" : "" %>>Semaine <%=w%></option>
+										<%} %>
+									</select>
+								</form>
+								</div>
+								<div class="col">
+									<a href="<c:url value='/modificationagenda'/>" class="w-100 btn btn-secondary">Editer
+										l'agenda</a>
+								</div>
+								<%} %>
+								<div class="col">
+									<form class="text-center" id="agendaActifForm" method="post" action="<c:url value='/agenda'/>">
+									<input name="checkboxAgenda" class="form-check-input" type="checkbox"
+										id="checkboxAgenda" <%= agendaDispo ? "checked" : ""  %>> Agenda Actif
+										<input type="hidden" name="majAgenda" value="maj">
+									</form>
+								</div>
+							</div>
+						</div>
+
+
+					</div>
+					
+						<%
+							
 				}
 						%>
 
@@ -234,12 +243,13 @@ $('#weekSelect').on('change', function() {
 	$('#dateForm').submit();
 });
 $('#centreSelect').on('change', function() {
-	$('#selectCentreForm').submit();
+	if($(this).val() != "placeholder"){
+		$('#selectCentreForm').submit();
+	}
+	
 });
 $('#checkboxAgenda').on('change', function() {
-	if($(this).val() != "placeholder"){
-		$('#agendaActifForm').submit();
-	}
+	$('#agendaActifForm').submit();
 });
 
 

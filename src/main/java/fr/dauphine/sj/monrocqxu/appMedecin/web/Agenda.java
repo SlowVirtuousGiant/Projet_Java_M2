@@ -8,6 +8,7 @@ import static fr.dauphine.sj.monrocqxu.appMedecin.util.AppMedecinUtil.isAuthenti
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
@@ -25,16 +26,21 @@ import fr.dauphine.sj.monrocqxu.appMedecin.util.TimeMedecinUtil;
 public class Agenda extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 	private HttpSession session;
-	ArrayList<Centre> centres = new ArrayList<Centre>();
+	HashMap<Integer, Affectation> affectationCentres;
+	List<Centre> centres;
 
 	@Override
 	public void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		if (isAuthenticated(request)) {
 			Utilisateur utilisateur = (Utilisateur) request.getSession().getAttribute(ATT_SESSION_USER);
+			affectationCentres = new HashMap<Integer,Affectation>();
+			centres = new ArrayList<Centre>();
 			if (utilisateur != null && utilisateur.getRole().equals("MEDECIN")) {
 				
 				for(Affectation aff : AffectationDao.getAffectationMedecin(utilisateur.getId())){
-					centres.add(CentreDao.getCentreByID(aff.getCentre_id()));
+					Centre c = CentreDao.getCentreByID(aff.getCentre_id());
+					affectationCentres.put(c.getId(), aff);
+					centres.add(c);
 				}
 				
 				request.setAttribute("centres_utilisateur", centres);
@@ -56,8 +62,17 @@ public class Agenda extends HttpServlet {
 		if(request.getParameter("init") != null){
 			//ajouter a la bdd le nom du medecin + la semaine + id affectation
 		}
-		
-		System.out.println(request.getParameter("checkboxAgenda"));
+		if(request.getParameter("majAgenda") != null) {
+			Centre centre = (Centre) session.getAttribute("selectedCentre");
+			
+			if(centre != null) {
+				System.out.println(affectationCentres);
+				Affectation affectation = affectationCentres.get(centre.getId());
+				affectation.setDisponible(!affectation.isDisponible());
+				AffectationDao.update(affectation);
+			}
+			
+		}
 		
 		if(request.getParameter("centreSelect") != null){
 			session.setAttribute("selectedCentre", CentreDao.getCentreByID(Integer.valueOf(request.getParameter("centreSelect"))));
