@@ -149,7 +149,7 @@ public class MailManager {
 						+ "Nous vous souhaitons une bonne continuation et confirmons la désactivation de votre compte ! <br>" 
 						+ "Voici les rendez-vous qui ont été annulés suite à votre désactivation : <br>"
 						+ msgRDVcanceled
-						+ "Merci pour votre visite ! ";
+						+ "<br>Merci pour votre visite ! ";
 			}else {
 				msg = "Bonjour "+ sexe + utilisateur.getNom() + " " + utilisateur.getPrenom() + ",<br>"
 						+ "Nous vous souhaitons une bonne continuation et confirmons la désactivation de votre compte ! " 
@@ -204,9 +204,9 @@ public class MailManager {
 					+"___________________________________________________<br>";
 
 			msg = "Bonjour "+ sexe + utilisateur.getNom() + " " + utilisateur.getPrenom() + ",<br>"
-					+ "Nous vous confirmons +" + keyword + " du rendez-vous suivant : " 
+					+ "Nous vous confirmons " + keyword + " du rendez-vous suivant : " 
 					+ detailRDV
-					+ "À bientôt ! ";
+					+ "<br>À bientôt ! ";
 			message.setContent((msg),
 					"text/html; charset=UTF-8");
 			Transport.send(message);
@@ -252,7 +252,7 @@ public class MailManager {
 			msg = "Bonjour "+ sexe + utilisateur.getNom() + " " + utilisateur.getPrenom() + ",<br>"
 					+ "Nous vous rappelons votre rendez-vous suivant : " 
 					+ detailRDV
-					+ "À bientôt ! ";
+					+ "<br>À bientôt ! ";
 			message.setContent((msg),
 					"text/html; charset=UTF-8");
 			Transport.send(message);
