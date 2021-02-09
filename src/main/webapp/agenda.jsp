@@ -212,6 +212,7 @@
 											à
 											<%=cr.getName()%></h5>
 									</div>
+									<form method="post" action="<c:url value='/agenda'/>">
 									<div class="modal-body">
 										<p>
 											<strong>Patient : </strong><%=patient.getPrenom() + " " + patient.getNom() + ", " + (patient.getSexe().equals("homme") ? "né" : "née")
@@ -229,18 +230,20 @@
 										<%
 											}
 										%>
+										
 										<div class="form-group">
 											<label class="form-control-label text-muted">Raison </label>
 											<input id="inputWhy" name="raison" type="text" size="20"
 												maxlength="60" class="form-control mb-1" value=""
 												placeholder="Veuillez expliquer votre raison" required>
-											<input type="hidden" name="rdvIdPourAnnulation" value="<%rdv.getId();%>">
+											<input type="hidden" name="rdvIdPourAnnulation" value=<%= rdv.getId()%>>
 										</div>
 									</div>
 									<div class="modal-footer">
 										<button type="submit" name="submit" value="submit"
 											class=" btn btn-danger">Annuler ce rendez-vous</button>
 									</div>
+									</form>
 								</div>
 							</div>
 						</div>

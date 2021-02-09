@@ -73,7 +73,11 @@ public class Agenda extends HttpServlet {
 			rdv.setAuteur("MEDECIN");
 			rdv.setCommentaire(request.getParameter("raison"));
 			RdvDao.update(rdv);
-			MailManager.envoiRDVDetail(patient, rdv);
+				try {
+					MailManager.envoiRDVDetail(patient, rdv);
+				}catch(Exception e) {
+				e.printStackTrace();
+			}
 		}
 		
 		if(request.getParameter("init") != null){
