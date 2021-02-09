@@ -4,7 +4,8 @@
 <%@ page import="fr.dauphine.sj.monrocqxu.appMedecin.dao.*"%>
 <%@ page
 	import="fr.dauphine.sj.monrocqxu.appMedecin.util.TimeMedecinUtil"%>
-<%@ page import="java.util.ArrayList"%>
+<%@ page import="java.util.HashMap"%>
+<%@ page import="java.util.Map"%>
 <%@ page import="java.util.List"%>
 
 <!DOCTYPE html>
@@ -24,26 +25,31 @@
 			<h2 class="mb-4 mt-5 text-center heading">Prendre un rendez-vous</h2>
 
 			<div class="row justify-content-center mt-5">
+			<%
+							
+				String sDate = (String) request.getAttribute("selectedDate");
+				
+				String aff = (String) session.getAttribute("affectation");
+	
+				Affectation affectation = AffectationDao.getAffectationByID(Integer.parseInt(aff));
+				
+				List<String> foundDates = (List<String>) request.getAttribute("foundDates");
+	
+				if(!foundDates.isEmpty()){%>
+				
 				<div class="col-3">
 					<form id="dateForm" method="post"
 						action="<c:url value='/reservationdetails'/>">
-						<label class="form-control-label text-muted">Date de votre
-							consultation : </label> <select name="date_id" class="form-select">
+							<label class="form-control-label text-muted">Date de votre consultation : </label> <select name="date_id" class="form-select">
 							<%
-								ArrayList<String> datesPossibles = TimeMedecinUtil.getNext20Days();
-							String sDate = (String) request.getAttribute("selectedDate");
-
-							for (String date : datesPossibles) {
-							%>
-							<option <%=(date.equals(sDate) ? "selected" : "")%>
-								value="<%=date%>">
-								<%=date%></option>
-							<%
+							
+							for (String date : foundDates) {%>
+									<option <%=(date.equals(sDate) ? "selected" : "")%>
+									value="<%=date%>">
+									<%=date%></option>
+							<%		
 								}
-							String aff = (String) session.getAttribute("affectation");
-
-							Affectation affectation = AffectationDao.getAffectationByID(Integer.parseInt(aff));
-
+							
 							Utilisateur medecin = UtilisateurDao.getUtilisateurByID(affectation.getMedecin_id());
 
 							Centre centre = CentreDao.getCentreByID(affectation.getCentre_id());
@@ -62,7 +68,7 @@
 							for (Creneau c : Creneau.values()) {
 							if (!rdvreserves.contains(c.id) && !rdvpatient.contains(c.id)) {
 						%>
-						<a class="list-group-item list-group-item-action" href=<%=c.id%>
+						<a class="list-group-item list-group-item-action" href=#<%=c.id%>
 							data-toggle="tab"><%=c.name%></a>
 						<%
 							}
@@ -73,7 +79,7 @@
 				<div class="col-6 mt-3">
 
 					<h5>
-						Médecin : <strong class="text-value">Dr.<%=medecin.getPrenom()%>
+						Médecin : <strong class="text-value">Dr. <%=medecin.getPrenom()%>
 							<%=medecin.getNom()%>, <%=specialite.getSpecialite()%>
 						</strong>
 					</h5>
@@ -128,17 +134,20 @@
 						}
 					%>
 				</div>
+				<%}else{%>
+					<h3 class="text-center">Désolé, nous n'avons trouvé aucun rendez-vous possible pour ce médecin.</h3>
+					<div class="col-6 mt-3 text-center">
+						<a href="<c:url value='/reservation' />" class="btn btn-secondary">Retour à la recherche</a>
+					</div>
+				<% }%>
+				
 			</div>
 		</div>
 
 	</div>
 </body>
-<script
-	src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
-<script
-	src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"
-	integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
-	crossorigin="anonymous"></script>
+<script src="js/jquery-3.5.1.min.js"></script>
+<script src="js/bootstrap.min.js"></script>
 <script>
 	$(".list-group-item").click(function() {
 		var x = $(this).attr("href");

@@ -6,6 +6,10 @@ import static fr.dauphine.sj.monrocqxu.appMedecin.util.AppMedecinUtil.CHEMIN_ESP
 import static fr.dauphine.sj.monrocqxu.appMedecin.util.AppMedecinUtil.isAuthenticated;
 
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
@@ -13,6 +17,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import fr.dauphine.sj.monrocqxu.appMedecin.dao.AffectationDao;
+import fr.dauphine.sj.monrocqxu.appMedecin.dao.AgendaDao;
 import fr.dauphine.sj.monrocqxu.appMedecin.dao.CentreDao;
 import fr.dauphine.sj.monrocqxu.appMedecin.dao.RdvDao;
 import fr.dauphine.sj.monrocqxu.appMedecin.dao.UtilisateurDao;
@@ -28,6 +33,7 @@ public class ReservationDetails extends HttpServlet {
 
 	private Utilisateur medecin;
 	private Centre centre;
+	private List<String> possiblesDates;
 	
 	@Override
 	public void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
@@ -39,9 +45,25 @@ public class ReservationDetails extends HttpServlet {
 				if(idaffectation != null && idaffectation.length >= 1 && idaffectation[0].equals("a")) {
 					Affectation affectation = AffectationDao.getAffectationByID(Integer.parseInt(idaffectation[1]));
 					if(affectation != null) {
-						request.setAttribute("selectedDate", TimeMedecinUtil.getRdvDay(1));
+						
 						request.getSession().setAttribute("affectation", idaffectation[1]);//save dans la session
 						
+						possiblesDates = new ArrayList<String>();
+						
+						List<Integer> medecinInit = AgendaDao.getSemaineInitialisationByAffectation(affectation.getId());
+						HashMap<Integer, ArrayList<String>> next20days = TimeMedecinUtil.getNext20Days();
+						
+						for (Map.Entry<Integer, ArrayList<String>> entry : next20days.entrySet()) {
+							if(medecinInit.contains(entry.getKey())){
+								possiblesDates.addAll(entry.getValue());
+								}
+							}
+						
+						System.out.println(next20days);
+						if(!possiblesDates.isEmpty()) {
+							request.setAttribute("selectedDate", possiblesDates.get(0));
+						}
+						request.setAttribute("foundDates", possiblesDates);
 
 						medecin =  UtilisateurDao.getUtilisateurByID(affectation.getMedecin_id());
 						centre = CentreDao.getCentreByID(affectation.getCentre_id());
@@ -83,6 +105,9 @@ public class ReservationDetails extends HttpServlet {
 			MailManager.envoiRDVDetail(utilisateur, rdv);
 			response.sendRedirect(CHEMIN_ESPACE);
 		}
+		
+		request.setAttribute("foundDates", possiblesDates);
+		
 		this.getServletContext().getRequestDispatcher("/reservationdetails.jsp").forward( request, response );
 	}
 }

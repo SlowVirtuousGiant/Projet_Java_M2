@@ -11,7 +11,6 @@
 <link rel="stylesheet" href="css/style.css">
 </head>
 <body>
-	<div id="page-container">
 		<%@include file="header.jsp"%>
 
 
@@ -60,12 +59,12 @@
 							</div>
 						</div>
 						<div class="row justify-content-center mt-5">
-							<div class="col-md-4">
+							<div class="col-md-4 text-center">
 								<a href="<%=request.getContextPath()%>/profil"
-									class=" btn  btn-secondary">Annuler</a>
+									class="w-75 btn btn-secondary">Annuler</a>
 							</div>
-							<div class="col-md-4">
-								<a class=" btn  btn-danger" data-bs-toggle="modal"
+							<div class="col-md-4 text-center">
+								<a class="w-75 btn btn-danger" data-bs-toggle="modal"
 									data-bs-target="#modifModal">Confirmer les modifications</a>
 							</div>
 						</div>
@@ -111,8 +110,6 @@
 				</form>
 			</div>
 		</div>
-		<%@include file="footer.jsp"%>
-	</div>
 </body>
 <script src="js/jquery-3.5.1.min.js"></script>
 <script src="js/bootstrap.min.js"></script>

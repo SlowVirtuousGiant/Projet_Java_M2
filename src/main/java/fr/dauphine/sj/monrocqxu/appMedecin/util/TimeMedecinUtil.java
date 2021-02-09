@@ -14,13 +14,27 @@ public class TimeMedecinUtil {
 	public TimeMedecinUtil() {
 	}
 	
-	public static ArrayList<String> getNext20Days(){
-		ArrayList<String> res = new ArrayList<String>();
+	public static HashMap<Integer,ArrayList<String>> getNext20Days(){
+		HashMap<Integer,ArrayList<String>> res = new HashMap<Integer,ArrayList<String>>();
 		LocalDate currentDate = LocalDate.now();
+		WeekFields weekFields = WeekFields.of(Locale.getDefault());
+		ArrayList<String> week = new ArrayList<String>();
+		int weekNumber = currentDate.get(weekFields.weekOfWeekBasedYear());
 		for(int i = 0; i < 20; i++) {
 			currentDate = currentDate.plusDays(1);
-			res.add(currentDate.format(DateTimeFormatter.ofPattern("dd/MM/yyyy")));
+			int currentWeekNumber = currentDate.get(weekFields.weekOfWeekBasedYear());
+			String date = currentDate.format(DateTimeFormatter.ofPattern("dd/MM/yyyy"));
+			week.add(date);
+			
+			if(currentWeekNumber != weekNumber) {
+				week.remove(week.size() - 1 );
+				res.put(weekNumber, week);
+				week = new ArrayList<String>();
+				weekNumber = currentWeekNumber;
+				currentDate.minusDays(1);
+			}
 		}
+		res.put(weekNumber, week);
 		return res;
 	}
 	

@@ -66,12 +66,6 @@
 										<button type="submit" name="submit" value="submit"
 											class="w-100 btn btn-lg btn-outline-success">Connexion</button>
 									</div>
-									<div class="row justify-content-center my-2">
-										<a href="#"><small class="text-muted">Mot de passe
-												oublié?</small></a>
-									</div>
-									<input type="hidden" name="${_csrf.parameterName}"
-										value="${_csrf.token}" />
 								</form>
 							</div>
 						</div>

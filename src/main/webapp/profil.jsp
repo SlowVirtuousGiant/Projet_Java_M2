@@ -11,7 +11,6 @@
 <link rel="stylesheet" href="css/style.css">
 </head>
 <body>
-	<div id="page-container">
 		<%@include file="header.jsp"%>
 
 		<div class="container">
@@ -25,7 +24,7 @@
 							${item}<br>
 						</div>
 					</c:forEach>
-					<div class="col-md-8">
+					<div class="col-md-6">
 						<h5>
 							Adresse mail : <strong class="text-value">${sessionScope.utilisateur.mail}</strong>
 						</h5>
@@ -54,12 +53,12 @@
 					</div>
 				</div>
 				<div class="row justify-content-center mt-5">
-					<div class="col-md-4">
+					<div class="col-md-4 text-center">
 						<a href="<c:url value='/modification' />" type="submit"
-							class=" btn  btn-warning">Modifier mon profil</a>
+							class="w-75 btn btn-warning">Modifier mon profil</a>
 					</div>
-					<div class="col-md-4">
-						<a class=" btn  btn-danger" data-bs-toggle="modal"
+					<div class="col-md-4 text-center">
+						<a class="w-75 btn btn-danger" data-bs-toggle="modal"
 							data-bs-target="#supprModal">Désactiver mon compte</a>
 					</div>
 
@@ -124,8 +123,6 @@
 				</div>
 			</div>
 		</div>
-		<%@include file="footer.jsp"%>
-	</div>
 </body>
 <script src="js/jquery-3.5.1.min.js"></script>
 <script src="js/bootstrap.min.js"></script>

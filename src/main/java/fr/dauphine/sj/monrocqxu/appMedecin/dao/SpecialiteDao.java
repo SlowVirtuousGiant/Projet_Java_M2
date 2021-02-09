@@ -18,7 +18,7 @@ public class SpecialiteDao {
 	
 	public static List<Specialite> getAllSpecialite(){
 		Session session = HibernateUtil.getSessionFactory().openSession();
-		List<Specialite> list = session.createSQLQuery("SELECT * FROM specialite").addEntity(Specialite.class).list();
+		List<Specialite> list = session.createSQLQuery("SELECT * FROM specialite EXCEPT SELECT * FROM specialite where specialite_id = 16").addEntity(Specialite.class).list();
 		return list;
 
 	}

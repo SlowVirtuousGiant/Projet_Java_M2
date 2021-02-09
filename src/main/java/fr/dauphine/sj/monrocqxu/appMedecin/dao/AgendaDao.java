@@ -1,7 +1,10 @@
 package fr.dauphine.sj.monrocqxu.appMedecin.dao;
 
+import java.util.List;
+
 import org.hibernate.Session;
 
+import fr.dauphine.sj.monrocqxu.appMedecin.model.Affectation;
 import fr.dauphine.sj.monrocqxu.appMedecin.model.AgendaModel;
 import fr.dauphine.sj.monrocqxu.appMedecin.util.HibernateUtil;
 
@@ -28,6 +31,12 @@ public class AgendaDao {
 			session.close();
 		}
 		return false; 
+	}
+	
+	public static List<Integer> getSemaineInitialisationByAffectation(int affectation_id){
+		Session session = HibernateUtil.getSessionFactory().openSession();
+		List<Integer> list =  session.createSQLQuery("SELECT semaine FROM agenda WHERE affectation_id = :id").setParameter("id", affectation_id).list();
+		return list;
 	}
 
 }

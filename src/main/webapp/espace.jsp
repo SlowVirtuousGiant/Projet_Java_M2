@@ -12,7 +12,6 @@
 <link rel="stylesheet" href="css/style.css">
 </head>
 <body>
-	<div id="page-container">
 		<%@include file="header.jsp"%>
 
 		<section>
@@ -56,8 +55,6 @@
 
 			</div>
 		</section>
-		<%@include file="footer.jsp"%>
-	</div>
 </body>
 <script src="js/jquery-3.5.1.min.js"></script>
 <script src="js/bootstrap.min.js"></script>
