@@ -5,6 +5,7 @@ import static fr.dauphine.sj.monrocqxu.appMedecin.util.AppMedecinUtil.ERREUR;
 import static fr.dauphine.sj.monrocqxu.appMedecin.util.AppMedecinUtil.CHEMIN_CONNEXION;
 import static fr.dauphine.sj.monrocqxu.appMedecin.util.AppMedecinUtil.CHEMIN_INSCRIPTION;
 import static fr.dauphine.sj.monrocqxu.appMedecin.util.AppMedecinUtil.isAuthenticated;
+import static fr.dauphine.sj.monrocqxu.appMedecin.util.AppMedecinUtil.validationAnneeNaiss;
 import static fr.dauphine.sj.monrocqxu.appMedecin.util.AppMedecinUtil.validationAlphaNum;
 
 import java.io.IOException;
@@ -55,20 +56,27 @@ public class Inscription extends HttpServlet {
 			utilisateur.setMotdepasse(BCrypt.hashpw(AppMedecinUtil.ConvertISOtoUTF8(request.getParameter("motdepasse")),BCrypt.gensalt(12)));
 			utilisateur.setActif(true);
 			if(validationAlphaNum(utilisateur.getNom())&& validationAlphaNum(utilisateur.getPrenom())) {
-				if(UtilisateurDao.ajouter(utilisateur)) {
-					MailManager.envoiInscriptionMail(utilisateur,mdp);
-					response.sendRedirect( CHEMIN_CONNEXION );
+				if(validationAnneeNaiss(utilisateur.getNaissance())) {
+					if(UtilisateurDao.ajouter(utilisateur)) {
+						MailManager.envoiInscriptionMail(utilisateur,mdp);
+						erreurs.add("Inscription terminée, veuillez vous connecter");
+						request.setAttribute( ERREUR, erreurs );
+						response.sendRedirect( CHEMIN_CONNEXION );
+					}
+				}else {
+					erreurs.add("Date de naissance incorrecte");
+					request.setAttribute( ERREUR, erreurs );
 				}
 			}
 			else {
 				erreurs.add("Format non alphanumérique");
-				response.sendRedirect(CHEMIN_INSCRIPTION);
 				request.setAttribute( ERREUR, erreurs );
 			}
 		}else {
 			erreurs.add("Utilisateur déjà présent");
-			request.setAttribute( ERREUR, erreurs );
 		}
-
+		request.setAttribute( ERREUR, erreurs );
+		this.getServletContext().getRequestDispatcher("/inscription.jsp").forward( request, response );
+		erreurs.clear();
 	}
 }

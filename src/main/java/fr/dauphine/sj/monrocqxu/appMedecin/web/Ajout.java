@@ -1,8 +1,12 @@
 package fr.dauphine.sj.monrocqxu.appMedecin.web;
 
 import static fr.dauphine.sj.monrocqxu.appMedecin.util.AppMedecinUtil.*;
+import static fr.dauphine.sj.monrocqxu.appMedecin.util.AppMedecinUtil.validationAnneeNaiss;
+import static fr.dauphine.sj.monrocqxu.appMedecin.util.AppMedecinUtil.validationAlphaNum;
+import static fr.dauphine.sj.monrocqxu.appMedecin.util.AppMedecinUtil.ERREUR;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.servlet.ServletException;
@@ -24,7 +28,7 @@ import fr.dauphine.sj.monrocqxu.appMedecin.util.AppMedecinUtil;
 
 public class Ajout extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-
+	private ArrayList<String> erreurs = new ArrayList<String>();
 
 
 	@Override
@@ -61,27 +65,47 @@ public class Ajout extends HttpServlet {
 		utilisateur.setMotdepasse(BCrypt.hashpw(AppMedecinUtil.ConvertISOtoUTF8(request.getParameter("motdepasse")), BCrypt.gensalt(12)));
 		utilisateur.setSexe(request.getParameter("sexe"));
 		utilisateur.setActif(true);
+		if(!UtilisateurDao.isPresent(request.getParameter("mail"))) {
+			if(validationAlphaNum(utilisateur.getNom())&& validationAlphaNum(utilisateur.getPrenom())) {
+				if(validationAnneeNaiss(utilisateur.getNaissance())) {
+					boolean result = UtilisateurDao.ajouter(utilisateur);
 
-		boolean result = UtilisateurDao.ajouter(utilisateur);
+					Affectation affectation = new Affectation();
 
-		Affectation affectation = new Affectation();
+					if (result) {
+						List<Centre> moncentre = CentreDao.getAllCentre();
+						for (Centre centre : moncentre) {
 
-		if (result) {
-			List<Centre> moncentre = CentreDao.getAllCentre();
-			for (Centre centre : moncentre) {
-
-				String id = String.valueOf(centre.getId());
-				if (request.getParameter("centre_" + id) != null) {
-					affectation.setCentre_id(centre.getId());
-					System.out.println(centre.getId());
-					affectation.setMedecin_id(utilisateur.getId());
-					affectation.setSpecialite_id(Integer.valueOf(request.getParameter("sp_"+id)));
-					affectation.setDisponible(false);
-					AffectationDao.ajouter(affectation);
-					MailManager.envoiInscriptionMail(utilisateur,mdp);
+							String id = String.valueOf(centre.getId());
+							if (request.getParameter("centre_" + id) != null) {
+								affectation.setCentre_id(centre.getId());
+								System.out.println(centre.getId());
+								affectation.setMedecin_id(utilisateur.getId());
+								affectation.setSpecialite_id(Integer.valueOf(request.getParameter("sp_"+id)));
+								affectation.setDisponible(false);
+								AffectationDao.ajouter(affectation);
+								MailManager.envoiInscriptionMail(utilisateur,mdp);
+								erreurs.add("Utilisateur bien ajouté");
+								request.setAttribute( ERREUR, erreurs );
+								this.getServletContext().getRequestDispatcher("/ajout.jsp").forward( request, response );
+							}
+						}
+					}
+					response.sendRedirect(CHEMIN_AJOUT);
+				}else {
+					erreurs.add("Date de naissance incorrecte");
+					request.setAttribute( ERREUR, erreurs );
 				}
+			}else {
+				erreurs.add("Format non alphanumérique");
+				request.setAttribute( ERREUR, erreurs );
 			}
+		}else {
+			erreurs.add("Utilisateur déjà présent");
 		}
-		response.sendRedirect(CHEMIN_AJOUT);
+		request.setAttribute( ERREUR, erreurs );
+		this.getServletContext().getRequestDispatcher("/ajout.jsp").forward( request, response );
+		erreurs.clear();
 	}
+
 }

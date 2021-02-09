@@ -26,9 +26,11 @@
 							<form method="post" action="<c:url value='/inscription' />">
 								<h2 class="mb-1 text-center heading">Il est temps de
 									s'inscrire</h2>
+								<c:forEach items="${erreur}" var="item">
 								<div class="alert alert-danger" role="alert">
-									${erreur}<br>
+									${item}<br>
 								</div>
+							</c:forEach>
 
 								<div class="row register-form">
 									<div class="col-md-6">
