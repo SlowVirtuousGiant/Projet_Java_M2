@@ -14,7 +14,6 @@ import fr.dauphine.sj.monrocqxu.appMedecin.model.Centre;
 import fr.dauphine.sj.monrocqxu.appMedecin.model.Rdv;
 import fr.dauphine.sj.monrocqxu.appMedecin.model.Specialite;
 import fr.dauphine.sj.monrocqxu.appMedecin.model.Utilisateur;
-import fr.dauphine.sj.monrocqxu.appMedecin.web.Agenda;
 
 /**
  * Java based configuration

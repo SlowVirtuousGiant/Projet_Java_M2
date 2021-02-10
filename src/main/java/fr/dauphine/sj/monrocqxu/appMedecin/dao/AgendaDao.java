@@ -4,7 +4,6 @@ import java.util.List;
 
 import org.hibernate.Session;
 
-import fr.dauphine.sj.monrocqxu.appMedecin.model.Affectation;
 import fr.dauphine.sj.monrocqxu.appMedecin.model.AgendaModel;
 import fr.dauphine.sj.monrocqxu.appMedecin.util.HibernateUtil;
 

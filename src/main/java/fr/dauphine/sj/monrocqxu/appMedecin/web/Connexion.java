@@ -2,7 +2,6 @@ package fr.dauphine.sj.monrocqxu.appMedecin.web;
 
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.List;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
@@ -13,8 +12,6 @@ import javax.servlet.http.HttpSession;
 import fr.dauphine.sj.monrocqxu.appMedecin.dao.CentreDao;
 import fr.dauphine.sj.monrocqxu.appMedecin.dao.SpecialiteDao;
 import fr.dauphine.sj.monrocqxu.appMedecin.dao.UtilisateurDao;
-import fr.dauphine.sj.monrocqxu.appMedecin.model.Centre;
-import fr.dauphine.sj.monrocqxu.appMedecin.model.Specialite;
 import fr.dauphine.sj.monrocqxu.appMedecin.model.Utilisateur;
 import fr.dauphine.sj.monrocqxu.appMedecin.util.AppMedecinUtil;
 

@@ -30,7 +30,6 @@ public class Ajout extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 	private ArrayList<String> erreurs = new ArrayList<String>();
 
-
 	@Override
 	public void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		if (isAuthenticated(request)) {
@@ -62,16 +61,17 @@ public class Ajout extends HttpServlet {
 		utilisateur.setVille(AppMedecinUtil.ConvertISOtoUTF8(request.getParameter("ville")));
 		utilisateur.setRole("MEDECIN");
 		String mdp = request.getParameter("motdepasse");
-		utilisateur.setMotdepasse(BCrypt.hashpw(AppMedecinUtil.ConvertISOtoUTF8(request.getParameter("motdepasse")), BCrypt.gensalt(12)));
+		utilisateur.setMotdepasse(
+				BCrypt.hashpw(AppMedecinUtil.ConvertISOtoUTF8(request.getParameter("motdepasse")), BCrypt.gensalt(12)));
 		utilisateur.setSexe(request.getParameter("sexe"));
 		utilisateur.setActif(true);
-		if(!UtilisateurDao.isPresent(request.getParameter("mail"))) {
-			if(validationAlphaNum(utilisateur.getNom())&& validationAlphaNum(utilisateur.getPrenom())) {
-				if(validationAnneeNaiss(utilisateur.getNaissance())) {
+		if (!UtilisateurDao.isPresent(request.getParameter("mail"))) {
+			if (validationAlphaNum(utilisateur.getNom()) && validationAlphaNum(utilisateur.getPrenom())) {
+				if (validationAnneeNaiss(utilisateur.getNaissance())) {
 
 					boolean result = UtilisateurDao.ajouter(utilisateur);
 					try {
-						MailManager.envoiInscriptionMail(utilisateur,mdp);
+						MailManager.envoiInscriptionMail(utilisateur, mdp);
 					} catch (Exception e) {
 						e.printStackTrace();
 					}
@@ -85,28 +85,28 @@ public class Ajout extends HttpServlet {
 							if (request.getParameter("centre_" + id) != null) {
 								affectation.setCentre_id(centre.getId());
 								affectation.setMedecin_id(utilisateur.getId());
-								affectation.setSpecialite_id(Integer.valueOf(request.getParameter("sp_"+id)));
+								affectation.setSpecialite_id(Integer.valueOf(request.getParameter("sp_" + id)));
 								affectation.setDisponible(false);
 								AffectationDao.ajouter(affectation);
 								erreurs.add("Utilisateur bien ajouté");
-								request.setAttribute( ERREUR, erreurs );
+								request.setAttribute(ERREUR, erreurs);
 							}
 						}
 					}
 					response.sendRedirect(CHEMIN_AJOUT);
-				}else {
+				} else {
 					erreurs.add("Date de naissance incorrecte");
-					request.setAttribute( ERREUR, erreurs );
+					request.setAttribute(ERREUR, erreurs);
 				}
-			}else {
+			} else {
 				erreurs.add("Format non alphanumérique");
-				request.setAttribute( ERREUR, erreurs );
+				request.setAttribute(ERREUR, erreurs);
 			}
-		}else {
+		} else {
 			erreurs.add("Utilisateur déjà présent");
 		}
-		request.setAttribute( ERREUR, erreurs );
-		this.getServletContext().getRequestDispatcher("/ajout.jsp").forward( request, response );
+		request.setAttribute(ERREUR, erreurs);
+		this.getServletContext().getRequestDispatcher("/ajout.jsp").forward(request, response);
 		erreurs.clear();
 	}
 

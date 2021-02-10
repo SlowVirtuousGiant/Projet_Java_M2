@@ -39,21 +39,21 @@ public class Agenda extends HttpServlet {
 	public void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		if (isAuthenticated(request)) {
 			Utilisateur utilisateur = (Utilisateur) request.getSession().getAttribute(ATT_SESSION_USER);
-			affectationCentres = new HashMap<Integer,Affectation>();
+			affectationCentres = new HashMap<Integer, Affectation>();
 			centres = new ArrayList<Centre>();
 			if (utilisateur != null && utilisateur.getRole().equals("MEDECIN")) {
-				
-				for(Affectation aff : AffectationDao.getAffectationMedecin(utilisateur.getId())){
+
+				for (Affectation aff : AffectationDao.getAffectationMedecin(utilisateur.getId())) {
 					Centre c = CentreDao.getCentreByID(aff.getCentre_id());
 					affectationCentres.put(c.getId(), aff);
 					centres.add(c);
 				}
-				
+
 				request.setAttribute("centres_utilisateur", centres);
 				request.setAttribute("affectationCentres", affectationCentres);
 				session = request.getSession();
 				this.getServletContext().getRequestDispatcher("/agenda.jsp").forward(request, response);
-				
+
 			} else {
 				response.sendRedirect(CHEMIN_ESPACE);
 			}
@@ -63,24 +63,25 @@ public class Agenda extends HttpServlet {
 	}
 
 	@Override
-	public void doPost (HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		
-		if(request.getParameter("raison")!=null) {
+	public void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+
+		if (request.getParameter("raison") != null) {
 			Rdv rdv = RdvDao.getRdvByID(Integer.valueOf(request.getParameter("rdvIdPourAnnulation")));
-			Utilisateur patient = UtilisateurDao.getUtilisateurByID(Integer.valueOf(request.getParameter("rdvIdPourAnnulation")));
+			Utilisateur patient = UtilisateurDao
+					.getUtilisateurByID(Integer.valueOf(request.getParameter("rdvIdPourAnnulation")));
 			rdv.setActif(false);
 			rdv.setAuteur("MEDECIN");
 			rdv.setCommentaire(request.getParameter("raison"));
 			RdvDao.update(rdv);
-				try {
-					MailManager.envoiRDVDetail(patient, rdv);
-				}catch(Exception e) {
+			try {
+				MailManager.envoiRDVDetail(patient, rdv);
+			} catch (Exception e) {
 				e.printStackTrace();
 			}
 			session.setAttribute("selectedWeek", request.getParameter("semaine"));
 		}
-		
-		if(request.getParameter("init") != null){
+
+		if (request.getParameter("init") != null) {
 			int week = Integer.valueOf(request.getParameter("week"));
 			int affectationId = Integer.valueOf(request.getParameter("aff_id"));
 			AgendaModel agenda = new AgendaModel();
@@ -88,35 +89,35 @@ public class Agenda extends HttpServlet {
 			agenda.setAffectation_id(affectationId);
 			AgendaDao.ajouter(agenda);
 			session.setAttribute("selectedWeek", request.getParameter("week"));
-			
+
 		}
-		if(request.getParameter("majAgenda") != null) {
+		if (request.getParameter("majAgenda") != null) {
 			Centre centre = (Centre) session.getAttribute("selectedCentre");
-			
-			if(centre != null) {
+
+			if (centre != null) {
 				Affectation affectation = affectationCentres.get(centre.getId());
 				affectation.setDisponible(!affectation.isDisponible());
 				AffectationDao.update(affectation);
 			}
 		}
-		
-		if(request.getParameter("centreSelect") != null){
-			session.setAttribute("selectedCentre", CentreDao.getCentreByID(Integer.valueOf(request.getParameter("centreSelect"))));
+
+		if (request.getParameter("centreSelect") != null) {
+			session.setAttribute("selectedCentre",
+					CentreDao.getCentreByID(Integer.valueOf(request.getParameter("centreSelect"))));
 		}
-		
-		if(request.getParameter("selectedWeek") != null){
+
+		if (request.getParameter("selectedWeek") != null) {
 			session.setAttribute("selectedWeek", request.getParameter("selectedWeek"));
-		}else if(request.getParameter("week") != null){
+		} else if (request.getParameter("week") != null) {
 			session.setAttribute("selectedWeek", request.getParameter("week"));
-		}else if(session.getAttribute("selectedWeek") == null){
+		} else if (session.getAttribute("selectedWeek") == null) {
 			session.setAttribute("selectedWeek", TimeMedecinUtil.getCurrentWeek());
-			
+
 		}
 		request.setAttribute("centres_utilisateur", centres);
 		request.setAttribute("affectationCentres", affectationCentres);
 
-		
-		this.getServletContext().getRequestDispatcher("/agenda.jsp").forward( request, response );
+		this.getServletContext().getRequestDispatcher("/agenda.jsp").forward(request, response);
 	}
 
 }

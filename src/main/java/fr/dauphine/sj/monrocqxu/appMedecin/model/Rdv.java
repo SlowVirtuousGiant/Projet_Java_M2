@@ -1,9 +1,6 @@
 package fr.dauphine.sj.monrocqxu.appMedecin.model;
 
 import java.io.Serializable;
-import java.sql.Date;
-import java.time.LocalDate;
-import java.time.format.DateTimeFormatter;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;

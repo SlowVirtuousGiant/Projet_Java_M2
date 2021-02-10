@@ -6,9 +6,6 @@ import static fr.dauphine.sj.monrocqxu.appMedecin.util.AppMedecinUtil.CHEMIN_ESP
 import static fr.dauphine.sj.monrocqxu.appMedecin.util.AppMedecinUtil.isAuthenticated;
 
 import java.io.IOException;
-import java.io.PrintWriter;
-import java.util.ArrayList;
-import java.util.List;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
@@ -22,9 +19,11 @@ import fr.dauphine.sj.monrocqxu.appMedecin.model.Rdv;
 import fr.dauphine.sj.monrocqxu.appMedecin.model.Utilisateur;
 import fr.dauphine.sj.monrocqxu.appMedecin.util.TimeMedecinUtil;
 
-public class ModificationAgenda extends HttpServlet{
-	
+public class ModificationAgenda extends HttpServlet {
+	private static final long serialVersionUID = 1L;
+
 	private Utilisateur utilisateur;
+
 	@Override
 	public void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		if (isAuthenticated(request)) {
@@ -38,30 +37,28 @@ public class ModificationAgenda extends HttpServlet{
 			response.sendRedirect(CHEMIN_CONNEXION);
 		}
 	}
-	
+
 	@Override
-	public void doPost (HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		
+	public void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+
 		String jsonresp = request.getParameter("json");
 		String dispo = request.getParameter("dispo");
 		String indispo = request.getParameter("indispo");
 
-		
-		if(jsonresp != null) {
+		if (jsonresp != null) {
 			JSONArray arr = new JSONArray(jsonresp);
-			for(int i=0; i < arr.length();i++) {
+			for (int i = 0; i < arr.length(); i++) {
 				String[] splt = arr.getString(i).split("-");
 				String date = splt[0];
 				int creneau = Integer.valueOf(splt[1]);
 				Rdv rdv = RdvDao.getRdvWithDateAndCreneau(date, creneau, utilisateur);
-				
-				if(dispo != null) {
-					if(rdv != null && rdv.getPatient_id() == rdv.getMedecin_id()) {
+
+				if (dispo != null) {
+					if (rdv != null && rdv.getPatient_id() == rdv.getMedecin_id()) {
 						RdvDao.delete(rdv);
 					}
-				}
-				else if(indispo != null) {
-					if(rdv == null) {
+				} else if (indispo != null) {
+					if (rdv == null) {
 						Rdv newRdv = new Rdv();
 						newRdv.setMedecin_id(utilisateur.getId());
 						newRdv.setPatient_id(utilisateur.getId());
@@ -75,26 +72,25 @@ public class ModificationAgenda extends HttpServlet{
 						newRdv.setAuteur(null);
 						newRdv.setCommentaire(null);
 						newRdv.setEnvoi_mail(true);
-						
+
 						RdvDao.ajouter(newRdv);
-						
+
 					}
-					
+
 				}
 			}
-			
+
 		}
 		response.setContentType("text/html");
 		response.setHeader("Cache-control", "no-cache, no-store");
-        response.setHeader("Pragma", "no-cache");
-        response.setHeader("Expires", "-1");
- 
-        response.setHeader("Access-Control-Allow-Origin", "*");
-        response.setHeader("Access-Control-Allow-Methods", "POST");
-        response.setHeader("Access-Control-Allow-Headers", "Content-Type");
-        response.setHeader("Access-Control-Max-Age", "86400");
+		response.setHeader("Pragma", "no-cache");
+		response.setHeader("Expires", "-1");
+
+		response.setHeader("Access-Control-Allow-Origin", "*");
+		response.setHeader("Access-Control-Allow-Methods", "POST");
+		response.setHeader("Access-Control-Allow-Headers", "Content-Type");
+		response.setHeader("Access-Control-Max-Age", "86400");
 		response.getWriter().print("ok");
 
-		
 	}
 }

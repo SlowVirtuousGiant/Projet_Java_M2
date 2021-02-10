@@ -3,10 +3,8 @@ package fr.dauphine.sj.monrocqxu.appMedecin.dao;
 import java.util.List;
 
 import org.hibernate.Session;
-import org.hibernate.query.Query;
 
 import fr.dauphine.sj.monrocqxu.appMedecin.model.Affectation;
-import fr.dauphine.sj.monrocqxu.appMedecin.model.Centre;
 import fr.dauphine.sj.monrocqxu.appMedecin.model.Utilisateur;
 import fr.dauphine.sj.monrocqxu.appMedecin.util.HibernateUtil;
 
