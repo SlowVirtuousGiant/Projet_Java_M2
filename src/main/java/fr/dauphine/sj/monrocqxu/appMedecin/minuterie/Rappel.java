@@ -15,6 +15,8 @@ public class Rappel extends TimerTask {
 	@Override
 	public void run() {
 
+		System.out.println("start");
+		
 		Date currDate = new Date();
 
 		Calendar cal = Calendar.getInstance(); 
@@ -22,8 +24,16 @@ public class Rappel extends TimerTask {
 		cal.add(Calendar.DATE, 1);
 		Date dateRepere = cal.getTime();
 		SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy");
-		String currDateFormated = formatter.format(currDate);
-
+		String currDateFormated = formatter.format(dateRepere);
+		
+		try {
+			RappelLogger logger = new RappelLogger("logger.txt");
+			
+			logger.logger.info("Début serveur");
+			
+		} catch (Exception e1) {
+			e1.printStackTrace();
+		}
 
 
 		List<Rdv> rdvs = RdvDao.getRdvPatientMail2BSent();
@@ -36,11 +46,7 @@ public class Rappel extends TimerTask {
 					throw new IllegalStateException(e);
 				}
 				if(date.before(currDate)) { // Si date rdv avant date courante, alors pas besoin d'envoyer un mail on remet juste à J la bdd
-					try {
-						rdv.setEnvoi_mail(true);
-					} catch (Exception e) {
-						e.printStackTrace();
-					}
+					rdv.setEnvoi_mail(true);
 					RdvDao.update(rdv);
 				}
 
@@ -49,6 +55,14 @@ public class Rappel extends TimerTask {
 						MailManager.envoieRDVRappel(rdv);
 					} catch (Exception e) {
 						e.printStackTrace();
+					}
+					try {
+						RappelLogger logger = new RappelLogger("logger.txt");
+						
+						logger.logger.info("Envoi msg du rdv n°" + rdv.getId() + "fait");
+						
+					} catch (Exception e1) {
+						e1.printStackTrace();
 					}
 					rdv.setEnvoi_mail(true);
 					RdvDao.update(rdv);

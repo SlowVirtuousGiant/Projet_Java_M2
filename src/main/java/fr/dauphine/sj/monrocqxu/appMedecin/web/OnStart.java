@@ -1,18 +1,25 @@
 package fr.dauphine.sj.monrocqxu.appMedecin.web;
 
+import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.Timer;
 import java.util.TimerTask;
+import java.util.logging.Logger;
 
 import javax.servlet.*;
 
 import fr.dauphine.sj.monrocqxu.appMedecin.minuterie.Rappel;
+import fr.dauphine.sj.monrocqxu.appMedecin.minuterie.RappelLogger;
 
 public class OnStart implements ServletContextListener {
 	@Override
 	public void contextInitialized(ServletContextEvent e) {
+		
+
+		
+		
 		Timer timer = new Timer();
 		TimerTask task = new Rappel();
 
