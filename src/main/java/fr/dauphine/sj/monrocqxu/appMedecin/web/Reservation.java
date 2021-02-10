@@ -96,9 +96,8 @@ public class Reservation extends HttpServlet {
 					}
 					request.setAttribute("affectations", results);
 				}
-			} else {// query sur toutes les affectations des centres cochés
+			} else {
 				for(String centre : centreSelect) {
-					System.out.println("ca rentre select unique");
 					int centre_id = Integer.parseInt(centre);
 					results.addAll(AffectationDao.getAffectationByCentre(centre_id));
 				}

@@ -36,7 +36,6 @@ public class Modification extends HttpServlet {
 
 	@Override
 	public void doPost(HttpServletRequest request, HttpServletResponse response ) throws ServletException, IOException {
-		System.out.println("bouton confirmer modif");
 		HttpSession session = request.getSession();
 		Utilisateur utilisateur = (Utilisateur)request.getSession().getAttribute(ATT_SESSION_USER);
 
@@ -45,7 +44,6 @@ public class Modification extends HttpServlet {
 		if(!AppMedecinUtil.ConvertISOtoUTF8(request.getParameter("newmotdepasse")).equals(null) && validationMotDePasse(AppMedecinUtil.ConvertISOtoUTF8(request.getParameter("newmotdepasse")))) {
 			utilisateur.setMotdepasse(BCrypt.hashpw(AppMedecinUtil.ConvertISOtoUTF8(request.getParameter("newmotdepasse")),BCrypt.gensalt(12)));
 		}if(!AppMedecinUtil.ConvertISOtoUTF8(request.getParameter("newmotdepasse")).equals(null) && validationMotDePasse(AppMedecinUtil.ConvertISOtoUTF8(request.getParameter("newmotdepasse")))) {
-			System.out.println("mdp trop court");
 			erreurs.add("Mot de passe trop court.");
 		}
 
@@ -59,15 +57,12 @@ public class Modification extends HttpServlet {
 		if(auth) {
 			if(UtilisateurDao.update(utilisateur)) {
 				response.sendRedirect( CHEMIN_PROFIL );
-				System.out.println("mise à jour du profil effectuée");
 				session.setAttribute(ATT_SESSION_USER,utilisateur);
 			}else {
-				System.out.println("erreur inconnue BDD ?");
 				response.sendRedirect(CHEMIN_MODIFICATION);
 				erreurs.add("N'a pas pu mettre à jour pour de sombres raisons");
 			}
 		}else {
-			System.out.println("erreur pas les meme mdp");
 			erreurs.add("Mot de passe incorrect");
 			response.sendRedirect(CHEMIN_MODIFICATION);
 		}

@@ -81,8 +81,6 @@ public class Agenda extends HttpServlet {
 		}
 		
 		if(request.getParameter("init") != null){
-			System.out.println("ca rentre");
-			//ajouter a la bdd le nom du medecin + la semaine + id affectation
 			int week = Integer.valueOf(request.getParameter("week"));
 			int affectationId = Integer.valueOf(request.getParameter("aff_id"));
 			AgendaModel agenda = new AgendaModel();
@@ -96,7 +94,6 @@ public class Agenda extends HttpServlet {
 			Centre centre = (Centre) session.getAttribute("selectedCentre");
 			
 			if(centre != null) {
-				System.out.println(affectationCentres);
 				Affectation affectation = affectationCentres.get(centre.getId());
 				affectation.setDisponible(!affectation.isDisponible());
 				AffectationDao.update(affectation);

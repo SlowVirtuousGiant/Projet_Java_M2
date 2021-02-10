@@ -67,7 +67,6 @@
 										String statutmsg = "";
 									LocalDate currentDate = LocalDate.now();
 									LocalDate rdvDate = LocalDate.parse(rdv.getDate(), DateTimeFormatter.ofPattern("dd/MM/yyyy"));
-									System.out.println("le rdv num " + rdv.getId() + " est " + rdv.isActif());
 
 									if (rdv.isActif() && rdvDate.isAfter(currentDate)) {
 										statutmsg = "RDV à venir";

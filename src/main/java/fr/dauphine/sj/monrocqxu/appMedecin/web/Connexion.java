@@ -49,13 +49,10 @@ public class Connexion extends HttpServlet {
 			erreurs.add("Mot de passe non valide.");
 		}
 
-		System.out.println(erreurs);
-
 		if ( erreurs.isEmpty() ) {
 			Utilisateur utilisateur = UtilisateurDao.validate(email, password);
 			if(utilisateur != null) {
 				if(utilisateur.isActif()==true) {
-					System.out.println("login succes");
 					session.setAttribute( ATT_SESSION_USER, utilisateur);
 					session.setAttribute(ATT_SESSION_CENTRES, CentreDao.getAllCentre());
 					session.setAttribute(ATT_SESSION_SPECIALITES, SpecialiteDao.getAllSpecialite());
@@ -65,7 +62,6 @@ public class Connexion extends HttpServlet {
 					erreurs.add("Compte désactivé.");
 				}
 			}else {
-				System.out.println("login erreur");
 				erreurs.add("Erreur d'authentification.");
 			}
 		}

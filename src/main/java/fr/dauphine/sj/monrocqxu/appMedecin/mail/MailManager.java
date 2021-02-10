@@ -37,39 +37,6 @@ public class MailManager {
 		//CreateSession(props);
 	}
 
-	/*
-	private void CreateSession(Properties props) {//Si on devait utiliser un mot de passe:
-		session = Session.getInstance(props, new javax.mail.Authenticator() {
-			protected PasswordAuthentication getPasswordAuthentication() {
-				return new PasswordAuthentication(MAIL_USERNAME, MAIL_PASSWORD);
-			}
-		});
-	}
-	 */
-
-	public void sendTestMessage(String destination) {
-		try {
-			Message message = new MimeMessage(session);
-
-			message.setFrom(new InternetAddress(MAIL_WEBSITE_ADRESS));
-
-			message.setRecipients(Message.RecipientType.TO, InternetAddress.parse(destination));
-
-			message.setSubject("Bienvenue sur rdvmedecin.fr");
-
-			message.setContent("<p> Bonjour <strong>vive les citrouilles</strong> "
-					+ "<img src='https://www.fraicheurquebec.com/images/fraicheur-products/main/Citrouille.png' alt='img' /> ",
-					"text/html");
-
-			Transport.send(message);
-
-			System.out.println("Message envoyé avec succés");
-
-		} catch (MessagingException e) {
-			throw new RuntimeException(e);
-		}
-	}
-
 	public static void envoiInscriptionMail(Utilisateur utilisateur,String mdp) {
 		try {
 			Message message = new MimeMessage(session);
@@ -105,7 +72,6 @@ public class MailManager {
 			message.setContent((msg),
 					"text/html; charset=UTF-8");
 			Transport.send(message);
-			System.out.println("Message envoyé avec succés");
 		} catch (MessagingException e) {
 			throw new RuntimeException(e);
 		}
@@ -158,7 +124,6 @@ public class MailManager {
 			message.setContent((msg),
 					"text/html; charset=UTF-8");
 			Transport.send(message);
-			System.out.println("Message envoyé avec succés");
 		} catch (MessagingException e) {
 			throw new RuntimeException(e);
 		}
@@ -210,7 +175,6 @@ public class MailManager {
 			message.setContent((msg),
 					"text/html; charset=UTF-8");
 			Transport.send(message);
-			System.out.println("Message envoyé avec succés");
 		} catch (MessagingException e) {
 			throw new RuntimeException(e);
 		}
@@ -256,7 +220,6 @@ public class MailManager {
 			message.setContent((msg),
 					"text/html; charset=UTF-8");
 			Transport.send(message);
-			System.out.println("Message envoyé avec succés");
 		} catch (MessagingException e) {
 			throw new RuntimeException(e);
 		}

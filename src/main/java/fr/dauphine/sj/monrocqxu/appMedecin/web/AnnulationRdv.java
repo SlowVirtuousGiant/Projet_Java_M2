@@ -59,7 +59,6 @@ public class AnnulationRdv extends HttpServlet{
 
 	@Override
 	public void doPost( HttpServletRequest request, HttpServletResponse response ) throws ServletException, IOException {
-		System.out.println("dans le post dopost");
 		Rdv rdv = (Rdv)request.getSession().getAttribute("rdv");
 		Utilisateur utilisateur = (Utilisateur) request.getSession().getAttribute(ATT_SESSION_USER);
 
@@ -68,17 +67,14 @@ public class AnnulationRdv extends HttpServlet{
 		rdv.setCommentaire(AppMedecinUtil.ConvertISOtoUTF8(request.getParameter("raison")));
 		rdv.setAuteur(utilisateur.getRole());
 
-		System.out.println(rdv.getCommentaire() + " Print avant le update");
 		if(RdvDao.update(rdv)) {
 			try {
 				MailManager.envoiRDVDetail(utilisateur, rdv);
 			} catch (Exception e) {
 				e.printStackTrace();
 			}
-			System.out.println(rdv.getCommentaire() + " Print après le update");
 			response.sendRedirect(CHEMIN_VISU_RDV);
 		}else {
-			System.out.println("erreurs");
 			this.getServletContext().getRequestDispatcher("/visualisationrdv.jsp").forward( request, response );
 			request.setAttribute( ERREUR, erreurs );
 		}

@@ -52,7 +52,6 @@ public class Profil extends HttpServlet {
 		HttpSession session = request.getSession();
 
 		Utilisateur utilisateur = (Utilisateur)request.getSession().getAttribute(ATT_SESSION_USER);
-		System.out.println("dans le post dopost");
 
 		if(BCrypt.checkpw(request.getParameter("motdepasse"), utilisateur.getMotdepasse())) {
 			if(utilisateur.getRole().equals("PATIENT")) {
@@ -66,14 +65,11 @@ public class Profil extends HttpServlet {
 					}
 
 					for(Rdv rdv:listRdv) {
-						System.out.println( "Voici les ID desRDV qui vont être annulés " + rdv.getId());
 						rdv.setActif(false);
-						rdv.setCommentaire("RDV annulé en raison de désactivation de compte patient");
 						RdvDao.update(rdv);
 					}
 					response.sendRedirect( CHEMIN_DECONNEXION );
 				}else {
-					System.out.println("erreurs");
 					response.sendRedirect(CHEMIN_PROFIL);
 					request.setAttribute( ERREUR, erreurs );
 				}
@@ -81,7 +77,6 @@ public class Profil extends HttpServlet {
 			}else {
 				List<Rdv> listRdv = RdvDao.getRdvActifMedecin(utilisateur.getId());
 				if(listRdv!=null && listRdv.isEmpty()) {
-					System.out.println("passage en role inactif pour docteur");
 
 					utilisateur.setActif(false);
 					if(UtilisateurDao.update(utilisateur)) {
@@ -92,15 +87,12 @@ public class Profil extends HttpServlet {
 							aff.setDisponible(false);
 							AffectationDao.update(aff);
 						}
-						System.out.println("actif bien MAJ dans la bdd");
 						response.sendRedirect( CHEMIN_DECONNEXION );
 					}else {
-						System.out.println("erreurs");
 						response.sendRedirect(CHEMIN_PROFIL);
 						request.setAttribute( ERREUR, erreurs );
 					}
 				}else {
-					System.out.println("Le docteur a des rdv");
 					response.sendRedirect(CHEMIN_PROFIL);
 					erreurs.add("Le docteur a des rdv");
 					request.setAttribute( ERREUR, erreurs );
@@ -109,7 +101,6 @@ public class Profil extends HttpServlet {
 				//IS MEDECIN CHECK ALL RDV CANCELED
 			}
 		}else {
-			System.out.println("mdp pas bon");
 			this.getServletContext().getRequestDispatcher("/profil.jsp").forward( request, response );
 			erreurs.add("Mot de passe incorrect");
 			request.setAttribute(ERREUR, erreurs);

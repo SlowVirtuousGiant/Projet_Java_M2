@@ -26,12 +26,6 @@
 	Specialite specialite = new Specialite();
 
 	specialite = SpecialiteDao.getSpecialiteByID(rdv.getSpecialite_id());
-
-	System.out.println(medecin.getNom());
-	System.out.println(medecin.getPrenom());
-	System.out.println(centre.getNom());
-	System.out.println(centre.getAdresse());
-	System.out.println(specialite.getSpecialite());
 	%>
 	<div class="container">
 		<div class="col-md-12 col-10">

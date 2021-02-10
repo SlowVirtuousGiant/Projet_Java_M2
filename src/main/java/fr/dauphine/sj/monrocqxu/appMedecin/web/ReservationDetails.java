@@ -62,8 +62,6 @@ public class ReservationDetails extends HttpServlet {
 								possiblesDates.addAll(entry.getValue());
 								}
 							}
-						
-						System.out.println(next20days);
 						if(!possiblesDates.isEmpty()) {
 							request.setAttribute("selectedDate", possiblesDates.get(0));
 						}

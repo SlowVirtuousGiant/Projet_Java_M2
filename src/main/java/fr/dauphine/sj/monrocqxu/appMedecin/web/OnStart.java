@@ -50,14 +50,7 @@ public class OnStart implements ServletContextListener {
 			longDiffInitCurr = dateMailInit.getTime()-currDate.getTime();
 		}
 
-		//SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
 
-
-		//String currDateFormated = formatter.format(currDate);
-		//String dateProchainMailingCal = formatter.format(dateMailInit);
-
-		//System.out.println(currDateFormated);
-		//System.out.println(dateProchainMailingCal);
 		System.out.println("Initialisation des rappel à compter de "+ longDiffInitCurr + " ms ");
 		timer.schedule(task, longDiffInitCurr,86400000);// 86.400.000 ms = 24H
 

@@ -84,7 +84,6 @@ public class Ajout extends HttpServlet {
 							String id = String.valueOf(centre.getId());
 							if (request.getParameter("centre_" + id) != null) {
 								affectation.setCentre_id(centre.getId());
-								System.out.println(centre.getId());
 								affectation.setMedecin_id(utilisateur.getId());
 								affectation.setSpecialite_id(Integer.valueOf(request.getParameter("sp_"+id)));
 								affectation.setDisponible(false);
