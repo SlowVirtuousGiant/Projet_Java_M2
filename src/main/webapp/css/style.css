@@ -243,3 +243,7 @@ button:focus {
 	margin-right: 10px;
 }
 
+.text-justify {
+  text-align: justify;
+}
+

@@ -57,6 +57,8 @@
 								<tbody>
 
 									<%
+										boolean outdated = false;
+										String html = "";
 										for (Rdv rdv : rdvs) {
 										Utilisateur medecin = UtilisateurDao.getUtilisateurByID(rdv.getMedecin_id());
 										Centre centre = CentreDao.getCentreByID(rdv.getCentre_id());
@@ -64,25 +66,29 @@
 										Creneau c = Creneau.valeurIdCreneau(rdv.getCreneau());
 									%>
 									<%
-										String statutmsg = "";
-									LocalDate currentDate = LocalDate.now();
-									LocalDate rdvDate = LocalDate.parse(rdv.getDate(), DateTimeFormatter.ofPattern("dd/MM/yyyy"));
+										
+										LocalDate currentDate = LocalDate.now();
+										LocalDate rdvDate = LocalDate.parse(rdv.getDate(), DateTimeFormatter.ofPattern("dd/MM/yyyy"));
 
-									if (rdv.isActif() && rdvDate.isAfter(currentDate)) {
-										statutmsg = "RDV à venir";
-										//if actif = 1 && rdv.get Date >= current date {A venir}
-									} else if (!rdv.isActif() && !rdvDate.isAfter(currentDate)) {
-										statutmsg = "RDV passé";
-										//if actif = 0 && rdv.get Date <= current date && auteur = null {passée}	
-									} else if (!rdv.isActif()) {
-										if (rdv.getAuteur().equals("PATIENT")) {
-											statutmsg = "RDV annulé par PATIENT : " + rdv.getCommentaire();
-											//if actif = 0 && rdv.get Date >= current date && auteur = patient {annulé par patient}
-										} else {
-											statutmsg = "RDV annulé par DOCTEUR : " + rdv.getCommentaire();
-											//if actif = 0 && rdv.get Date >= current date && auteur = docteur {annulé par docteur}
+										if (rdv.isActif() && rdvDate.isAfter(currentDate)) {
+											html = "<span class=\"badge bg-primary\">À venir</span>";
+											outdated = false;
+											//if actif = 1 && rdv.get Date >= current date {A venir}
+										} else if (rdv.isActif() && !rdvDate.isAfter(currentDate)) {
+											outdated = true;
+											html = "<span class=\"badge bg-danger\">Passé</span>";
+											//if actif = 0 && rdv.get Date <= current date && auteur = null {passée}	
+										} else if (!rdv.isActif()) {
+											if (rdv.getAuteur().equals("PATIENT")) {
+												html = "<span class=\"badge bg-danger\">Annulé par patient</span><br><span><small>"+rdv.getCommentaire()+"</small></span>";
+												outdated = false;
+												//if actif = 0 && rdv.get Date >= current date && auteur = patient {annulé par patient}
+											} else {
+												html = "<span class=\"badge bg-danger\">Annulé par docteur</span><br><span><small>"+rdv.getCommentaire()+"</small></span>";
+												outdated = false;
+												//if actif = 0 && rdv.get Date >= current date && auteur = docteur {annulé par docteur}
+											}
 										}
-									}
 									%>
 
 									<tr>
@@ -94,11 +100,11 @@
 										<td><%=centre.getTelephone()%></td>
 										<td class="text-nowrap"><%=rdv.getDate()%></td>
 										<td><%=c.getName()%></td>
-										<td><%=statutmsg%></td>
+										<td><%=html%></td>
 
 										<td>
 											<%
-												if (rdv.isActif()) {
+												if (rdv.isActif() && !outdated) {
 											%><a class="btn btn-danger"
 											href="<c:url value='<%="/annulationrdv?idrdv=" + rdv.getId()%>' />">Annuler</a>
 											<%

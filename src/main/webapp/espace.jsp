@@ -17,42 +17,41 @@
 		<section>
 			<div class="container">
 				<h2>
-					Bienvenue
-					<%=utilisateur.getPrenom()%></h2>
+					Bienvenue <%=utilisateur.getPrenom()%> dans votre espace !</h2>
 
 				<%
-					if (utilisateur.getRole().equals("PATIENT") || utilisateur.getRole().equals("MEDECIN")) {
+					if (utilisateur.getRole().equals("PATIENT")) {
 				%>
-				<h4 class="mt-5">Vos rendez-vous en cours</h4>
 
-				<div class="col-md-8">
-					<div class="bg-light p-5 rounded mt-3">
-						<h1>Vous n'avez pas de rendez-vous prévus</h1>
-						<p class="lead">Vos prochains rendez-vous apparaitrons ici</p>
-						<a class="btn btn-lg btn-primary"
-							href="<c:url value='/inscription' />" role="button">Prendre
-							un rendez-vous »</a>
-					</div>
-				</div>
+				<div class="col-md-10 mt-5">
+					<h4 class="mt-5 text-value">Prendre un rendez-vous</h4>
+					<p class="text-justify">Pour prendre un rendez-vous avec un médecin, c'est très simple vous pouvez consulter l'onglet « Rendez-vous » puis <a href="<c:url value='/reservation' />">« Prendre un rendez-vous »</a>.
+					A partir de la recherche il vous suffit de rentrer un nom de médecin, où le nom d'une spécialité, ainsi qu'un des centres disponible.
+					Une fois le medecin selectionné, vous n'avez ensuite plus qu'à choisir votre date et votre horaire!</p>
+					
+					<h4 class="mt-5 text-value">Consulter ou annuler un rendez-vous</h4>
+					<p class="text-justify">Dans l'onglet « Rendez-vous » puis <a href="<c:url value='/visualisationrdv' />">« Gérer mes rendez-vous »</a> vous pouvez voir les rendez vous que vous avez pris.
+			         Vous avez également la possibilité d'annuler un rendez vous en cours à partir de cette page.</p>
+					
+					<h4 class="mt-5 text-value">Votre profil</h4>
+					<p class="text-justify">Vous pouvez consulter et mettre à jours vos informations dans votre profil. Si vous voulez désactiver votre compte vous pouvez également le faire via cette page.</p>
 				<%
 					}
-				%>
-				<h4 class="mt-5">Vos anciens rendez-vous</h4>
-				<div class="col-md-8">
-					<ul class="list-group mt-3">
-						<li
-							class="list-group-item d-flex justify-content-between align-items-center">
-							Avec le Dr. Joe Généraliste au centre x <span
-							class="badge bg-success">Terminé</span>
-						</li>
-						<li
-							class="list-group-item d-flex justify-content-between align-items-center">
-							Avec le Dr. Michel Généraliste au centre x <span
-							class="badge bg-danger">Annulé</span>
-						</li>
-					</ul>
+					if(utilisateur.getRole().equals("MEDECIN")){%>
+						<h4 class="mt-5 text-value">Votre Agenda</h4>
+						<p class="text-justify">Votre agenda vous permet d'indiquer vos disponibilités entre vos différents centres, de consulter vos rendez-vous et d'accéder aux informations des patients. Vous pouvez également
+						annuler un rendez-vous en précisant un motif.</p>
+				
+						<h4 class="mt-5 text-value">Votre profil</h4>
+						<p class="text-justify">Vous pouvez consulter et mettre à jours vos informations dans votre profil. Si vous voulez désactiver votre compte vous pouvez également le faire via cette page après annulation de vos rendez-vous.</p>
+				<%}if (utilisateur.getRole().equals("ADMIN")){%>
+					<h4 class="mt-5">Vous êtes administrateur, ne faites pas n'importe quoi! 😉</h4>
+				<%} %>
+					<p class="mt-5"><small>Travail réalisé par Pierre MONROCQ et Nicolas XU</small></p>
 				</div>
-
+				
+				
+			
 			</div>
 		</section>
 </body>

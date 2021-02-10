@@ -237,6 +237,7 @@
 												maxlength="60" class="form-control mb-1" value=""
 												placeholder="Veuillez expliquer votre raison" required>
 											<input type="hidden" name="rdvIdPourAnnulation" value=<%= rdv.getId()%>>
+											<input type="hidden" name="semaine" value=<%=currentWeek%>>
 										</div>
 									</div>
 									<div class="modal-footer">

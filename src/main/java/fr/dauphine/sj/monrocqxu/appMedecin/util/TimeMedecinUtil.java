@@ -31,7 +31,7 @@ public class TimeMedecinUtil {
 				res.put(weekNumber, week);
 				week = new ArrayList<String>();
 				weekNumber = currentWeekNumber;
-				currentDate.minusDays(1);
+				currentDate = currentDate.minusDays(1);
 			}
 		}
 		res.put(weekNumber, week);

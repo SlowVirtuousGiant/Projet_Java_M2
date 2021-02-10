@@ -54,7 +54,6 @@ public class Agenda extends HttpServlet {
 				session = request.getSession();
 				this.getServletContext().getRequestDispatcher("/agenda.jsp").forward(request, response);
 				
-				//get agenda actif affectation = disponible
 			} else {
 				response.sendRedirect(CHEMIN_ESPACE);
 			}
@@ -78,6 +77,7 @@ public class Agenda extends HttpServlet {
 				}catch(Exception e) {
 				e.printStackTrace();
 			}
+			session.setAttribute("selectedWeek", request.getParameter("semaine"));
 		}
 		
 		if(request.getParameter("init") != null){
@@ -98,7 +98,6 @@ public class Agenda extends HttpServlet {
 				affectation.setDisponible(!affectation.isDisponible());
 				AffectationDao.update(affectation);
 			}
-			
 		}
 		
 		if(request.getParameter("centreSelect") != null){
@@ -109,7 +108,7 @@ public class Agenda extends HttpServlet {
 			session.setAttribute("selectedWeek", request.getParameter("selectedWeek"));
 		}else if(request.getParameter("week") != null){
 			session.setAttribute("selectedWeek", request.getParameter("week"));
-		}else {
+		}else if(session.getAttribute("selectedWeek") == null){
 			session.setAttribute("selectedWeek", TimeMedecinUtil.getCurrentWeek());
 			
 		}
