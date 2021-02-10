@@ -56,7 +56,7 @@ public class AnnulationRdv extends HttpServlet{
 			response.sendRedirect(CHEMIN_CONNEXION);
 		}
 	}
-	
+
 	@Override
 	public void doPost( HttpServletRequest request, HttpServletResponse response ) throws ServletException, IOException {
 		System.out.println("dans le post dopost");
@@ -67,10 +67,14 @@ public class AnnulationRdv extends HttpServlet{
 		rdv.setActif(false);
 		rdv.setCommentaire(AppMedecinUtil.ConvertISOtoUTF8(request.getParameter("raison")));
 		rdv.setAuteur(utilisateur.getRole());
-		
+
 		System.out.println(rdv.getCommentaire() + " Print avant le update");
 		if(RdvDao.update(rdv)) {
-			MailManager.envoiRDVDetail(utilisateur, rdv);
+			try {
+				MailManager.envoiRDVDetail(utilisateur, rdv);
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
 			System.out.println(rdv.getCommentaire() + " Print après le update");
 			response.sendRedirect(CHEMIN_VISU_RDV);
 		}else {

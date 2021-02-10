@@ -36,12 +36,20 @@ public class Rappel extends TimerTask {
 					throw new IllegalStateException(e);
 				}
 				if(date.before(currDate)) { // Si date rdv avant date courante, alors pas besoin d'envoyer un mail on remet juste à J la bdd
-					rdv.setEnvoi_mail(true);
+					try {
+						rdv.setEnvoi_mail(true);
+					} catch (Exception e) {
+						e.printStackTrace();
+					}
 					RdvDao.update(rdv);
 				}
-				
+
 				if(rdv.getDate().equals(currDateFormated)) { // si date RDV == date courante +1J, alors on envoie un mail 
-					MailManager.envoieRDVRappel(rdv);
+					try {
+						MailManager.envoieRDVRappel(rdv);
+					} catch (Exception e) {
+						e.printStackTrace();
+					}
 					rdv.setEnvoi_mail(true);
 					RdvDao.update(rdv);
 				}

@@ -68,8 +68,13 @@ public class Ajout extends HttpServlet {
 		if(!UtilisateurDao.isPresent(request.getParameter("mail"))) {
 			if(validationAlphaNum(utilisateur.getNom())&& validationAlphaNum(utilisateur.getPrenom())) {
 				if(validationAnneeNaiss(utilisateur.getNaissance())) {
-					boolean result = UtilisateurDao.ajouter(utilisateur);
 
+					boolean result = UtilisateurDao.ajouter(utilisateur);
+					try {
+						MailManager.envoiInscriptionMail(utilisateur,mdp);
+					} catch (Exception e) {
+						e.printStackTrace();
+					}
 					Affectation affectation = new Affectation();
 
 					if (result) {
@@ -84,10 +89,8 @@ public class Ajout extends HttpServlet {
 								affectation.setSpecialite_id(Integer.valueOf(request.getParameter("sp_"+id)));
 								affectation.setDisponible(false);
 								AffectationDao.ajouter(affectation);
-								MailManager.envoiInscriptionMail(utilisateur,mdp);
 								erreurs.add("Utilisateur bien ajouté");
 								request.setAttribute( ERREUR, erreurs );
-								this.getServletContext().getRequestDispatcher("/ajout.jsp").forward( request, response );
 							}
 						}
 					}

@@ -86,7 +86,7 @@
 				<%
 					if (agendaDispo) {
 				%>
-				<h4 class="text-center mt-3">${selectedCentre.nom}pourla
+				<h4 class="text-center mt-3">${selectedCentre.nom} pour la
 					semaine ${selectedWeek}</h4>
 				<div class="container text-center mt-4">
 					<ul class="legende">

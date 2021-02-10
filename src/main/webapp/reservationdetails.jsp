@@ -119,7 +119,7 @@
 										rendez-vous.</p>
 									<form method="post"
 										action="<c:url value='/reservationdetails'/>">
-										<button type="submit" class="btn btn-primary">Valider</button>
+										<button type="submit" class="btn btn-primary" >Valider</button>
 										<input type="hidden" name="rdvDate" value=<%=sDate%>>
 										<input type="hidden" name="rdvCreneau" value=<%=c.id%>>
 										<input type="hidden" name="rdvSpecialite"

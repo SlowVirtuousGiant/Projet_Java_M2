@@ -1,8 +1,12 @@
 package fr.dauphine.sj.monrocqxu.appMedecin.web;
 
 import static fr.dauphine.sj.monrocqxu.appMedecin.util.AppMedecinUtil.ATT_SESSION_USER;
+import static fr.dauphine.sj.monrocqxu.appMedecin.util.AppMedecinUtil.ATT_SESSION_RDV;
 import static fr.dauphine.sj.monrocqxu.appMedecin.util.AppMedecinUtil.CHEMIN_CONNEXION;
 import static fr.dauphine.sj.monrocqxu.appMedecin.util.AppMedecinUtil.CHEMIN_ESPACE;
+import static fr.dauphine.sj.monrocqxu.appMedecin.util.AppMedecinUtil.CHEMIN_VISU_RDV;
+import static fr.dauphine.sj.monrocqxu.appMedecin.util.AppMedecinUtil.CHEMIN_CONF_RDV;
+
 import static fr.dauphine.sj.monrocqxu.appMedecin.util.AppMedecinUtil.isAuthenticated;
 
 import java.io.IOException;
@@ -102,8 +106,13 @@ public class ReservationDetails extends HttpServlet {
 			rdv.setCommentaire(null);
 			
 			RdvDao.ajouter(rdv);
-			MailManager.envoiRDVDetail(utilisateur, rdv);
-			response.sendRedirect(CHEMIN_ESPACE);
+			try {
+				MailManager.envoiRDVDetail(utilisateur, rdv);
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+			request.getSession().setAttribute(ATT_SESSION_RDV,rdv);
+			response.sendRedirect(CHEMIN_CONF_RDV);
 		}
 		
 		request.setAttribute("foundDates", possiblesDates);

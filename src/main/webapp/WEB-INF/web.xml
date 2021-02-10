@@ -135,6 +135,14 @@
 		<servlet-name>AnnulationRdv</servlet-name>
 		<url-pattern>/annulationrdv</url-pattern>
 	</servlet-mapping>
+		<servlet>
+		<servlet-name>ConfirmationRdv</servlet-name>
+		<servlet-class>fr.dauphine.sj.monrocqxu.appMedecin.web.ConfirmationRdv</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>ConfirmationRdv</servlet-name>
+		<url-pattern>/confirmationrdv</url-pattern>
+	</servlet-mapping>
 	<listener>
 		<listener-class>fr.dauphine.sj.monrocqxu.appMedecin.web.OnStart</listener-class>
 	</listener>

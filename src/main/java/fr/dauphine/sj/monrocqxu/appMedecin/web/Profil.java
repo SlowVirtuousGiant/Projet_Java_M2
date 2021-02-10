@@ -59,7 +59,11 @@ public class Profil extends HttpServlet {
 				utilisateur.setActif(false);
 				if(UtilisateurDao.update(utilisateur)) {
 					List<Rdv> listRdv = RdvDao.getRdvActifPatient(utilisateur.getId());
-					MailManager.envoiMailDesactivationCompte(utilisateur,listRdv);
+					try {
+						MailManager.envoiMailDesactivationCompte(utilisateur,listRdv);
+					} catch (Exception e) {
+						e.printStackTrace();
+					}
 
 					for(Rdv rdv:listRdv) {
 						System.out.println( "Voici les ID desRDV qui vont être annulés " + rdv.getId());

@@ -58,7 +58,11 @@ public class Inscription extends HttpServlet {
 			if(validationAlphaNum(utilisateur.getNom())&& validationAlphaNum(utilisateur.getPrenom())) {
 				if(validationAnneeNaiss(utilisateur.getNaissance())) {
 					if(UtilisateurDao.ajouter(utilisateur)) {
-						MailManager.envoiInscriptionMail(utilisateur,mdp);
+						try {
+							MailManager.envoiInscriptionMail(utilisateur,mdp);
+						} catch (Exception e) {
+							e.printStackTrace();
+						}
 						erreurs.add("Inscription terminée, veuillez vous connecter");
 						request.setAttribute( ERREUR, erreurs );
 						response.sendRedirect( CHEMIN_CONNEXION );

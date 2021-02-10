@@ -11,6 +11,7 @@ public class AppMedecinUtil {
 	public static final String ATT_SESSION_USER = "utilisateur";
 	public static final String ATT_SESSION_SPECIALITES = "specialites";
 	public static final String ATT_SESSION_CENTRES = "centres";
+	public static final String ATT_SESSION_RDV = "rdv";
 	public static final String SESSION_ROLE = "utilisateur_role";
 	public static final String ERREUR = "erreur";
 	public static final String CHEMIN_ESPACE ="/appMedecin/espace";
@@ -24,6 +25,8 @@ public class AppMedecinUtil {
 	public static final String CHEMIN_MODIFICATION = "/appMedecin/modification";
 	public static final String CHEMIN_RESERVATIONDE = "/appMedecin/reservationdetails";
 	public static final String CHEMIN_VISU_RDV = "/appMedecin/visualisationrdv";
+	public static final String CHEMIN_CONF_RDV = "/appMedecin/confirmationrdv";
+	
 	
 	//Mail
 	public static final String MAIL_HOST = "localhost";//Utilisation FAKESMTP
