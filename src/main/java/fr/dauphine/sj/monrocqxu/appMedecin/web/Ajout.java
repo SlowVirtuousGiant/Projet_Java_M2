@@ -3,6 +3,7 @@ package fr.dauphine.sj.monrocqxu.appMedecin.web;
 import static fr.dauphine.sj.monrocqxu.appMedecin.util.AppMedecinUtil.*;
 import static fr.dauphine.sj.monrocqxu.appMedecin.util.AppMedecinUtil.validationAnneeNaiss;
 import static fr.dauphine.sj.monrocqxu.appMedecin.util.AppMedecinUtil.validationAlphaNum;
+import static fr.dauphine.sj.monrocqxu.appMedecin.util.AppMedecinUtil.validationTel;
 import static fr.dauphine.sj.monrocqxu.appMedecin.util.AppMedecinUtil.ERREUR;
 
 import java.io.IOException;
@@ -68,32 +69,37 @@ public class Ajout extends HttpServlet {
 		if (!UtilisateurDao.isPresent(request.getParameter("mail"))) {
 			if (validationAlphaNum(utilisateur.getNom()) && validationAlphaNum(utilisateur.getPrenom())) {
 				if (validationAnneeNaiss(utilisateur.getNaissance())) {
+					if(validationTel(utilisateur.getTelephone())) {
 
-					boolean result = UtilisateurDao.ajouter(utilisateur);
-					try {
-						MailManager.envoiInscriptionMail(utilisateur, mdp);
-					} catch (Exception e) {
-						e.printStackTrace();
-					}
-					Affectation affectation = new Affectation();
+						boolean result = UtilisateurDao.ajouter(utilisateur);
+						try {
+							MailManager.envoiInscriptionMail(utilisateur, mdp);
+						} catch (Exception e) {
+							e.printStackTrace();
+						}
+						Affectation affectation = new Affectation();
 
-					if (result) {
-						List<Centre> moncentre = CentreDao.getAllCentre();
-						for (Centre centre : moncentre) {
+						if (result) {
+							List<Centre> moncentre = CentreDao.getAllCentre();
+							for (Centre centre : moncentre) {
 
-							String id = String.valueOf(centre.getId());
-							if (request.getParameter("centre_" + id) != null) {
-								affectation.setCentre_id(centre.getId());
-								affectation.setMedecin_id(utilisateur.getId());
-								affectation.setSpecialite_id(Integer.valueOf(request.getParameter("sp_" + id)));
-								affectation.setDisponible(false);
-								AffectationDao.ajouter(affectation);
-								erreurs.add("Utilisateur bien ajouté");
-								request.setAttribute(ERREUR, erreurs);
+								String id = String.valueOf(centre.getId());
+								if (request.getParameter("centre_" + id) != null) {
+									affectation.setCentre_id(centre.getId());
+									affectation.setMedecin_id(utilisateur.getId());
+									affectation.setSpecialite_id(Integer.valueOf(request.getParameter("sp_" + id)));
+									affectation.setDisponible(false);
+									AffectationDao.ajouter(affectation);
+									erreurs.add("Utilisateur bien ajouté");
+									request.setAttribute(ERREUR, erreurs);
+								}
 							}
 						}
+						response.sendRedirect(CHEMIN_AJOUT);
+					}else {
+						erreurs.add("Téléphone non francophone");
+						request.setAttribute(ERREUR, erreurs);
 					}
-					response.sendRedirect(CHEMIN_AJOUT);
 				} else {
 					erreurs.add("Date de naissance incorrecte");
 					request.setAttribute(ERREUR, erreurs);

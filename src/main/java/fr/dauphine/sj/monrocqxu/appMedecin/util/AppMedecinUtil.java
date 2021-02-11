@@ -1,6 +1,8 @@
 package fr.dauphine.sj.monrocqxu.appMedecin.util;
 
 import java.nio.charset.StandardCharsets;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
@@ -68,6 +70,15 @@ public class AppMedecinUtil {
 	}
 	public static boolean validationAlphaNum (String txt) {
 		return(txt.matches("[A-Za-z0-9]+"));
+	}
+	public static boolean validationTel (String telephone) {
+		Pattern regexFrancais = Pattern.compile("/^\r\n"
+				+ "    (?:(?:\\+|00)33|0)     # Dialing code\r\n"
+				+ "    \\s*[1-9]              # First number (from 1 to 9)\r\n"
+				+ "    (?:[\\s.-]*\\d{2}){4}   # End of the phone number\r\n"
+				+ "$/gmix"); // source : https://stackoverflow.com/questions/38483885/regex-for-french-telephone-numbers
+		Matcher matcher = regexFrancais.matcher(telephone);
+		return(matcher.matches());
 	}
 	
 	

@@ -15,6 +15,8 @@ import javax.servlet.http.HttpServletResponse;
 import org.json.JSONArray;
 
 import fr.dauphine.sj.monrocqxu.appMedecin.dao.RdvDao;
+import fr.dauphine.sj.monrocqxu.appMedecin.dao.UtilisateurDao;
+import fr.dauphine.sj.monrocqxu.appMedecin.mail.MailManager;
 import fr.dauphine.sj.monrocqxu.appMedecin.model.Rdv;
 import fr.dauphine.sj.monrocqxu.appMedecin.model.Utilisateur;
 import fr.dauphine.sj.monrocqxu.appMedecin.util.TimeMedecinUtil;
@@ -55,7 +57,9 @@ public class ModificationAgenda extends HttpServlet {
 
 				if (dispo != null) {
 					if (rdv != null && rdv.getPatient_id() == rdv.getMedecin_id()) {
+						Utilisateur patient = UtilisateurDao.getUtilisateurByID(rdv.getPatient_id());
 						RdvDao.delete(rdv);
+						MailManager.envoiRDVDetail(patient, rdv);
 					}
 				} else if (indispo != null) {
 					if (rdv == null) {

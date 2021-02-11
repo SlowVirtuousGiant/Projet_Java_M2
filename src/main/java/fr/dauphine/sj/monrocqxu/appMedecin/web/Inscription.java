@@ -6,6 +6,7 @@ import static fr.dauphine.sj.monrocqxu.appMedecin.util.AppMedecinUtil.CHEMIN_CON
 import static fr.dauphine.sj.monrocqxu.appMedecin.util.AppMedecinUtil.isAuthenticated;
 import static fr.dauphine.sj.monrocqxu.appMedecin.util.AppMedecinUtil.validationAnneeNaiss;
 import static fr.dauphine.sj.monrocqxu.appMedecin.util.AppMedecinUtil.validationAlphaNum;
+import static fr.dauphine.sj.monrocqxu.appMedecin.util.AppMedecinUtil.validationTel;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -56,15 +57,20 @@ public class Inscription extends HttpServlet {
 			utilisateur.setActif(true);
 			if (validationAlphaNum(utilisateur.getNom()) && validationAlphaNum(utilisateur.getPrenom())) {
 				if (validationAnneeNaiss(utilisateur.getNaissance())) {
-					if (UtilisateurDao.ajouter(utilisateur)) {
-						try {
-							MailManager.envoiInscriptionMail(utilisateur, mdp);
-						} catch (Exception e) {
-							e.printStackTrace();
+					if(validationTel(utilisateur.getTelephone())) {
+						if (UtilisateurDao.ajouter(utilisateur)) {
+							try {
+								MailManager.envoiInscriptionMail(utilisateur, mdp);
+							} catch (Exception e) {
+								e.printStackTrace();
+							}
+							erreurs.add("Inscription terminée, veuillez vous connecter");
+							request.setAttribute(ERREUR, erreurs);
+							response.sendRedirect(CHEMIN_CONNEXION);
 						}
-						erreurs.add("Inscription terminée, veuillez vous connecter");
+					}else {
+						erreurs.add("Téléphone non francophone");
 						request.setAttribute(ERREUR, erreurs);
-						response.sendRedirect(CHEMIN_CONNEXION);
 					}
 				} else {
 					erreurs.add("Date de naissance incorrecte");
