@@ -61,7 +61,7 @@ public class MailManager {
 			}else {
 				msg = "Bonjour,<br>"
 						+ "Bienvenue sur le site RDVmedecin Dr. "
-						+ utilisateur.getNom() + utilisateur.getPrenom() +" ! <br>"
+						+ utilisateur.getNom() + " " +utilisateur.getPrenom() +" ! <br>"
 						+ "Merci de vous êtes inscrit sur notre site, voici vos coordonnées de connexion : <br>"
 						+ "Mail : " + utilisateur.getMail() + "<br>"
 						+ "Mot de passe : " + mdp + "<br>"
