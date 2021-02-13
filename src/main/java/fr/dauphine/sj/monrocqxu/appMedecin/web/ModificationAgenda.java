@@ -59,7 +59,6 @@ public class ModificationAgenda extends HttpServlet {
 					if (rdv != null && rdv.getPatient_id() == rdv.getMedecin_id()) {
 						Utilisateur patient = UtilisateurDao.getUtilisateurByID(rdv.getPatient_id());
 						RdvDao.delete(rdv);
-						MailManager.envoiRDVDetail(patient, rdv);
 					}
 				} else if (indispo != null) {
 					if (rdv == null) {
