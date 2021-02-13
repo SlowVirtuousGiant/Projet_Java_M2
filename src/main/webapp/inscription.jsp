@@ -30,7 +30,12 @@
 								<div class="alert alert-danger" role="alert">
 									${item}<br>
 								</div>
-							</c:forEach>
+								</c:forEach>	
+								<c:forEach items="${succes}" var="item_s">
+								<div class="alert alert-success" role="alert">
+									${item_s}<br>
+								</div>
+								</c:forEach>
 
 								<div class="row register-form">
 									<div class="col-md-6">

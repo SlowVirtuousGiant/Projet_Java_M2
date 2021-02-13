@@ -16,6 +16,7 @@ public class AppMedecinUtil {
 	public static final String ATT_SESSION_RDV = "rdv";
 	public static final String SESSION_ROLE = "utilisateur_role";
 	public static final String ERREUR = "erreur";
+	public static final String SUCCES = "succes";
 	public static final String CHEMIN_ESPACE ="/appMedecin/espace";
 	public static final String CHEMIN_CONNEXION ="/appMedecin/connexion";
 	public static final String CHEMIN_DECONNEXION ="/appMedecin/deconnexion";
@@ -72,12 +73,9 @@ public class AppMedecinUtil {
 		return(txt.matches("[A-Za-z0-9]+"));
 	}
 	public static boolean validationTel (String telephone) {
-		Pattern regexFrancais = Pattern.compile("/^\r\n"
-				+ "    (?:(?:\\+|00)33|0)     # Dialing code\r\n"
-				+ "    \\s*[1-9]              # First number (from 1 to 9)\r\n"
-				+ "    (?:[\\s.-]*\\d{2}){4}   # End of the phone number\r\n"
-				+ "$/gmix"); // source : https://stackoverflow.com/questions/38483885/regex-for-french-telephone-numbers
+		Pattern regexFrancais = Pattern.compile("^(33|0)(6|7|9)\\d{8}$");
 		Matcher matcher = regexFrancais.matcher(telephone);
+		System.out.println(matcher);
 		return(matcher.matches());
 	}
 	

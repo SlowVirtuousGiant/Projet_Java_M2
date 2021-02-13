@@ -2,6 +2,7 @@ package fr.dauphine.sj.monrocqxu.appMedecin.web;
 
 import static fr.dauphine.sj.monrocqxu.appMedecin.util.AppMedecinUtil.CHEMIN_ESPACE;
 import static fr.dauphine.sj.monrocqxu.appMedecin.util.AppMedecinUtil.ERREUR;
+import static fr.dauphine.sj.monrocqxu.appMedecin.util.AppMedecinUtil.SUCCES;
 import static fr.dauphine.sj.monrocqxu.appMedecin.util.AppMedecinUtil.CHEMIN_CONNEXION;
 import static fr.dauphine.sj.monrocqxu.appMedecin.util.AppMedecinUtil.isAuthenticated;
 import static fr.dauphine.sj.monrocqxu.appMedecin.util.AppMedecinUtil.validationAnneeNaiss;
@@ -26,6 +27,7 @@ import fr.dauphine.sj.monrocqxu.appMedecin.util.AppMedecinUtil;
 public class Inscription extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 	private ArrayList<String> erreurs = new ArrayList<String>();
+	private ArrayList<String> succes = new ArrayList<String>();
 
 	@Override
 	public void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
@@ -64,7 +66,7 @@ public class Inscription extends HttpServlet {
 							} catch (Exception e) {
 								e.printStackTrace();
 							}
-							erreurs.add("Inscription terminée, veuillez vous connecter");
+							succes.add("Inscription terminée, veuillez vous connecter");
 							request.setAttribute(ERREUR, erreurs);
 							response.sendRedirect(CHEMIN_CONNEXION);
 						}
@@ -84,6 +86,7 @@ public class Inscription extends HttpServlet {
 			erreurs.add("Utilisateur déjà présent");
 		}
 		request.setAttribute(ERREUR, erreurs);
+		request.setAttribute(SUCCES, succes);
 		this.getServletContext().getRequestDispatcher("/inscription.jsp").forward(request, response);
 		erreurs.clear();
 	}
