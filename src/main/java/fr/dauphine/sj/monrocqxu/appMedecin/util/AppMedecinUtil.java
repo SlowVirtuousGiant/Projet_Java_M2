@@ -75,7 +75,6 @@ public class AppMedecinUtil {
 	public static boolean validationTel (String telephone) {
 		Pattern regexFrancais = Pattern.compile("^(33|0)(6|7|9)\\d{8}$");
 		Matcher matcher = regexFrancais.matcher(telephone);
-		System.out.println(matcher);
 		return(matcher.matches());
 	}
 	

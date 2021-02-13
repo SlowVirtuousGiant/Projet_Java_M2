@@ -279,11 +279,13 @@
 									</select>
 								</form>
 							</div>
+							<% if(init){ %>
 							<div class="col">
 								<a href="<c:url value='/modificationagenda'/>"
 									class="w-100 btn btn-secondary">Editer l'agenda</a>
 							</div>
 							<%
+								}
 								}
 							%>
 							<div class="col">

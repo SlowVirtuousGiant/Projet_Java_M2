@@ -30,7 +30,7 @@ import fr.dauphine.sj.monrocqxu.appMedecin.util.AppMedecinUtil;
 public class Ajout extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 	private ArrayList<String> erreurs = new ArrayList<String>();
-
+	
 	@Override
 	public void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		if (isAuthenticated(request)) {
