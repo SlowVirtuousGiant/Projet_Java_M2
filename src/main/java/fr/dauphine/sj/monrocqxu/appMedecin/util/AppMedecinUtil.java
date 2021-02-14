@@ -40,7 +40,7 @@ public class AppMedecinUtil {
 
 
 	//Methode
-	public static boolean isAuthenticated (HttpServletRequest request) {
+	public static boolean isAuthenticated (HttpServletRequest request) {//Fonction pour verifier l'authentification
 		HttpSession checkSession = request.getSession();
 		if (checkSession != null && checkSession.getAttribute(ATT_SESSION_USER) != null) {
 			return true;
@@ -79,7 +79,7 @@ public class AppMedecinUtil {
 	}
 	
 	
-	public static String ConvertISOtoUTF8(String iso) {
+	public static String ConvertISOtoUTF8(String iso) {//Permet de convertir les String ISO en UTF-8, utilise dans les JSP
 	String item = iso; 
 
 	byte[] bytes = item.getBytes(StandardCharsets.ISO_8859_1);

@@ -35,7 +35,7 @@ public class AffectationDao {
 		}
 	}
 	
-	public static boolean agendaActif(int centre_id, int medecin_id) {
+	public static boolean agendaActif(int centre_id, int medecin_id) {//Recupere la disponibilite du medecin (agenda actif)
 		Session session = HibernateUtil.getSessionFactory().openSession();
 		boolean actif =  (boolean) session.createSQLQuery("SELECT disponible FROM affectation WHERE medecin_id = :medecin_id and centre_id = :centre_id").setParameter("medecin_id", medecin_id).setParameter("centre_id",centre_id).uniqueResult();
 		return actif;
@@ -45,7 +45,7 @@ public class AffectationDao {
 		return getAffectationMedecinActif(medecin.getId());
 	}
 	
-	public static List<Affectation> getAffectationMedecinActif(int medecin_id){
+	public static List<Affectation> getAffectationMedecinActif(int medecin_id){//Recupere toutes les affectations avec des medecins disponibles
 		Session session = HibernateUtil.getSessionFactory().openSession();
 		List<Affectation> list =  session.createSQLQuery("SELECT * FROM affectation WHERE medecin_id = :id and disponible = 1").setParameter("id", medecin_id).addEntity(Affectation.class).list();
 		return list;

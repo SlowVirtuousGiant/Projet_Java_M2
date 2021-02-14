@@ -23,7 +23,7 @@ public class UtilisateurDao {
 	}
 
 	@SuppressWarnings({ "unchecked", "deprecation" })
-	public static HashMap<Integer, String> getAllMedecinName() {
+	public static HashMap<Integer, String> getAllMedecinName() {//Recuperation du nom des medecins et de leurs id
 		Session session = HibernateUtil.getSessionFactory().openSession();
 		List<List<Object>> permission = session
 				.createSQLQuery("SELECT utilisateur_id, nom FROM utilisateur WHERE role = 'MEDECIN'")
@@ -41,7 +41,7 @@ public class UtilisateurDao {
 		return utilisateur;
 	}
 
-	public static Utilisateur validate(String userName, String password) {
+	public static Utilisateur validate(String userName, String password) {//Fonction de login
 		Transaction transaction = null;
 		Utilisateur utilisateur = null;
 		Session session = null;
@@ -50,7 +50,7 @@ public class UtilisateurDao {
 			transaction = session.beginTransaction();
 			utilisateur = (Utilisateur) session.createQuery("FROM Utilisateur U WHERE U.mail = :mail")
 					.setParameter("mail", userName).uniqueResult();
-			if (utilisateur != null && BCrypt.checkpw(password, utilisateur.getMotdepasse())) {
+			if (utilisateur != null && BCrypt.checkpw(password, utilisateur.getMotdepasse())) {//verification du mot de passe avec bCrypt
 				return utilisateur;
 			}
 			transaction.commit();
@@ -65,7 +65,7 @@ public class UtilisateurDao {
 		return null;
 	}
 
-	public static boolean isPresent(String mail) {
+	public static boolean isPresent(String mail) {//Permet de verifier la presence d'un utilisateur dans la base
 		Transaction transaction = null;
 		Utilisateur utilisateur = null;
 		Session session = null;

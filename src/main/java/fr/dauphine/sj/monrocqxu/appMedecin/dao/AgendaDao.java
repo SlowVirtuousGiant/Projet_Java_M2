@@ -9,7 +9,7 @@ import fr.dauphine.sj.monrocqxu.appMedecin.util.HibernateUtil;
 
 public class AgendaDao {
 	
-	public static boolean isAgendaInitialise(int semaine, int affectation_id){
+	public static boolean isAgendaInitialise(int semaine, int affectation_id){//Fonction pour verifier si un agenda est initialise
 		Session session = HibernateUtil.getSessionFactory().openSession();
 		AgendaModel agenda = (AgendaModel) session.createSQLQuery("SELECT * FROM agenda WHERE affectation_id = :affectation_id AND semaine = :semaine")
 				.setParameter("affectation_id", affectation_id).setParameter("semaine", semaine).addEntity(AgendaModel.class).uniqueResult();
@@ -32,7 +32,7 @@ public class AgendaDao {
 		return false; 
 	}
 	
-	public static List<Integer> getSemaineInitialisationByAffectation(int affectation_id){
+	public static List<Integer> getSemaineInitialisationByAffectation(int affectation_id){//Recherche si un agenda pour une affectation est initialise
 		Session session = HibernateUtil.getSessionFactory().openSession();
 		List<Integer> list =  session.createSQLQuery("SELECT semaine FROM agenda WHERE affectation_id = :id").setParameter("id", affectation_id).list();
 		return list;

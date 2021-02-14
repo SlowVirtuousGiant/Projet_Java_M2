@@ -43,7 +43,7 @@ public class Agenda extends HttpServlet {
 			centres = new ArrayList<Centre>();
 			if (utilisateur != null && utilisateur.getRole().equals("MEDECIN")) {
 
-				for (Affectation aff : AffectationDao.getAffectationMedecin(utilisateur.getId())) {
+				for (Affectation aff : AffectationDao.getAffectationMedecin(utilisateur.getId())) {//On recherche les centre de ce medecin
 					Centre c = CentreDao.getCentreByID(aff.getCentre_id());
 					affectationCentres.put(c.getId(), aff);
 					centres.add(c);
@@ -65,7 +65,7 @@ public class Agenda extends HttpServlet {
 	@Override
 	public void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
-		if (request.getParameter("raison") != null) {
+		if (request.getParameter("raison") != null) {//Si annulation
 			Rdv rdv = RdvDao.getRdvByID(Integer.valueOf(request.getParameter("rdvIdPourAnnulation")));
 			Utilisateur patient = UtilisateurDao
 					.getUtilisateurByID(Integer.valueOf(request.getParameter("rdvIdPourAnnulation")));
@@ -81,7 +81,7 @@ public class Agenda extends HttpServlet {
 			session.setAttribute("selectedWeek", request.getParameter("semaine"));
 		}
 
-		if (request.getParameter("init") != null) {
+		if (request.getParameter("init") != null) {//Si initialisation
 			int week = Integer.valueOf(request.getParameter("week"));
 			int affectationId = Integer.valueOf(request.getParameter("aff_id"));
 			AgendaModel agenda = new AgendaModel();
@@ -91,7 +91,7 @@ public class Agenda extends HttpServlet {
 			session.setAttribute("selectedWeek", request.getParameter("week"));
 
 		}
-		if (request.getParameter("majAgenda") != null) {
+		if (request.getParameter("majAgenda") != null) {//Si l'agenda on change l'activite de l'agenda
 			Centre centre = (Centre) session.getAttribute("selectedCentre");
 
 			if (centre != null) {
@@ -101,6 +101,7 @@ public class Agenda extends HttpServlet {
 			}
 		}
 
+		//Selection des centres et des semaines
 		if (request.getParameter("centreSelect") != null) {
 			session.setAttribute("selectedCentre",
 					CentreDao.getCentreByID(Integer.valueOf(request.getParameter("centreSelect"))));

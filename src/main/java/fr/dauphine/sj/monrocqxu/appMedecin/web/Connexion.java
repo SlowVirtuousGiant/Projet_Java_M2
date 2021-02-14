@@ -39,18 +39,18 @@ public class Connexion extends HttpServlet {
 		String password = AppMedecinUtil.ConvertISOtoUTF8(request.getParameter("motdepasse"));
 
 		if(!validationEmail(email)) {
-			erreurs.add("Email non valide.");
+			erreurs.add("Email non valide.");//L'email est incorrect
 		}
 
 		if(!validationMotDePasse(password)) {
-			erreurs.add("Mot de passe non valide.");
+			erreurs.add("Mot de passe non valide.");//Le mot de passe est incorrect
 		}
 
-		if ( erreurs.isEmpty() ) {
+		if ( erreurs.isEmpty() ) {//Si aucune erreur de saisie
 			Utilisateur utilisateur = UtilisateurDao.validate(email, password);
 			if(utilisateur != null) {
-				if(utilisateur.isActif()==true) {
-					session.setAttribute( ATT_SESSION_USER, utilisateur);
+				if(utilisateur.isActif()) {
+					session.setAttribute(ATT_SESSION_USER, utilisateur);
 					session.setAttribute(ATT_SESSION_CENTRES, CentreDao.getAllCentre());
 					session.setAttribute(ATT_SESSION_SPECIALITES, SpecialiteDao.getAllSpecialite());
 					

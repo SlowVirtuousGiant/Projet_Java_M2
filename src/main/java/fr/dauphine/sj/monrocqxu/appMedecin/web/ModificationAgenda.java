@@ -47,20 +47,20 @@ public class ModificationAgenda extends HttpServlet {
 		String dispo = request.getParameter("dispo");
 		String indispo = request.getParameter("indispo");
 
-		if (jsonresp != null) {
-			JSONArray arr = new JSONArray(jsonresp);
+		if (jsonresp != null) {//Si on obtient une reponse AJAX
+			JSONArray arr = new JSONArray(jsonresp);//On recupere l'objet JSON envoye
 			for (int i = 0; i < arr.length(); i++) {
-				String[] splt = arr.getString(i).split("-");
+				String[] splt = arr.getString(i).split("-");//Separation du string du type date-creneau
 				String date = splt[0];
 				int creneau = Integer.valueOf(splt[1]);
 				Rdv rdv = RdvDao.getRdvWithDateAndCreneau(date, creneau, utilisateur);
 
-				if (dispo != null) {
+				if (dispo != null) {//Si on veut liberer ce creneau 
 					if (rdv != null && rdv.getPatient_id() == rdv.getMedecin_id()) {
 						Utilisateur patient = UtilisateurDao.getUtilisateurByID(rdv.getPatient_id());
 						RdvDao.delete(rdv);
 					}
-				} else if (indispo != null) {
+				} else if (indispo != null) {//Si on veut rendre ce creneau indisponible
 					if (rdv == null) {
 						Rdv newRdv = new Rdv();
 						newRdv.setMedecin_id(utilisateur.getId());
@@ -84,6 +84,7 @@ public class ModificationAgenda extends HttpServlet {
 			}
 
 		}
+		//On retourne la reponse a la fonction AJAX
 		response.setContentType("text/html");
 		response.setHeader("Cache-control", "no-cache, no-store");
 		response.setHeader("Pragma", "no-cache");

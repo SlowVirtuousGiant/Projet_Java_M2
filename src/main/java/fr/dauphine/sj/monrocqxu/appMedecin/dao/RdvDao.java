@@ -11,7 +11,7 @@ import fr.dauphine.sj.monrocqxu.appMedecin.util.HibernateUtil;
 public class RdvDao {
 	
 
-	public static List<Rdv> getRdvActifPatient(int patient_id){
+	public static List<Rdv> getRdvActifPatient(int patient_id){//Recherche les rdvs des patients avec un compte actif
 		Session session = HibernateUtil.getSessionFactory().openSession();
 		List<Rdv> rdvs = session.createSQLQuery("SELECT * FROM rdv where patient_id = :patient_id and actif = 1")
 				.setParameter("patient_id", patient_id)
@@ -19,7 +19,7 @@ public class RdvDao {
 		return rdvs;
 	}
 	
-	public static List<Rdv> getRdvPatient(int patient_id){
+	public static List<Rdv> getRdvPatient(int patient_id){//Recherche tous les rendez-vous d'un patient
 		Session session = HibernateUtil.getSessionFactory().openSession();
 		List<Rdv> list = session.createSQLQuery("SELECT * FROM rdv WHERE patient_id = :id")
 				.setParameter("id", patient_id)
@@ -93,7 +93,7 @@ public class RdvDao {
 		return rdv;
 	}
 	
-	public static List<Integer> getNonPossibleRdvByDate(String date, Utilisateur medecin){
+	public static List<Integer> getNonPossibleRdvByDate(String date, Utilisateur medecin){//Recherche les indisponibilites d'un medecin
 		Session session = HibernateUtil.getSessionFactory().openSession();
 		List<Integer> list = session.createSQLQuery("SELECT creneau FROM rdv WHERE date = :date AND medecin_id = :id")
 				.setParameter("date", date)

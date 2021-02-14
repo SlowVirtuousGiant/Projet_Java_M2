@@ -96,7 +96,6 @@ public class Profil extends HttpServlet {
 					request.setAttribute( ERREUR, erreurs );
 				}
 
-				//IS MEDECIN CHECK ALL RDV CANCELED
 			}
 		}else {
 			this.getServletContext().getRequestDispatcher("/profil.jsp").forward( request, response );
