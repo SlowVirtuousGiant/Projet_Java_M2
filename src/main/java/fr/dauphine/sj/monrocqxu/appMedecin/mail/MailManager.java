@@ -186,7 +186,7 @@ public class MailManager {
 			message.setFrom(new InternetAddress(MAIL_WEBSITE_ADRESS));
 			message.setRecipients(Message.RecipientType.TO, InternetAddress.parse(utilisateur.getMail()));
 			message.setHeader("toto", "UTF-8");
-			message.setSubject("Rappel de votre RDV sur RDVmedecin.fr à venir"+rdv.getDate());
+			message.setSubject("Rappel de votre RDV sur RDVmedecin.fr à venir "+rdv.getDate());
 			String sexe;
 			if(utilisateur.getSexe().equals("homme")) {
 				sexe = "Mr. ";

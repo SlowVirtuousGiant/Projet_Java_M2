@@ -55,7 +55,7 @@ public class OnStart implements ServletContextListener {
 
 
 		System.out.println("Initialisation des rappel à compter de "+ longDiffInitCurr + " ms ");
-		timer.schedule(task, longDiffInitCurr,86400000);// 86.400.000 ms = 24H
+		timer.schedule(task, longDiffInitCurr,86400000);// 86.400.000 ms = 24H param (tâche, quand, intervalle de temps)
 
 	}
 
